@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./Images/icon.png">
+    <title>HTML Learning</title>
+    <style>
+        img{
+            height: 20%;
+            width: 20%;
+        }
+        th, td{
+            padding: 10px;
+            width: 25%;
+        }
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            text-align: center;
+        }
+        .list{
+            display: flex;
+            justify-content: space-between;
+        }
+        iframe{
+            width: 80%;
+            height: 60%;
+        }
+        .aboutu{
+            width: 60%;
+            height: 40%;
+            margin: 10px;
+        }
+        input, label{
+            padding: 5px;
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Comment -->
+    <h1>DAY 1</h1>
+    <center>
+        <h2>Welcome Here..! Hii</h2>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem quas quisquam temporibus culpa incidunt fugiat minus illum voluptatum voluptate animi commodi laborum rerum amet suscipit explicabo officiis, architecto doloremque provident dignissimos earum. Ipsa officia cumque explicabo voluptate alias. Beatae cumque facere architecto hic enim minus veniam excepturi eligendi vitae harum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae obcaecati exercitationem inventore earum,
+        delectus iure quidem incidunt vel repellat corporis quam! Officiis dolores soluta, quia vero aspernatur
+        magni laudantium. Minus!</p>
+    </center>
+    <table>
+        <tr>
+            <th>S.No</th>
+            <th>Logo</th>
+            <th>Page Name</th>
+            <th>Website Link</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td><img src="./Images/icon.png" alt="img"></td>
+            <td>Cool</td>
+            <td>.com</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td><img src="./Images/icon.png" alt="img"></td>
+            <td>Cool</td>
+            <td>.com</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td><img src="./Images/icon.png" alt="img"></td>
+            <td>Cool</td>
+            <td>.com</td>
+        </tr>
+    </table>
+    <div>
+        <ul class="list">
+            <li>First</li>
+            <li>Second</li>
+            <li>Third</li>
+            <li>Fourth</li>
+        </ul>
+    </div>
+    <div>
+        <ol class="list">
+            <li>One</li>
+            <li>Two</li>
+            <li>Three</li>
+            <li>Four</li>
+        </ol>
+    </div>
+    <center>
+        <iframe src="https://www.w3schools.com/html/html_iframe.asp" frameborder="0"></iframe>
+    </center>
+    <form action="" autocomplete="off">
+        <label for="fname">First Name</label>
+        <input type="text" id="fname" name="fname" value="" placeholder="Enter your first name"> <br>
+        <label for="lname">Last Name</label>
+        <input type="text" id="lname" name="lname" value="" placeholder="Enter your last name"> <br>
+        <label for="aboutu">Write something about <b>You</b></label> <br>
+        <textarea class="aboutu" name="aboutu" id="aboutu"></textarea> <br>
+        <label for="">What do you like most</label>
+        <select name="" id="">
+            <option value="">Game</option>
+            <option value="">Movie</option>
+            <option value="">Song</option>
+            <option value="">Celebration</option>
+        </select> <br>
+        <label for="file">Upload your Resume</label>
+        <input type="file" id="file" name="file" value=""> <br>
+        <input type="submit">
+    </form>
+</body>
+
+</html>
