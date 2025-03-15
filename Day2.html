@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -17,7 +18,7 @@
     <a href="./Images/icon.png" download="" title="Click here to download">Download Image</a>
     <h2>Form controls</h2>
     <form action="">
-        <label for="">Text Input:</label> 
+        <label for="">Text Input:</label>
         <input type="text"> <br>
         <label for="">Password Input:</label>
         <input type="password" value=""> <br>
@@ -34,6 +35,87 @@
         <label for="">Number Input:</label>
         <input type="number" min="0" max="10" value="5">
     </form>
+
+    <h2>Input Attributes</h2>
+    <form action="">
+        Your Name: <input type="text" name="name" value="John Doe">
+        Contact: <input type="text" name="phone" maxlength="10" size="10"> <br>
+        Readonly!!! <input type="text" value="Read only Text" readonly>
+        Accept Images only <input type="file" name="fileupload" id="file" accept=".jpg, .png, .jpeg"> <br>
+        Location
+        <input list="location" name="districts">
+        <datalist id="location">
+            <option value="Namakkal"></option>
+            <option value="Erode"></option>
+            <option value="Coimbatore"></option>
+            <option value="Salem"></option>
+        </datalist>
+    </form>
+    <h2>Video tag</h2>
+    <p>Supports only mp4, webM, ogg formats</p>
+    <p>I used video tag to embed a video in my webpage.</p>
+    <video width="80%" controls muted poster="./Images/icon.png">
+        <source src="Images/sample.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <h2>Embedding an Audio in HTML</h2>
+    <p>Most commonly used audio formats are ogg, mp3, wav</p>
+    <p>Code similar to video tag</p>
+
+    <h2>Embed tag</h2>
+    <p>we have used the &lt;audio&gt; and &lt;video&gt; elements to add music and videos into our web page. There are
+        other alternative
+        ways to add videos, sounds, images, or any other external content to the website by using HTML tags
+        &lt;embed&gt; and
+        &lt;object&gt;. These tags cause the browser itself to include controls for the multimedia automatically:
+    </p>
+
+    <h2>JavaScript</h2>
+    <p>
+        JavaScript allows us to create dynamic and interactive HTML pages. script is a small piece of program that can
+        add interactivity to our website.
+    </p>
+    <p>
+        This script could be written using JavaScript or VBScript. Nowadays, only JavaScript and associated frameworks
+        are being
+        used by most web developers; VBScript is not even supported by major browsers.
+    </p>
+    <ul>
+        <li>Inline JavaScript</li>
+        <li>Internal JavaScript</li>
+        <li>External JavaScript</li>
+    </ul>
+    <h3>Inline JavaScript</h3>
+    <p>Inline JavaScript is the JavaScript code that is written directly inside the HTML document like <b>onclick</b>
+        <b>onload</b> and more</p>
+
+    <button onclick="alert('Why did you click that button')">Alert Button</button>
+    <h3>Internal JavaScript and External JavaScript</h3>
+    <p>Same as Internal CSS and External CSS adding JavaScript to our project and linking it to our HTML file</p>
+
+    <h2>What is a Responsive Web Design?</h2>
+    <span><strong>Responsive web design</strong> is an approach that allows the creation of the webpages compatible with
+        different screen sizes,
+        resolutions, and devices, such as desktops, laptops, tablets, and smartphones. It helps in improving the user
+        experience, accessibility, and performance of a website.</span> <br>
+
+    <h3>Responsive Design using Media Queries</h3>
+    <ol type="i">
+        <li>Mobile: 360 x 640 px</li>
+        <li>Tablet: 768 x 1024 px</li>
+        <li>Laptop: 1366 x 768 px</li>
+        <li>HD Desktop: 1920 x 1080 px</li>
+    </ol>
+
+    <h3>HTML SVG Circle</h3>
+    <svg height="500">
+        <circle cx="100" cy="100" r="50" fill="red"/>
+    </svg>
+    <svg height="500">
+        <rect width = "300" height = "100" fill="gold"/>
+    </svg>
+
+
 
 
 </body>
