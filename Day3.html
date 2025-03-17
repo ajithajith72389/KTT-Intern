@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./Images/icon.png">
+    <title>Day 3</title>
+    <style>
+        #dragBox {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            color: white;
+            text-align: center;
+            line-height: 100px;
+            cursor: grab;
+        }
+
+        #dropZone {
+            width: 200px;
+            height: 200px;
+            border: 2px dashed black;
+            margin-top: 20px;
+            text-align: center;
+            line-height: 200px;
+        }
+
+        .drag-img {
+            width: 100px;
+            height: 100px;
+            cursor: grab;
+        }
+
+        #dropImage {
+            width: 200px;
+            height: 200px;
+            border: 2px dashed black;
+            margin-top: 20px;
+            text-align: center;
+            line-height: 200px;
+        }
+
+        .main-container {
+            border: 1px solid black;
+            height: 150px;
+            width: 400px;
+            display: flex;
+            justify-content: Center;
+            align-items: Center;
+        }
+
+        .middle-container {
+            border: 1px solid black;
+            height: 100px;
+            width: 200px;
+            display: flex;
+            flex-direction: column;
+            background-color: aqua;
+        }
+
+        .inner-container {
+            border: 1px solid black;
+            margin: 10px;
+            height: 5px;
+            width: 80%;
+            background-color: brown;
+        }
+
+        .container {
+            position: relative;
+            width: 500px;
+            height: 300px;
+            border: 1px solid black;
+        }
+
+        .box1 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 25px;
+            width: 25px;
+            border: 10px solid gold;
+            background-color: red;
+        }
+
+        .box2 {
+            position: absolute;
+            top: 45%;
+            left: 45%;
+            height: 25px;
+            width: 25px;
+            border: 10px solid gold;
+            background-color: red;
+        }
+
+        .box3 {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            height: 25px;
+            width: 25px;
+            border: 10px solid gold;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Your Location on Google Maps</h2>
+    <button onclick="getLocation()">Find My Location</button>
+    <p id="output"></p>
+    <iframe id="map" width="600" height="450" style="border:0;"></iframe>
+
+    <h2>Live Location Tracker</h2>
+    <button onclick="startTracking()">Start Tracking</button>
+    <button onclick="stopTracking()">Stop Tracking</button>
+    <p id="livelocation"></p>
+
+    <h2>Drag and Drop Example</h2>
+    <div id="dragBox" draggable="true">Drag Me</div>
+    <div id="dropZone">Drop Here</div>
+
+    <h2>Drag and Drop Example</h2>
+    <img src="./Images/butterfly.png" id="dragImage" class="drag-img" draggable="true" alt="">
+    <div id="dropImage">Drop Here</div>
+
+    <h2>Current location name (city, state, country).</h2>
+    <button onclick="getLocationName()">Find My Location Name</button>
+    <p id="locationName"></p>
+
+    <table border="1px">
+        <tr>
+            <th colspan="2">Col 1 & 2</th>
+            <th>Col 3</th>
+        </tr>
+        <tr>
+            <td>row1</td>
+            <td>row1</td>
+            <td>row1</td>
+        </tr>
+        <tr>
+            <td rowspan="2">row 2 & 3</td>
+            <td>row 2</td>
+            <td>row 2</td>
+        </tr>
+        <tr>
+            <td>row 3</td>
+            <td>row 3</td>
+        </tr>
+    </table>
+
+    <dl>
+        <dt>Creating multiple same tags in single line</dt>
+        <dd>- div*3, h1*2, span*5</dd>
+        <dt>For different class name</dt>
+        <dd>- div.div1+div.div2+div.div3.... p.para1+p.para2+p.para3</dd>
+    </dl>
+    <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition1, showError);
+            } else {
+                document.getElementById("output").innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function showPosition1(position) {
+            let lat = position.coords.latitude;
+            let lon = position.coords.longitude;
+            document.getElementById("output").innerHTML = `Latitude: ${lat}, Longitude: ${lon}`;
+
+            let mapUrl = `https://www.google.com/maps?q=${lat},${lon}&output=embed`;
+            document.getElementById("map").src = mapUrl;
+        }
+
+        function showError(error) {
+            alert("Error getting location. Check browser settings.");
+        }
+
+        let watchid;
+        function startTracking() {
+            if (navigator.geolocation) {
+                watchid = navigator.geolocation.watchPosition(showPosition, error, { enableHighAccuracy: true })
+            }
+        }
+
+        function showPosition(position) {
+            document.getElementById("livelocation").innerHTML = "Latitude: " + position.coords.latitude + "<br/> Longitude: " + position.coords.longitude;
+        }
+
+        function error(err) {
+            document.getElementById("livelocation").innerHTML = "Error getting location. Check browser settings.";
+        }
+
+        function stopTracking() {
+            if (navigator.geolocation) {
+                navigator.geolocation.clearWatch(watchid);
+                alert("Stopped Tracking")
+            }
+        }
+
+        let dragBox = document.getElementById("dragBox")
+        let dropZone = document.getElementById("dropZone")
+
+        dragBox.addEventListener("dragstart", function (event) {
+            event.dataTransfer.setData("text", event.target.id);
+        })
+
+        dropZone.addEventListener("dragover", function (event) {
+            event.preventDefault()
+        })
+
+        dropZone.addEventListener("drop", function (event) {
+            event.preventDefault()
+            let data = event.dataTransfer.getData("text")
+            let element = document.getElementById(data)
+            dropZone.appendChild(element)
+        })
+
+        let dragImage = document.getElementById("dragImage")
+        let dropImage = document.getElementById("dropImage")
+
+        dragImage.addEventListener("dragstart", function (event) {
+            event.dataTransfer.setData("text/plain", event.target.src)
+        })
+        dropImage.addEventListener("dragover", function (event) {
+            event.preventDefault()
+        })
+        dropImage.addEventListener("drop", function (event) {
+            event.preventDefault()
+            let data = event.dataTransfer.getData("text/plain");
+            dropImage.innerHTML = `<img src="${data} " width="100">`;
+        })
+
+        function getLocationName() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(async (position) => {
+                    let lat = position.coords.latitude
+                    let lon = position.coords.longitude
+                    let response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`);
+                    let data = await response.json()
+                    document.getElementById("locationName").innerHTML = data.display_name
+                })
+            }
+            else {
+                document.getElementById("locationName").innerText = "Geolocation is not supported.";
+            }
+        }
+    </script>
+
+
+    <center>
+        <div class="main-container">
+            <div class="middle-container">
+                <div class="inner-container"></div>
+                <div class="inner-container"></div>
+                <div class="inner-container"></div>
+                <div class="inner-container"></div>
+            </div>
+        </div>
+    </center>
+
+    <!-- Position -->
+    <h2>Position CSS</h2>
+    <div class="container">
+        <div class="box1"></div>
+        <div class="box2"></div>
+        <div class="box3"></div>
+    </div>
+</body>
+
+</html>
