@@ -1,0 +1,330 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- give information about the last time the document was updated. 
+     This information can be used by various web browsers while refreshing your webpage. -->
+    <meta name="revised" content="Overview of HTML tags 17/03/2025">
+    <!-- used to specify a duration after which your web page will keep refreshing automatically. -->
+    <!-- <meta http-equiv="refresh" content="5; url=https://github.com/ajithajith72389/HTML-Learning"> -->
+    <title>Overview of HTML tags</title>
+</head>
+
+<body>
+    <h1>HTML Tutorial</h1>
+    <p>HTML is a standard markup language, which stands for Hyper Text Markup Language. It is widely used language to
+        create
+        webpages. HTML invented by Tim Berners-Lee in late 1991, but it's first version "HTML 1.0" was released in 1993,
+        and
+        "HTML 2.0" was the first standard HTML specification, which was published in 1995.</p>
+    <h2>What is HTML</h2>
+    <p>HTML (HyperText Markup Language) is a standard markup language to design the structure of a webpage. HTML is the
+        combination of HyperText and Markup Language. HyperText defines the internal links between webpages, and Markup
+        language
+        defines the layout and presentation of text and media.</p>
+    <h1>Basic HTML tags</h1>
+    <h2>Heading Tags h1...h6</h2>
+    <h1>Heading 1: Main Heading of Page</h1>
+    <h2>Heading 2: Section</h2>
+    <h3>Heading 3: Subsection</h3>
+    <h4>Heading 4: Sub-subsection</h4>
+    <h5>Heading 5: Lower-level heading</h5>
+    <h6>Heading 6: Lowest-level heading</h6>
+    <h2>Paragraph tag p</h2>
+    <p>Here is a first paragraph of text.</p>
+    <p>Here is a second paragraph of text.</p>
+    <p>Here is a third paragraph of text.</p>
+    <h2>Line break tag br</h2>
+    <p>This is <br> the example for <br> br tag</p>
+    <h2>Center tag</h2>
+    <p>The center tag aligns text, images, or other HTML elements in the middle of a web page.
+        <br>
+        Note: The center tag is deprecated in HTML5. You can use the CSS text-align property to center elements.
+    </p>
+    <h2>Horizonal Rule Tag</h2>
+    <p>The horizontal rule tag displays a horizonal line. A horizontal line visually breaks up sections of a document.
+        The
+        hr tag creates a line from the current position in the document to the right margin and breaks the line
+        accordingly.</p>
+    <hr>
+    <h2>Preserve Formatting tag</h2>
+    <p>Whenever you want to display content on the webpage exactly in the same format as it was written in the HTML
+        document,
+        you can use the
+        pre tag.</p>
+    <h2>Listing Tags</h2>
+    <p>ul and ol tags create the unordered and ordered listings, and to display list items, the li tag is used</p>
+    <h3>Example for ul tag (unordered list)</h3>
+    <ul>
+        <li>Item1</li>
+        <li>Item2</li>
+        <li>Item3</li>
+    </ul>
+    <h3>Example for ol tag (ordered list)</h3>
+    <ol>
+        <li>Item1</li>
+        <li>Item2</li>
+        <li>Item3</li>
+    </ol>
+    <h2>Example of HTML Elements</h2>
+    <p>opening tag, content, and closing tag</p>
+    &lt;p>This is paragraph content.&lt;/p>
+    &lt;h1>This is heading content.&lt;/h1>
+    &lt;div>This is division content.&lt;/div>
+    <h2>HTML Element vs HTML Tag</h2>
+    <p>HTML elements are created using the HTML tags. An HTML element is defined by a pair of starting and closing tags
+        having
+        content between them, which defines the content and structure of the webpage. Whereas, HTML tags are like
+        keywords and
+        part of HTML elements enclosed in angel brackets</p>
+    <h2>HTML Void Elements</h2>
+    <p>HTML void elements are those elements that don't require closing tags.</p>
+    <h2>What are HTML Attributes?</h2>
+    <p>HTML attributes are special words that provide additional information to an HTML element. Attributes are placed
+        inside
+        the element's opening tag, and they are used to configure or adjust the element's behavior.</p>
+    <h2>HTML Formatting Tags</h2>
+    <p>b tag is used to make the text <b>bold.</b></p>
+    <p>i tag is used to make the text <i>italic.</i></p>
+    <p>big tag is used to make the text bigger. <big>It is not supported in HTML5.</big></p>
+    <p>small tag is used to make the text <small>smaller.</small></p>
+    <p>u tag is used to underline <u>text.</u></p>
+    <p>strike tag is used to strike through text. <strike>It is not supported in HTML5.</strike></p>
+    <p>tt tag is used to make text appear in teletype (monospace font). <tt>It is not supported in HTML5.</tt></p>
+    <p>strong tag is used to bold text and give it <strong>semantic importance</strong></p>
+    <p>em tag is used to italicize text and give it <em>semantic emphasis.</em></p>
+    <p>sup tag is used to make superscript text <sup>(slightly above the normal line).</sup></p>
+    <p>sub tag is used to make subscript text <sub>(slightly below the normal line).</sub></p>
+    <p>ins tag is used to indicate that content has been added <ins>(typically underlined).</ins></p>
+    <p>del tag is used to indicate that content has been deleted <del>(typically struck through).</del></p>
+    <p>mark tag is used to highlight text with a <mark>yellow background.</mark></p>
+    <h2>HTML - Quotations</h2>
+    <p>q tag Defines a <q>short inline</q> quotation.</p>
+    <p>blockquote tag Defines a block-level indented quotation.</p>
+    <blockquote>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste corporis eius delectus voluptatibus
+        aliquam explicabo? Repudiandae recusandae nihil inventore, provident natus nulla, laboriosam eos adipisci omnis
+        ullam excepturi, modi illo?</blockquote>
+    <p>cite tag Specifies a reference to the <cite>title of a creative work</cite>, such as books or articles.</p>
+    <address>address tag Defines contact information.</address>
+    <p>This text will go left to right. bdo tag</p>
+    <p><bdo dir="rtl">This text will go right to left.</bdo></p>
+    <p>abbr tag is used to abbreviate to <abbr title="World Wide Web">WWW</abbr> and the 'title' attribute provides the
+        full
+        description of the abbreviation</p>
+    <h2>HTML - Links</h2>
+    <p><b>HTML Links (Hyperlinks)</b> are words or buttons having a link to another page that take the user to that
+        linked page
+        when
+        clicked.</p>
+    <a href="#">Anchor tag</a>
+    <h2>The <q>target</q> Attribute</h2>
+    <p>The target attribute specifies the location where linked document is opened. Following are the possible values of
+        target
+        attribute:</p>
+    <dl>
+        <dt>_blank</dt>
+        <dd>- Opens the linked document in a new window or tab.</dd>
+        <dt>_self</dt>
+        <dd>- Opens the linked document in the same frame.</dd>
+        <dt>_parent</dt>
+        <dd>- Opens the linked document in the parent frame.</dd>
+        <dt>_top</dt>
+        <dd>- Opens the linked document in the full body of the window.</dd>
+    </dl>
+    <h2>Tables</h2>
+    <h3>Basic Table</h3>
+    <table border="1px solid black">
+        <thead>
+            <th>Product</th>
+            <th>Category</th>
+            <th>Price</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Laptop</td>
+                <td>Electronics</td>
+                <td>$800</td>
+            </tr>
+            <tr>
+                <td>Bookshelf</td>
+                <td>Furniture</td>
+                <td>$150</td>
+            </tr>
+            <tr>
+                <td>Coffee Maker</td>
+                <td>Appliance</td>
+                <td>$50</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Table adding height 50,50, 50px and width 200,200, 100px to table head</h3>
+    <table border="1px solid black">
+        <thead>
+            <th style="width: 200px; height:50px">Product</th>
+            <th style="width: 200px; height:50px">Category</th>
+            <th style="width: 100px; height:50px">Price</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Laptop</td>
+                <td>Electronics</td>
+                <td>$800</td>
+            </tr>
+            <tr>
+                <td>Bookshelf</td>
+                <td>Furniture</td>
+                <td>$150</td>
+            </tr>
+            <tr>
+                <td>Coffee Maker</td>
+                <td>Appliance</td>
+                <td>$50</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Table adding height 50,50, 50px and width 200,200, 100px to table body rows</h3>
+    <table border="1px solid black">
+        <thead>
+            <th>Product</th>
+            <th>Category</th>
+            <th>Price</th>
+        </thead>
+        <tbody>
+            <tr style="width: 200px; height:50px">
+                <td>Laptop</td>
+                <td>Electronics</td>
+                <td>$800</td>
+            </tr>
+            <tr style="width: 200px; height:50px">
+                <td>Bookshelf</td>
+                <td>Furniture</td>
+                <td>$150</td>
+            </tr>
+            <tr style="width: 200px; height:50px">
+                <td>Coffee Maker</td>
+                <td>Appliance</td>
+                <td>$50</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Adding single border to the table using style="border-collapse: collapse"</h3>
+    <table border="1px solid black" style="border-collapse: collapse">
+        <thead>
+            <th>Product</th>
+            <th>Category</th>
+            <th>Price</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Laptop</td>
+                <td>Electronics</td>
+                <td>$800</td>
+            </tr>
+            <tr>
+                <td>Bookshelf</td>
+                <td>Furniture</td>
+                <td>$150</td>
+            </tr>
+            <tr>
+                <td>Coffee Maker</td>
+                <td>Appliance</td>
+                <td>$50</td>
+            </tr>
+        </tbody>
+    </table>
+    <h2>sample table using col and rowspan</h2>
+    <img style="height: 300px; width:500px" src="./Images/table_image.png" alt="table_image">
+    <table border="1px solid black">
+        <thead>
+            <th>Poster Name</th>
+            <th>Color</th>
+            <th colspan="3">Size Available</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td rowspan="3">Zodiac</td>
+                <td>Full color</td>
+                <td>A2</td>
+                <td>A3</td>
+                <td>A4</td>
+            </tr>
+            <tr>
+                <td>Black and white</td>
+                <td>A1</td>
+                <td>A2</td>
+                <td>A3</td>
+            </tr>
+            <tr>
+                <td>Sepia</td>
+                <td>A3</td>
+                <td>A4</td>
+                <td>A5</td>
+            </tr>
+            <tr>
+                <td rowspan="2">Angels</td>
+                <td>Black and white</td>
+                <td>A1</td>
+                <td>A3</td>
+                <td>A4</td>
+            </tr>
+            <tr>
+                <td>Sepia</td>
+                <td>A2</td>
+                <td>A3</td>
+                <td>A5</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>HTML Nested Tables</h2>
+    <table border="1px solid black">
+        <thead>
+            <th style="width: 200px;">Employees</th>
+            <th>Networth</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <table border="1px solid black" style="width: 200px;">
+                        <thead>
+                            <th>Name</th>
+                            <th>Salary</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Ramesh</td>
+                                <td>5000</td>
+                            </tr>
+                            <tr>
+                                <td>Shabbir</td>
+                                <td>7000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+
+                <td>12000</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Plugins</h2>
+    <!-- If the content loads successfully and no error occurs, both <embed> and <object> may look identical.
+    However, if there's a loading issue, <object> will show a fallback while <embed> won’t. -->
+    <h3>Object Tag</h3>
+    <object data="./pdf/sample.pdf" type="application/pdf">
+        <p>There is an issue in loading pdf <a href="./pdf/sample.pdf">Download pdf</a></p>
+    </object>
+    <h3>Embed tag</h3>
+    <embed src="./pdf/sample.pdf" type="application/pdf">
+    <h3>Image using object tag</h3>
+    <object data="./Images/butterfly.png" type="Image/png" width="250px">
+        <p>There is an issue in loading this image <a href="./Images/butterfly.png">Download Image</a></p>
+    </object>
+</body>
+
+</html>
