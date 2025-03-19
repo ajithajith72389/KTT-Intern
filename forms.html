@@ -1,0 +1,183 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+</head>
+
+<body>
+    <h1>Forms</h1>
+    <table>
+        <thead>
+            <th>Attributes</th>
+            <th>Description</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>action</td>
+                <td>used to specify a URL that processes the form submission.</td>
+            </tr>
+            <tr>
+                <td>method</td>
+                <td>used to define which HTTP method to use when submitting the form.</td>
+            </tr>
+            <tr>
+                <td>target</td>
+                <td>used to specify where to open the linked document.</td>
+            </tr>
+            <tr>
+                <td>autocomplete</td>
+                <td>set whether the autocomplete for the form should be on or off.</td>
+            </tr>
+            <tr>
+                <td>enctype</td>
+                <td>used to specify how the form input data should be encoded before sending it to the server.</td>
+            </tr>
+            <tr>
+                <td>novalidate</td>
+                <td>while submitting the form, the form data should not be validated in an HTML document.</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+    <form action="">
+        <fieldset>
+            <legend>Registration Form</legend>
+            <label for="firstname">First Name</label>
+            <input type="text" name="Firstname" id="firstname"> <br> <br>
+            <label for="lastname">Last Name</label>
+            <input type="text" id="lastname" name="Lastname"> <br> <br>
+            <label for="email">Email ID</label>
+            <input type="email" name="Email" id="email"> <br> <br>
+            <label for="password">Enter Your Password</label>
+            <input type="password" id="password" name="Password"> <br> <br>
+            <label for="cpassword">Confirm Your Password</label>
+            <input type="password" id="cpassword" name="cPassword"> <br> <br>
+            <label for="address">Address</label>
+            <input type="text" id="address" name="Address"> <br> <br>
+            <button>Submit</button>
+            
+        </fieldset>
+    </form>
+
+    <form action="./Day4.html" method="get" target="_blank" novalidate>
+        Name: <input type="text" name="your_name" required />
+        <br><br>
+        Email: <input type="email" name="mail" required />
+        <br><br>
+        <input type="submit">
+    </form>
+
+    <form action="">
+        <fieldset>
+            <legend>Form with All input types</legend>
+            <h2>Personal Details</h2>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name"> <br> <br>
+            <label for="mail">Email ID</label>
+            <input type="email" name="mail" id="mail"> <br><br>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" maxlength="10"> <br> <br>
+            <label for="dob">Date of Birth</label>
+            <input type="date" id="dob" name="dob"> <br><br>
+            <h2>Preferences</h2>
+            <label for="gender">Gender</label>
+            <input type="radio" id="gender" name="gender" value="male"> Male
+            <input type="radio" id="gender" name="gender" value="female"> Female <br><br>
+            <label for="hobby">Hobbies</label>
+            <input type="checkbox" id="hobby" name="hobby"> Reading Books
+            <input type="checkbox" id="hobby" name="hobby"> watching movies
+            <input type="checkbox" id="hobby" name="hobby"> Playing games <br><br>
+            <label for="range">Range</label>
+            <input type="range" name="range" id="range" value="5" min="1" max="10">
+            <h2>Files and Urls</h2>
+            <label for="file">File</label>
+            <input type="file" id="file" name="file" multiple> <br><br>
+            <label for="url">URL</label>
+            <input type="url" name="url" id="url"> <br><br>
+            <h2>Hidden Data</h2>
+            <label for="hidden">Hidden Data</label>
+            <input type="text" id="hidden" value="hidden" hidden> <br><br>
+            <label for="readonly">Readonly Data</label>
+            <input type="text" id="readonly" value="readonly" readonly> <br><br>
+            <label for="disabled">Disabled Data</label>
+            <input type="text" id="disabled" value="disabled" disabled> <br><br>
+            <h2>Numbers and Search</h2>
+            <label for="age">Age</label>
+            <input type="number" name="age" id="age" min="1"> <br><br>
+            <label for="search">Search</label>
+            <input type="search" name="search" id="search"> <br><br>
+            <h2>Input type buttons</h2>
+            <input type="submit" name="submit" id="submit" value="submit">
+            <input type="reset" name="reset" id="reset" value="reset">
+            <input type="button" name="button" id="button" value="button"> <br><br>
+            <h2>Button tag</h2>
+            <button type="submit">Submit</button>
+            <button type="reset">Reset</button>
+            <button type="button">Button</button>
+        </fieldset>
+    </form>
+
+    <!-- <canvas id="myCanvas" width="400" height="200" style="border:1px solid black;"></canvas>
+    
+    <script>
+        const canvas = document.getElementById("myCanvas");
+        const ctx = canvas.getContext("2d");
+
+        // Draw Rectangle
+        ctx.fillStyle = "blue";
+        ctx.fillRect(50, 50, 150, 100);
+
+        // Draw Circle
+        ctx.beginPath();
+        ctx.arc(250, 100, 50, 0, 2 * Math.PI);
+        ctx.fillStyle = "red";
+        ctx.fill();
+    </script> -->
+
+    <!-- <svg width="300" height="300" style="border:1px solid black;">
+        <circle cx="150" cy="80" r="50" fill="skyblue" />
+    
+        <rect x="80" y="150" width="140" height="80" rx="20" fill="lightgreen" />
+    
+        <line x1="10" y1="10" x2="290" y2="290" stroke="red" stroke-width="2" />
+    
+        <text x="80" y="250" fill="black" font-size="20">Simple SVG Design</text>
+    </svg> -->
+
+    <table border="1">
+        <caption>Fruits Table</caption>
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Price</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Apple</td>
+                <td>2</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>Banana</td>
+                <td>1</td>
+                <td>10</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>Total</td>
+                <td>15</td>
+                <td>15</td>
+            </tr>
+        </tfoot>
+    </table>
+
+</body>
+
+</html>
