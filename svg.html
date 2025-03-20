@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SVG</title>
 </head>
+
 <body>
     <svg width="600px" height="500px" style="border: 1px solid black;">
         <circle cx="300" cy="100" r="50" stroke="black" fill="aqua"></circle>
@@ -21,9 +23,92 @@
         <circle cx="150" cy="450" r="20" stroke="black" fill="aqua" stroke-width="3"></circle>
         <circle cx="350" cy="450" r="30" stroke="black" fill="black" stroke-width="3"></circle>
         <circle cx="350" cy="450" r="20" stroke="black" fill="aqua" stroke-width="3"></circle>
-        <circle cx="200" cy="330" r="10" stroke="black" fill="aqua" stroke-width="3"></circle>
-        <circle cx="300" cy="330" r="10" stroke="black" fill="aqua" stroke-width="3"></circle>
-
+        <rect x="180" y="320" width="30" height="20" stroke="black" fill="aqua" stroke-width="3"></rect>
+        <rect x="300" y="320" width="30" height="20" stroke="black" fill="aqua" stroke-width="3"></rect>
+        <polygon points="100,200 250,200 175,50" stroke="black" stroke-width="3" fill="yellow"></polygon>
+        <polygon points="500,50 550,150 450,100 580,100 480,150" stroke="black" stroke-width="3" fill="yellow">
+        </polygon>
     </svg>
+
+    <canvas id="mycanvas" width="600px" height="500px" style="border:1px solid black">
+
+    </canvas>
+    <script>
+        var c = document.getElementById("mycanvas")
+        var ctx = c.getContext('2d')
+        /*  ctx.moveTo(10,10)
+          ctx.lineTo(590, 490)
+          ctx.stroke()    */
+        ctx.beginPath()
+        ctx.arc(500, 100, 25, 0, 2 * Math.PI)
+        ctx.stroke()
+        ctx.fillStyle = "yellow"
+        ctx.fill()
+        ctx.stroke()
+
+        // Drawing Top for the house;;
+        ctx.beginPath()
+        ctx.moveTo(130, 100)
+        ctx.lineTo(250, 250)
+        ctx.lineTo(10, 250)
+        ctx.fillStyle = "brown"
+        ctx.fill()
+        ctx.stroke()
+
+        // Drawing Bottom for the house;
+        ctx.beginPath()
+        ctx.moveTo(10, 250)
+        ctx.lineTo(250, 250)
+        ctx.lineTo(250, 450)
+        ctx.lineTo(10, 450)
+        ctx.fillStyle = "blue"
+        ctx.fill()
+        ctx.stroke()
+
+        //Drawing door to the house;;
+        ctx.beginPath()
+        ctx.moveTo(100, 350)
+        ctx.lineTo(150, 350)
+        ctx.lineTo(150, 450)
+        ctx.lineTo(100, 450)
+        ctx.fillStyle = "brown"
+        ctx.fill()
+        ctx.stroke()
+
+        // Car top;;
+        ctx.beginPath()
+        ctx.moveTo(350, 350)
+        ctx.lineTo(450, 350)
+        ctx.lineTo(500, 400)
+        ctx.lineTo(300, 400)
+        ctx.fillStyle = "red"
+        ctx.fill()
+        ctx.stroke()
+
+        //Car bottom;;
+        ctx.beginPath()
+        ctx.moveTo(280, 400)
+        ctx.lineTo(520, 400)
+        ctx.lineTo(520, 450)
+        ctx.lineTo(280, 450)
+        ctx.fillStyle = "brown"
+        ctx.fill()
+        ctx.stroke()
+
+        // wheel for the car;;
+
+        ctx.beginPath()
+        ctx.arc(330, 450, 20, 0, 2 * Math.PI)
+        ctx.fillStyle = "black"
+        ctx.fill()
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.arc(480, 450, 20, 0, 2 * Math.PI)
+        ctx.fillStyle = "black"
+        ctx.fill()
+        ctx.stroke()
+    </script>
 </body>
+
 </html>
