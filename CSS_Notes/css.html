@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Introduction</title>
+    <style>
+        /* Adding colors to text */
+        /* Element Selector */
+        h2 {
+            color: blue;
+            margin-left: 10px;
+            padding: 10px;
+        }
+
+        /*Presence Selector */
+        ol[type="1"] {
+            color: red;
+        }
+
+        /* combinator Selector */
+        h3~p {
+            color: green;
+        }
+
+        h3+p {
+            font-size: large;
+            color: rgb(193, 28, 28);
+        }
+
+        div>p {
+            margin: 10px;
+
+        }
+
+        #b1 {
+            height: 100px;
+            width: 100px;
+            background: rgb(255, 0, 0);
+            display: inline-block;
+        }
+
+        #b2 {
+            height: 100px;
+            width: 100px;
+            background: rgb(0, 255, 0);
+            display: inline-block;
+        }
+
+        #b3 {
+            height: 100px;
+            width: 100px;
+            background: rgb(0, 0, 255);
+            display: inline-block;
+        }
+
+        .inner-container {
+            width: 400px;
+            height: 100px;
+            border: 1px solid #846868;
+            border-radius: 3px;
+        }
+
+        @media screen and (max-width: 600px) {
+            body {
+                background-color: black;
+                color: white
+            }
+        }
+
+        .topnav {
+            overflow: hidden;
+            background-color: #333;
+        }
+
+        /* Style the topnav links */
+        .topnav a {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        /* Change color on hover */
+        .topnav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        /* On screens that are 600px wide or less, make the menu links stack on top of each other instead of next to each other */
+        @media screen and (max-width: 600px) {
+            .topnav a {
+                float: none;
+                width: 100%;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .box-container {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            .box {
+                border: 2px solid gold;
+                height: 200px;
+                width: 90%;
+                margin: 10px;
+                overflow: auto;
+                scrollbar-width: none;
+            }
+
+            .box p {
+                padding: 10px;
+            }
+        }
+
+        @media screen and (min-width:481px) and (max-width: 1024px) {
+            .box-container {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            .box {
+                border: 2px solid gold;
+                height: 200px;
+                width: 45%;
+                margin: 10px;
+                overflow: auto;
+                scrollbar-width: none;
+            }
+
+            .box p {
+                padding: 10px;
+            }
+        }
+
+        @media screen and (min-width:1025px) {
+            .box-container {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: space-evenly;
+            }
+
+            .box {
+                border: 2px solid gold;
+                height: 200px;
+                width: 23%;
+                margin: 10px;
+                overflow: auto;
+                scrollbar-width: none;
+            }
+
+            .box p {
+                padding: 10px;
+            }
+        }
+
+        .flex-container {
+            display: flex;
+            background-color: DodgerBlue;
+        }
+
+        .flex-container>div {
+            background-color: #f1f1f1;
+            margin: 10px;
+            padding: 20px;
+            font-size: 30px;
+        }
+
+        .boxx {
+            background-color: #f1f1f1;
+            margin: 10px;
+            padding: 20px;
+            font-size: 30px;
+        }
+        .container{
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+        }
+    </style>
+</head>
+
+<body>
+    <h2>what is css?</h2>
+    <marquee>
+        <p>Adding styles to html web page</p>
+    </marquee>
+    <h2>CSS Selectors</h2>
+    <h3>Basic Selectors</h3>
+    <ol type="1">
+        <li>Universal Selector (*)</li>
+        <li>Element Selector (like &lt;p&gt;, &lt;h1&gt;, etc)</li>
+        <li>Class Selector (.)</li>
+        <li>ID Selector (#)</li>
+    </ol>
+    <h3>Combinator Selectors</h3>
+    <ol type="I">
+        <li>Descendant Selectors ( div p )</li>
+        <li>Child Selector ( div > p )</li>
+        <li>Adjacent Sibling Selector ( div + p )</li>
+        <li>General Sibling Selector ( div ~ p )</li>
+    </ol>
+    <h3>Attribute Selector</h3>
+    <ol>
+        <li>Presence Selector</li>
+        <li>Attribute Value Selector</li>
+        <li>Substring Matching</li>
+    </ol>
+    <h3>Pseudo classes</h3>
+    <ol>
+        <li>: hover</li>
+        <li>: focus</li>
+        <li>: first -child</li>
+    </ol>
+    <div style="display: flex;flex-direction:column;border:3px solid gray">
+        <h3 style="padding: 0 10px;">Dummy Text</h3>
+        <p style="border:3px solid gray; padding:10px">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Consectetur aperiam facilis, earum rem in non!
+            Recusandae
+            possimus maxime ipsam aspernatur obcaecati autem illo, magnam ad soluta aliquid quam, reprehenderit sint.
+        </p>
+        <p style="border:3px solid gray; padding:10px">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Error
+            deserunt quas blanditiis fugiat consequatur
+            accusantium, laboriosam quis vitae cumque dolorum aperiam? Blanditiis quidem, eum molestiae labore optio rem
+            debitis
+            nobis tempora culpa numquam quam nostrum autem odit eligendi neque tempore?</p>
+        <p style="border:3px solid gray; padding:10px">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+            Eligendi commodi fuga tenetur reiciendis ullam
+            perspiciatis
+            tempora veritatis laborum est minima?</p>
+    </div>
+
+    <div class="main-container" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">display: block; property</div>
+    <div class="inner-container">
+        <div id="b1"></div>
+        <div id="b2"></div>
+        <div id="b3"></div>
+    </div>
+
+    <!-- Float -->
+    <h3 style="text-decoration: underline;">Float</h3>
+    <div>
+        <h3 style="float:left">Left Float
+            <p style="float:inherit">Float Inherit</p>
+        </h3>
+        <h3 style="float:right">Right Float
+            <p style="float: inherit;">Float Inherit</p>
+        </h3>
+        <br>
+        <br>
+    </div>
+
+    <h1 style="clear: both;">Responsive navigation menu</h1>
+    <p>Resize the browser window to see the effect: When the screen is less than 600px, the navigation menu will be
+        displayed vertically instead of horizontally.</p>
+
+    <div class="topnav">
+        <a href="#">Link</a>
+        <a href="#">Link</a>
+        <a href="#">Link</a>
+    </div>
+    <center>
+        <h2 style="text-decoration: underline;">Media Queries using Flex</h2>
+    </center>
+    <dl style="display: flex; flex-direction:column; align-items:center">
+        <dt style="background-color: #333; color:whitesmoke">For Mobile Phones</dt>
+        <dd>- max-width: 480px</dd>
+        <dt style="background-color: #333; color:whitesmoke">For Tablets</dt>
+        <dd>- min-width: 481px and max-width: 1024px</dd>
+        <dt style="background-color: #333; color:whitesmoke">For Desktops</dt>
+        <dd>- min-width: 1025px</dd>
+    </dl>
+    <div class="box-container">
+        <div class="box">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio quo doloribus non dolores! Nobis quaerat
+                fuga, voluptates expedita nostrum, neque mollitia veritatis, ipsa voluptatibus labore rem obcaecati
+                vitae maiores commodi.</p>
+        </div>
+        <div class="box">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum commodi inventore ea modi ut iste nesciunt
+                ullam veniam est minus atque error beatae consectetur iusto explicabo cumque, quaerat labore, ipsum
+                excepturi facilis. Deserunt voluptatibus quasi atque officia velit consequuntur maxime laborum. Fugiat
+                odio saepe iusto perspiciatis voluptates enim quo ipsa.</p>
+        </div>
+        <div class="box">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo repellendus at dolor harum nam perferendis
+                cumque ex nobis molestias recusandae?</p>
+        </div>
+        <div class="box">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis ea odio ipsam perspiciatis sint dolore
+                voluptates fugit! Officia id fuga magni debitis eaque est nostrum laborum exercitationem dicta alias
+                reprehenderit, veritatis recusandae architecto laudantium dolore esse obcaecati facilis quos cumque
+                ipsum nemo aliquid possimus rem? Reiciendis alias, aliquam pariatur doloribus amet sequi sit, optio
+                perferendis voluptatum eos error nesciunt ratione deserunt, esse quod illum beatae! Adipisci voluptatum
+                corrupti beatae? Ducimus possimus rem aperiam omnis ad harum dolores ratione deleniti eligendi excepturi
+                facilis ea explicabo eius, et cum repellat vel culpa quidem quisquam voluptatibus, a aliquam tenetur
+                doloribus. Reiciendis, rem aspernatur!</p>
+        </div>
+    </div>
+    <h1>Flex box</h1>
+
+    <div class="flex-container">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+    </div>
+    <h2>flex-direction: row</h2>
+    <div style=" display:flex;
+  flex-direction: row;">
+        <div class="boxx">1</div>
+        <div class="boxx">2</div>
+        <div class="boxx">3</div>
+    </div>
+
+    <h2>flex-direction: column</h2>
+    <div style=" display:flex;
+      flex-direction: column;">
+        <div class="boxx">1</div>
+        <div class="boxx">2</div>
+        <div class="boxx">3</div>
+    </div>
+
+    <h2>flex-direction: row-reverse</h2>
+    <div style="display: flex; flex-direction: row-reverse; width:400px">
+        <div class="boxx">1</div>
+        <div class="boxx">2</div>
+        <div class="boxx">3</div>
+        <div class="boxx">4</div>
+        <div class="boxx">5</div>
+    </div>
+
+    <h2>flex-direction: column-reverse</h2>
+    <div style=" display:flex;
+          flex-direction: column-reverse;">
+        <div class="boxx">1</div>
+        <div class="boxx">2</div>
+        <div class="boxx">3</div>
+    </div>
+
+    <h2>flex-grow</h2>
+    <div style="display: flex;">
+        <div class="boxx" style="flex-grow: 1;">1</div>
+        <div class="boxx" style="flex-grow: 1;">2</div>
+        <div class="boxx" style="flex-grow: 8;">3</div>
+    </div>
+
+    <h2>The order property</h2>
+    <div style="display: flex;">
+        <div class="boxx" style="order:2">1</div>
+        <div class="boxx" style="order:1">2</div>
+        <div class="boxx" style="order:3">3</div>
+    </div>
+
+    <h2>Align self</h2>
+    <div style="display: flex; height:300px; ">
+        <div class="boxx" >1</div>
+        <div class="boxx"  style="align-self: flex-start">2</div>
+        <div class="boxx"  style="align-self: flex-end">3</div>
+        <div class="boxx" >4</div>
+    </div>
+
+    <h1>Grid Layout...</h1>
+    <h2>Grid using fr</h2>
+    <div class="container">
+        <div class="boxx">1</div>
+        <div class="boxx">2</div>
+        <div class="boxx">3</div>
+        <div class="boxx">4</div>
+        <div class="boxx">5</div>
+        <div class="boxx">6</div>
+        <div class="boxx">7</div>
+        <div class="boxx">8</div>
+    </div>
+</body>
+
+</html>
