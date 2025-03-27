@@ -179,8 +179,10 @@
             margin: 10px;
             padding: 20px;
             font-size: 30px;
+            border: 2px solid black;
         }
-        .container{
+
+        .container {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
         }
@@ -360,13 +362,17 @@
 
     <h2>Align self</h2>
     <div style="display: flex; height:300px; ">
-        <div class="boxx" >1</div>
-        <div class="boxx"  style="align-self: flex-start">2</div>
-        <div class="boxx"  style="align-self: flex-end">3</div>
-        <div class="boxx" >4</div>
+        <div class="boxx">1</div>
+        <div class="boxx" style="align-self: flex-start">2</div>
+        <div class="boxx" style="align-self: flex-end">3</div>
+        <div class="boxx">4</div>
     </div>
 
     <h1>Grid Layout...</h1>
+    <p>The Grid Layout Module offers a grid-based layout system, with rows and columns.</p>
+    <p>The Grid Layout Module allows developers to easily create complex web layouts.</p>
+    <p>The Grid Layout Module makes it easier to design a responsive layout structure, without using float or
+        positioning.</p>
     <h2>Grid using fr</h2>
     <div class="container">
         <div class="boxx">1</div>
@@ -377,6 +383,58 @@
         <div class="boxx">6</div>
         <div class="boxx">7</div>
         <div class="boxx">8</div>
+    </div>
+
+    <h1>Grid</h1>
+    <div
+        style="border: 1px solid black; height:300px; width:500px; display:grid; grid-template-columns:repeat(5, 20%); grid-template-rows:repeat(5, 20%)">
+        <div class="boxx" style="grid-column-start:3; grid-row-start:3; background-color:aqua"></div>
+    </div>
+<br>
+    <div
+        style="border: 1px solid black; height:300px; width:500px; display:grid; grid-template-columns:repeat(5, 20%); grid-template-rows:repeat(5, 20%)">
+        <div class="boxx" style="grid-column-start:1; grid-row-start:1; background-color:aqua;">1</div>
+        <div class="boxx" style="grid-column-start:2; grid-row-start:2; background-color:aqua">2</div>
+        <div class="boxx" style="grid-column-start:3; grid-row-start:3; background-color:aqua">3</div>
+        <div class="boxx" style="grid-column-start:4; grid-row-start:4; background-color:aqua">4</div>
+        <div class="boxx" style="grid-column-start:5; grid-row-start:5; background-color:aqua">5</div>
+    </div>
+    <br>
+    <div
+        style="border: 1px solid black; height:300px; width:500px; display:grid; grid-template-columns:repeat(5, 20%); grid-template-rows:repeat(5, 20%)">
+        <div class="boxx" style="grid-column-start:1; grid-row-start:1; background-color:aqua;">1</div>
+        <div class="boxx" style="grid-column-start:2; grid-row-start:2; background-color:aqua">2</div>
+        <div class="boxx" style="grid-column-start:3; grid-row-start:3; background-color:aqua">3</div>
+        <div class="boxx" style="grid-column-start:4; grid-row-start:4; background-color:aqua">4</div>
+        <div class="boxx" style="grid-column-start:5; grid-row-start:5; background-color:aqua">5</div>
+        <div class="boxx" style="grid-column-start:5; grid-row-start:1; background-color:aqua">6</div>
+        <div class="boxx" style="grid-column-start:4; grid-row-start:2; background-color:aqua">7</div>
+        <div class="boxx" style="grid-column-start:2; grid-row-start:4; background-color:aqua">8</div>
+        <div class="boxx" style="grid-column-start:1; grid-row-start:5; background-color:aqua">9</div>
+    </div>
+    <br>
+    <div
+        style="border: 1px solid black; height:300px; width:500px; display:grid; grid-template-columns:repeat(5, 20%); grid-template-rows:repeat(5, 20%)">
+        <div class="boxx" style="grid-column-start:3; grid-row-start:1; background-color:aqua;">1</div>
+        <div class="boxx" style="grid-column-start:3; grid-row-start:2; background-color:aqua">2</div>
+        <div class="boxx" style="grid-column-start:3; grid-row-start:3; background-color:aqua">3</div>
+        <div class="boxx" style="grid-column-start:3; grid-row-start:4; background-color:aqua">4</div>
+        <div class="boxx" style="grid-column-start:3; grid-row-start:5; background-color:aqua">5</div>
+        <div class="boxx" style="grid-column-start:1; grid-row-start:3; background-color:aqua">6</div>
+        <div class="boxx" style="grid-column-start:2; grid-row-start:3; background-color:aqua">7</div>
+        <div class="boxx" style="grid-column-start:4; grid-row-start:3; background-color:aqua">8</div>
+        <div class="boxx" style="grid-column-start:5; grid-row-start:3; background-color:aqua">9</div>
+    </div>
+    <br>
+    <div
+        style="border: 1px solid black; height:300px; width:500px; display:grid; grid-template-columns:repeat(5, 20%); grid-template-rows:repeat(5, 20%)">
+        <div class="boxx" style="grid-column-start:1; grid-column-end:4; background-color:aqua; grid-row:1/ span 3">1</div>
+        <div class="boxx" style="background-color:aqua">2</div>
+        <div class="boxx" style="background-color:aqua">3</div>
+        <div class="boxx" style="background-color:aqua; grid-column:4/ span 2">4</div>
+        <div class="boxx" style="background-color:aqua; ">5</div>
+        <div class="boxx" style="background-color:aqua; grid-row:4/span 1; grid-column:1/ span 2">6</div>
+        <div class="boxx" style="background-color:aqua;">7</div>
     </div>
 </body>
 
