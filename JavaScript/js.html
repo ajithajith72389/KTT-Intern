@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript</title>
+</head>
+<body>
+    <div>
+        <h2>Hello world</h2>
+        <p>Before the script...</p>
+        
+        <script>
+            alert('Hello, world!');
+        </script>
+        
+        <p>...After the script.</p>
+    </div>
+
+    <div>
+        <h2>use strict</h2>
+        <script>
+            'use strict';
+            let name = "Ajith";
+            delete name
+        </script>
+    </div>
+    <div>
+        <button onclick="aler()">click me</button>
+        <script>
+            function aler(){
+                alert("Hello")
+            }
+        </script>
+    </div>
+    <br>
+    <div>
+        <h2>Prompt</h2>
+        <button onclick="pmt()">What's your age</button>
+        <script>
+            function pmt(){
+                // result = prompt(title, default)
+                let age = prompt("How old are you?", 25);
+                alert(`You are ${age} years old!`);
+            }
+        </script>
+    </div>
+    <br>
+    <div>
+        <h2>confirm</h2>
+        <button onclick="cnf()">Confirm</button>
+        <script>
+            function cnf(){
+                let virat = confirm("Do you love virat?");
+                alert(virat);
+            }
+        </script>
+    </div>
+    
+
+</body>
+</html>
