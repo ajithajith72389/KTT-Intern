@@ -122,3 +122,41 @@ console.log(ag);
 // // str 1 + 5 = str 15 + 6 = 156 str
 // console.log("1" + 5 + 6);
 
+// console.log(6 - '2');
+// console.log('6' / '2');
+// console.log(6 / 2);
+// console.log("6" - 2);
+
+// Numeric conversion 
+// unary +
+// let apples = "2";
+// let oranges = "3";
+// console.log(apples+oranges);
+// console.log(+apples + +oranges);
+// console.log(Number(apples) + Number(oranges));
+
+
+// let n = 2;
+// n *= 3 + 5; // right part evaluated first, same as n *= 8
+// alert(n); // 16
+
+// console.log(null > 0);
+// console.log(null == 0);
+// console.log(null >= 0);
+
+// conditional branching: if, ?
+
+// closure
+
+function outer() {
+    let count = 0;
+    return function () {
+        count++;
+        console.log(count);
+    };
+}
+
+const counter = outer();
+counter(); // 1
+counter(); // 2
+counter(); // 3

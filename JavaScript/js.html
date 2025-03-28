@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JavaScript</title>
 </head>
+
 <body>
     <div>
         <h2>Hello world</h2>
         <p>Before the script...</p>
-        
+
         <script>
             alert('Hello, world!');
         </script>
-        
+
         <p>...After the script.</p>
     </div>
 
@@ -28,7 +30,7 @@
     <div>
         <button onclick="aler()">click me</button>
         <script>
-            function aler(){
+            function aler() {
                 alert("Hello")
             }
         </script>
@@ -38,7 +40,7 @@
         <h2>Prompt</h2>
         <button onclick="pmt()">What's your age</button>
         <script>
-            function pmt(){
+            function pmt() {
                 // result = prompt(title, default)
                 let age = prompt("How old are you?", 25);
                 alert(`You are ${age} years old!`);
@@ -50,13 +52,43 @@
         <h2>confirm</h2>
         <button onclick="cnf()">Confirm</button>
         <script>
-            function cnf(){
+            function cnf() {
                 let virat = confirm("Do you love virat?");
                 alert(virat);
             }
         </script>
     </div>
-    
+
+    <div>
+        <h2>If statement</h2>
+        <button onclick="quiz()">Quiz</button>
+        <script>
+            function quiz() {
+                let year = prompt("2011 world cup india won in which year");
+                if (year == 2011) {
+                    alert("You are right!"); alert("You are so smart!")
+                } else{
+                    alert("Look at the quiz once more!")
+                    quiz()
+                }
+            }
+        </script>
+    </div>
+    <br>
+    <div>
+        <button onclick="js()">Let</button>
+        <script>
+            function js() {
+                let quiz = prompt("What are you currently learning?", "JavaScript");
+                quiz.toLowerCase() === "javascript"
+                    ? prompt("What is 'let' in JavaScript?")
+                    : alert("Study JavaScript!");
+            }
+        </script>
+
+    </div>
+
 
 </body>
+
 </html>
