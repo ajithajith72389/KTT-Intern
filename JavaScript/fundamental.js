@@ -1,6 +1,6 @@
-//"use strict"
+"use strict"
 
-console.log("Aj");
+//console.log("Aj");
 
 // Variables
 /*
@@ -148,15 +148,47 @@ console.log(ag);
 
 // closure
 
-function outer() {
-    let count = 0;
-    return function () {
-        count++;
-        console.log(count);
-    };
-}
+// function outer() {
+//     let count = 0;
+//     return function () {
+//         count++;
+//         console.log(count);
+//     };
+// }
 
-const counter = outer();
-counter(); // 1
-counter(); // 2
-counter(); // 3
+// const counter = outer();
+// counter(); // 1
+// counter(); // 2
+// counter(); // 3
+
+// let text1 = "551";
+// let text2 = "55";
+// let result = text1 < text2;
+// console.log(result);
+
+// use strict ;;
+// num = 5;
+// console.log(num);
+
+
+// num = 21; // Error: num is not defined
+// age;      // Error: age is not defined
+// age = 22; // Error: age is not defined
+// console.log(age);
+
+
+console.log(typeof undefined) // "undefined"
+
+console.log(typeof 0) // "number"
+
+console.log(typeof 10n) // "bigint"
+
+console.log(typeof true) // "boolean"
+
+console.log(typeof "foo") // "string"
+
+console.log(typeof Symbol("id")) // "symbol"
+
+console.log(typeof Math) // "object"  (1)
+
+console.log(typeof null) // "object"  (2)
