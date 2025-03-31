@@ -318,7 +318,6 @@ console.log(ag);
 
 // function greet() {
 //     username = "Aj";
-//     return "Hello" + username;
 // }
 
 // console.log("Hello " + username);
