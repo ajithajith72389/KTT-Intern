@@ -304,12 +304,23 @@ console.log(ag);
 // ajith();
 // ajith();
 
-function showMessage() {
-  let message = "Hello, I'm JavaScript!"; // local variable
+// function showMessage() {
+//   let message = "Hello, I'm JavaScript!"; // local variable
 
-  console.log( message );
-}
+//   console.log( message );
+// }
 
-showMessage(); // Hello, I'm JavaScript!
+// showMessage(); // Hello, I'm JavaScript!
 
-console.log(message);
+// console.log(message);
+
+// let username = "Ajith";
+
+// function greet() {
+//     username = "Aj";
+//     return "Hello" + username;
+// }
+
+// console.log("Hello " + username);
+// greet();
+// console.log("Hello " + username);
