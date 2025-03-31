@@ -127,7 +127,7 @@ console.log(ag);
 // console.log(6 / 2);
 // console.log("6" - 2);
 
-// Numeric conversion 
+// Numeric conversion
 // unary +
 // let apples = "2";
 // let oranges = "3";
@@ -177,18 +177,139 @@ console.log(ag);
 // console.log(age);
 
 
-console.log(typeof undefined) // "undefined"
+// console.log(typeof undefined) // "undefined"
 
-console.log(typeof 0) // "number"
+// console.log(typeof 0) // "number"
 
-console.log(typeof 10n) // "bigint"
+// console.log(typeof 10n) // "bigint"
 
-console.log(typeof true) // "boolean"
+// console.log(typeof true) // "boolean"
 
-console.log(typeof "foo") // "string"
+// console.log(typeof "foo") // "string"
 
-console.log(typeof Symbol("id")) // "symbol"
+// console.log(typeof Symbol("id")) // "symbol"
 
-console.log(typeof Math) // "object"  (1)
+// console.log(typeof Math) // "object"  (1)
 
-console.log(typeof null) // "object"  (2)
+// console.log(typeof null) // "object"  (2)
+
+// console.log("while loop")
+// let a = 5;
+// while (a){
+//     console.log(a);
+//     a--;
+// }
+
+// console.log("Do while loop");
+// let a =5;
+// do {
+//     console.log(a);
+// } while(a != 5);
+
+// console.log("For loop");
+
+// for (let i=0; i<5; i++){
+//     console.log(i);
+// }
+
+
+// breaking loop
+// outer: for (let i = 0; i < 5; i++) {
+//     for (let j = 0; j < 5; j++) {
+//         let input = prompt("Enter any number: ");
+//         if (!input || input == 0) break outer;
+//     }
+
+// }
+// alert("Done");
+
+//Write a program to print numbers from 1 to 10 using a for loop.
+
+// for (let i=1; i<=10; i++){
+//     console.log(i);
+// }
+
+
+//Use a while loop to print all odd numbers between 1 and 20
+
+// let i = 20;
+// while (i) {
+//     if (i % 2 == 1) {
+//         console.log(i);
+//     }
+//     i = i - 1;
+// }
+
+// Use a do while loop to prompt the user to enter a number until they input a positive value.
+
+// do {
+//     let input = prompt("Enter a number:", 0);
+// } while (input <= 0);
+
+// for in
+
+// const user = {name : "Ajith", age : 21, Location : "Namakkal"}
+
+// for (let keys in user) {
+//     console.log(keys);
+//     console.log(user[keys]);
+// }
+
+// for each;;
+
+// const arr = [1, 2, 3, 4, 5, 6, 7]
+
+// for (let index in arr){
+//     console.log(index);
+//     console.log(arr[index]);
+// }
+
+// switch
+
+// let num = 20;
+
+// switch (true) {
+//     case num < 0:
+//         console.log("Negative Number");
+//         break;
+//     case num == 0:
+//         console.log("The number is zero");
+//         break;
+//     case num > 1:
+//         console.log("Positive Number");
+//         break;
+//     default:
+//         console.log("This is not a number");
+// }
+
+// let day = 3;
+
+// switch (day) {
+//     case 1: console.log("Monday"); break;
+//     case 2: console.log("Tuesday"); break;
+//     case 3: console.log("Wednesday"); break;
+//     case 4: console.log("Thursday"); break;
+//     case 5: console.log("Friday"); break;
+//     case 6: console.log("Saturday"); break;
+//     case 7: console.log("Sunday"); break;
+//     default: console.log("Number must be between 1 and 7");
+// }
+
+
+// functions
+
+// function ajith() {
+//     console.log("Hello ajith");
+// }
+// ajith();
+// ajith();
+
+function showMessage() {
+  let message = "Hello, I'm JavaScript!"; // local variable
+
+  console.log( message );
+}
+
+showMessage(); // Hello, I'm JavaScript!
+
+console.log(message);
