@@ -323,3 +323,97 @@ console.log(ag);
 // console.log("Hello " + username);
 // greet();
 // console.log("Hello " + username);
+
+//Parameters
+
+// function greet(text, name) {
+//     console.log(text, name)
+// }
+
+// greet("Hello", "Ajith");
+// greet("Goodmorning", "Ajith");
+
+
+// function showMessage(count) {
+//     console.log(count ?? "unknown");
+// }
+
+// showMessage(0);
+// showMessage(null);
+// showMessage(undefined);
+// showMessage();
+// showMessage("Ajith");
+
+
+// returning a value;;
+
+// function sum (a, b, c) {
+//     return a+b-c;   
+// }
+
+// let result = sum(10, 330, 90);
+// console.log(result);
+
+
+// function sayHi() {   // (1) create
+//     console.log("Hello");
+// }
+
+// let func = sayHi;    // (2) copy
+
+// func(); // Hello     // (3) run the copy (it works)!
+// sayHi(); // Hello    //     this still works too (why wouldn't it)
+
+// Call back function;;
+
+// function ask (question, yes, no) {
+//     if (confirm(question)) showok();
+//     else showcancel();
+// }
+// function showok(){
+//     console.log("You love JavaScript!");
+// }
+// function showcancel(){
+//     console.log("No do not love JavaScript");
+// }
+// ask("Do you like JavaScript?", showok, showcancel)
+
+
+// Arrow function;;
+
+// let sum = (a, b) => {
+//     return a + b
+// }
+
+// let result = sum(18, 17)
+// console.log(result)
+
+// let sum = (a, b) => {
+//     let result = a + b
+//     return result
+// }
+
+// let result = sum(18, 17)
+// console.log(result)
+
+// Readable Version
+// const nums = [1, 2, 3, 4, 5];
+
+// // Double the numbers
+// const doubled = nums.map(n => n * 2);
+// console.log(doubled);
+
+// // Keep numbers greater than 5
+// const filtered = doubled.filter(n => n > 5);
+// console.log(filtered);
+
+// // Add the remaining numbers
+// const result = filtered.reduce((a, b) => a + b);
+// console.log(result);
+
+// Ninja code
+
+const nums = [1, 2, 3, 4, 5];
+
+const result = nums.map(num => num * 2).filter(num => num > 5).reduce((a, b) => a + b);
+console.log(result);
