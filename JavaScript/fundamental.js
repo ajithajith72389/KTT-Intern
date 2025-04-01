@@ -434,14 +434,19 @@ console.log(ag);
 
 // console.log(user)
 
-let user = {
-    "name": "Ajith",
-    "email": "ajithajith72389@gmail.com",
-    "Age": 21,
-    "Full Name": "Ajith Kumar",
-}
+// let user = {
+//     "name": "Ajith",
+//     "email": "ajithajith72389@gmail.com",
+//     "Age": 21,
+//     "Full Name": "Ajith Kumar",
+// }
 
-console.log(user.key)
+// console.log(user["Full Name"])
+// console.log( "Age" in user);
+// for (let key in user) {
+//     console.log(key);
+//     console.log(user[key]);
+// }
 
 
 // let key = "Full Name"
@@ -453,3 +458,65 @@ console.log(user.key)
 // }
 
 // console.log(user.key)
+
+// copying object references
+
+// let message = "Hello";
+// let phrase = message;
+// console.log(phrase);
+
+// let user = {
+//     name: "Ajith",
+// };
+// let admin = user;
+// //console.log(admin);
+// // console.log(admin.name);
+// admin.name = "Aj";
+// console.log(admin);
+
+// let a = {} // "1"
+// //let b = a // 1
+// let b = {}
+
+// console.log(a == b); // true
+// console.log(a === b); // false
+
+// Assign ->
+
+// let college = { id: "7376212AD104" }
+// let student = { Name: "Ajith" }
+// let location = { city: "Bangalore" }
+
+// Object.assign(student, college, location);
+
+// console.log(student.id);
+// console.log(student.Name);
+// console.log(student.city);
+
+
+// nested cloning;;
+
+// let user = {
+//     name   : "Ajith",
+//     college : {
+//         college: "BIT",
+//         location : "Sathy"
+//     }
+// }
+
+// console.log(user)
+// console.log(user.college.college)
+
+
+
+//structuredClone
+let user = {
+    name: "John",
+    sizes: {
+        height: 182,
+        width: 50
+    }
+};
+
+let clone = structuredClone(user);
+console.log(clone);
