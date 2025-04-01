@@ -348,7 +348,7 @@ console.log(ag);
 // returning a value;;
 
 // function sum (a, b, c) {
-//     return a+b-c;   
+//     return a+b-c;
 // }
 
 // let result = sum(10, 330, 90);
@@ -413,7 +413,43 @@ console.log(ag);
 
 // Ninja code
 
-const nums = [1, 2, 3, 4, 5];
+// const nums = [1, 2, 3, 4, 5];
 
-const result = nums.map(num => num * 2).filter(num => num > 5).reduce((a, b) => a + b);
-console.log(result);
+// const result = nums.map(num => num * 2).filter(num => num > 5).reduce((a, b) => a + b);
+// console.log(result);
+
+// objects
+
+// creating an object;;
+// let obj = new Object();
+
+// let user = {}
+
+// let user ={
+//     "name": "Ajith",
+//     "email": "ajithajith72389@gmail.com",
+//     "Age": 21,
+// }
+// delete user.location;
+
+// console.log(user)
+
+let user = {
+    "name": "Ajith",
+    "email": "ajithajith72389@gmail.com",
+    "Age": 21,
+    "Full Name": "Ajith Kumar",
+}
+
+console.log(user.key)
+
+
+// let key = "Full Name"
+// let user ={
+//     "name": "Ajith",
+//     "email": "ajithajith72389@gmail.com",
+//     "Age": 21,
+//     key : "Ajith Kumar",
+// }
+
+// console.log(user.key)
