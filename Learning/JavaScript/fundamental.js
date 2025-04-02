@@ -510,13 +510,71 @@ console.log(ag);
 
 
 //structuredClone
-let user = {
-    name: "John",
-    sizes: {
-        height: 182,
-        width: 50
-    }
-};
+// let user = {
+//     name: "John",
+//     sizes: {
+//         height: 182,
+//         width: 50
+//     }
+// };
 
-let clone = structuredClone(user);
-console.log(clone);
+// let clone = structuredClone(user);
+// console.log(clone);
+
+// this keyword -> this method
+
+// let user = {
+//     name: "John",
+//     age: 30,
+
+//     sayHi() {
+//         console.log(this.name);
+//     }
+
+// };
+
+// user.sayHi();
+
+// let college ={
+//     name :"BIT",
+//     location :"Sathy",
+
+//     showMessage(){
+//         console.log(this.name);
+//     }
+// }
+// college.showMessage();
+
+
+// let user = { name: "John" };
+// let admin = { name: "Admin" };
+
+// function sayHi() {
+//     console.log(this.name);
+// }
+
+// user.f = sayHi;
+// admin.f = sayHi;
+
+// user.f()
+// admin.f()
+
+
+// arrow function ;; 
+// let user = {
+//     firstName: "Mandhana",
+//     sayHi() {
+//         let arrow = () => console.log(this.firstName);
+//         arrow();
+//     }
+// };
+
+// user.sayHi();
+
+function Person(name, age) {
+    this.name = name;
+    this.age = age;
+}
+
+const ajith = new Person("Ajith", 21);
+console.log(ajith);
