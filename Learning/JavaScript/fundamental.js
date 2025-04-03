@@ -604,3 +604,59 @@ console.log(ag);
 // Object.assign(number, {five: 5, six: 6})
 // console.log(number["six"])
 // console.log(number.two);
+
+// constructor;;
+
+// function Person(name, age) {
+//     this.name = name;
+//     this.age = age;
+// }
+
+// let person = [new Person("Ajith", 21),
+//     new Person("Swetha", 22),
+//     new Person("Virat", 34)
+// ]
+// // let person1 = new Person("Ajith", 21);
+// // let person = new Object();
+// // person.name = "ajith";
+// // person.age = 20;
+// // person.name="Swetha";
+
+// console.log(person);
+
+// // map
+// let names = person.map(person => person.name);
+// console.log(names);
+
+
+// symbol
+
+// let id = Symbol("id");
+// let name = Symbol("id");
+// console.log(id);
+// console.log(id.toString());
+// console.log(name.toString());
+// console.log(id.description);
+// console.log(name.description);
+// console.log(Boolean (id == name))   ; // false
+
+// let id = Symbol("id");
+// let user = { name  : 'Ajith', [id] : 104 };
+// console.log(user[id]);
+
+
+// let id = Symbol.for("id");
+// let name = Symbol.for("id");
+// console.log(Boolean(id == name)); // true
+
+
+let id = Symbol("id");
+console.log(Symbol.keyFor(id));
+
+let name = Symbol.for("name");
+console.log(Symbol.keyFor(name));
+
+// Object to primitive datatypes
+
+// console.log(obj);
+// anotherObj[obj] = 123;
