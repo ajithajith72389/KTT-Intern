@@ -1,5 +1,7 @@
 "use strict"
 
+const { use } = require("react");
+
 //console.log("Aj");
 
 // Variables
@@ -571,10 +573,34 @@ console.log(ag);
 
 // user.sayHi();
 
-function Person(name, age) {
-    this.name = name;
-    this.age = age;
-}
+// function Person(name, age) {
+//     this.name = name;
+//     this.age = age;
+// }
 
-const ajith = new Person("Ajith", 21);
-console.log(ajith);
+// const ajith = new Person("Ajith", 21);
+// console.log(ajith);
+
+
+// let user = { name : "Aj" , age:21,
+
+//     Person(){
+//         console.log(this.name);
+// }
+
+// }
+
+// user.Person();
+
+
+// let fav = {team: "RCB", color: "Blue", player: "Virat"}
+
+// Object.assign(fav,{ number : 18});
+// console.log(fav.number);
+
+
+// let number ={ one : 1, two : 2, three : 3, four : 4}
+
+// Object.assign(number, {five: 5, six: 6})
+// console.log(number["six"])
+// console.log(number.two);
