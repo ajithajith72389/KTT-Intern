@@ -650,14 +650,107 @@ console.log(ag);
 // console.log(Boolean(id == name)); // true
 
 
-let id = Symbol("id");
-console.log(Symbol.keyFor(id));
+// let id = Symbol("id");
+// console.log(Symbol.keyFor(id));
 
-let name = Symbol.for("name");
-console.log(Symbol.keyFor(name));
+// let name = Symbol.for("name");
+// console.log(Symbol.keyFor(name));
 
 // Object to primitive datatypes
 
 // console.log(obj);
 // anotherObj[obj] = 123;
 
+
+
+
+
+// objects
+
+// Login system
+
+let user = {
+    name : "Ajith",
+    age : 21,
+    email: "ajithajith72389@gmail.com",
+    login : function (){
+        console.log(`${this.name} has logged in`);
+    }
+}
+
+console.log("username: ", user.name);
+user.login();
+
+// E-commerce site;;
+
+let product = {
+    id: 101,
+    name : "Bag",
+    price : 500,
+    discount: 10,
+    finalPrice: function (){
+        return this.price - (this.price * this.discount) / 100;
+    }
+}
+
+console.log("Product final price: ", product.finalPrice());
+
+// Bank Transaction
+
+let transaction = {
+    id: "TXN12345",
+    amount: 5000,
+    type: "Credit",
+    date: "2025-04-04",
+    getTransactionDetails: function () {
+        return `Transaction ${this.id}: ${this.type} of ₹${this.amount} on ${this.date}`;
+    },
+};
+
+console.log(transaction.getTransactionDetails());
+
+// object with 10+ properties and nested objects,
+
+let employee = {
+    id: "EMP614",
+    name: "Ajith V",
+    age: 21,
+    department: "Software Engineering",
+    position: "Backend Developer",
+    salary: 5000,
+    experience: 1, // in years
+    skills: ["JavaScript", "Node.js", "PostgreSQL", "HTML", "CSS"],
+    address: {
+        city: "Namakkal",
+        state: "Tamil Nadu",
+        country: "India",
+    },
+    contact: {
+        email: "ajith@example.com",
+        phone: "+91 9876543210",
+    },
+    projects: [
+        { name: "Traffic Management", role: "Frontend Lead", year: 2024 },
+        { name: "Finance Tracker", role: "Full Stack Developer", year: 2025 },
+    ],
+    isActive: true,
+    calculateAnnualSalary: function () {
+        return this.salary * 12;
+    },
+    displayInfo: function () {
+        return `${this.name}, working as ${this.position} in ${this.department}, earns ₹${this.salary} per month.`;
+    },
+};
+
+// 🔥 Accessing Data
+console.log(employee.displayInfo());
+// Output: "Ajith V, working as Backend Developer in Software Engineering, earns ₹75000 per month."
+
+console.log("Annual Salary: ₹" + employee.calculateAnnualSalary());
+// Output: "Annual Salary: ₹900000"
+
+console.log("Skills:", employee.skills.join(", "));
+// Output: "Skills: JavaScript, Node.js, PostgreSQL, Docker"
+
+console.log("Projects:", employee.projects.map(project => project.name).join(", "));
+// Output: "Projects: Traffic Management, Finance Tracker"
