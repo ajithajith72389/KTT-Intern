@@ -137,3 +137,4 @@ let students = [
 ];
 let topper = students.filter(mark => mark.marks >= 75).map(mark => mark.name);
 console.log("student more than 75 using Filter:", topper);
+
