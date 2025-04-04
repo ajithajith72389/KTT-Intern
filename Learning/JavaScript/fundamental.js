@@ -754,3 +754,4 @@ console.log("Skills:", employee.skills.join(", "));
 
 console.log("Projects:", employee.projects.map(project => project.name).join(", "));
 // Output: "Projects: Traffic Management, Finance Tracker"
+
