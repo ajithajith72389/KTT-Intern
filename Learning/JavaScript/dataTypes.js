@@ -180,13 +180,13 @@ for (let price of recipeMap.values()) {
 }
 
 console.log("Key and value:")
-for (let item of recipeMap ) {
+for (let item of recipeMap) {
     console.log(item);
 }
 
 //foreach
 
-recipeMap.forEach((value,key) => {
+recipeMap.forEach((value, key) => {
     console.log(` ${key} ${value}`);
 })
 
@@ -224,13 +224,13 @@ console.log("Remove all entries: ", myMap.clear());
 
 
 let stud = new Set(["ajith", "sudharshan", "ajith"]);
-console.log("Students set:",stud);
+console.log("Students set:", stud);
 
 let marks = new Map();
 marks.set("ajith", 90);
 marks.set("sudharshan", 85);
 
-console.log("get mark of a student:",marks.get("ajith")); // 90
+console.log("get mark of a student:", marks.get("ajith")); // 90
 
 // student reportcard using Map
 
@@ -252,7 +252,7 @@ studentt.set("Sudharshan", new Map([
 ]))
 
 let printReport = (student) => {
-    if(!(studentt.has(student))) {
+    if (!(studentt.has(student))) {
         console.log(`Student ${student} not found`);
         return;
     }
@@ -260,13 +260,13 @@ let printReport = (student) => {
     let total = 0
     let count = 0;
     console.log(`Report Card for ${student}`);
-    for( let [subject, marks] of subjects) {
+    for (let [subject, marks] of subjects) {
         console.log(`${subject}: ${marks}`);
         total = total + marks;
         count = count + 1;
     }
     console.log(`Total: ${total}`);
-    console.log(`Percentage: ${(total/count)}%`);
+    console.log(`Percentage: ${(total / count)}%`);
     console.log("\n");
 
 }
@@ -278,7 +278,7 @@ for (let student of studentt.keys()) {
 let mark = studentt.get("Sahith") //.get("Maths");
 // console.log("Mark of the student",mark); // 99
 
-for (let [subject, marks] of mark){
+for (let [subject, marks] of mark) {
     console.log(`${subject}: ${marks}`);
-    
+
 }
