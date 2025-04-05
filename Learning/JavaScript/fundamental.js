@@ -688,12 +688,26 @@ let product = {
     name : "Bag",
     price : 500,
     discount: 10,
-    finalPrice: function (){
+    // get finalPrice()
+    finalPrice: function ()
+    {
         return this.price - (this.price * this.discount) / 100;
     }
 }
+product.finalPriceValue = product.finalPrice()
+delete product.finalPrice
+console.log("Product: ",product); // 450
+// let productDetails = {
+//     ...product,
+//     finalPrice:product.finalPrice
+// }
 
-console.log("Product final price: ", product.finalPrice());
+
+// console.log("Product Details: ",productDetails);
+// product.finalPrice = product.price - (product.price * product.discount) / 100;
+
+// console.log("Product final price: ", product.finalPrice());
+// console.log("Product: ",product);
 
 // Bank Transaction
 
@@ -742,7 +756,7 @@ let employee = {
     },
 };
 
-// 🔥 Accessing Data
+//  Accessing Data
 console.log(employee.displayInfo());
 // Output: "Ajith V, working as Backend Developer in Software Engineering, earns ₹75000 per month."
 
