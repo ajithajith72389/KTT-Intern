@@ -282,3 +282,41 @@ for (let [subject, marks] of mark) {
     console.log(`${subject}: ${marks}`);
 
 }
+
+
+// using set
+
+let markss = new Set();
+markss.add("Maths : 99");
+markss.add("English : 88");
+markss.add("Science : 92");
+
+console.log("marks using set");
+for (let mark of markss) {
+    console.log(mark);
+}
+
+// Store subject + mark as object (and use Set)
+let score = new Set();
+score.add({ subject: "Maths", mark: 91 });
+score.add({ subject: "English", mark: 80 })
+score.add({ subject: "Tamil", mark: 97 });
+
+console.log("mark using set (Store subject + mark as object)");
+
+for (let item of score) {
+    console.log(`${item.subject}: ${item.mark}`);
+
+}
+
+
+// array
+
+let arrr = [1, 2, 3,,4,5,6,7,8,9,]
+console.log(arrr);
+console.log(arrr.length);
+
+let fil = arrr.filter(val => val !== 0)
+
+console.log(fil);
+console.log(arrr.length);
