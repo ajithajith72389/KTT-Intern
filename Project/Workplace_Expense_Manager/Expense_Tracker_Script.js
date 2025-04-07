@@ -35,6 +35,7 @@ function addExpense() {
 function deleteExpense(btn){
     if(confirm("Are you sure? You want to delete this item")){
         btn.parentElement.parentElement.remove();
+        updateSerialNumber();
     }
 }
 
@@ -49,4 +50,13 @@ function updateExpense(btn) {
         amountCell.innerHTML = newAmount;
         categoryCell.innerHTML = newCategory;
     }
+}
+
+function updateSerialNumber(){
+    const row = document.querySelectorAll("#expenseTableBody tr")
+    count = 1
+    row.forEach(row => {
+        row.cells[0].textContent = count++;
+    })
+    
 }
