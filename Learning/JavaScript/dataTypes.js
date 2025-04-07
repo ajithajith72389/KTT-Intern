@@ -321,6 +321,7 @@ let fil = arrr.filter(val => val !== 0)
 console.log(fil);
 console.log(arrr.length);
 
+
 // Object.key(), values(), entries(); - These are used to extract data from objects.
 
 let user1 = {
