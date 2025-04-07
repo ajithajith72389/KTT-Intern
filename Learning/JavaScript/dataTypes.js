@@ -312,7 +312,7 @@ for (let item of score) {
 
 // array
 
-let arrr = [1, 2, 3,,4,5,6,7,8,9,]
+let arrr = [1, 2, 3, , 4, 5, 6, 7, 8, 9,]
 console.log(arrr);
 console.log(arrr.length);
 
@@ -320,3 +320,94 @@ let fil = arrr.filter(val => val !== 0)
 
 console.log(fil);
 console.log(arrr.length);
+
+// Object.key(), values(), entries(); - These are used to extract data from objects.
+
+let user1 = {
+    name: "Ajith",
+    age: 22,
+    role: "Frontend Developer"
+};
+
+console.log("keys of user1", Object.keys(user1));
+console.log("values of user1:", Object.values(user1));
+console.log("key - value pairs of user1:", Object.entries(user1));
+
+// Destructuring Assignment - unpack values from arrays or properties from objects into separate variables.
+let product1 = {
+    id: 101,
+    product_name: "Bluetooth Speaker",
+    price: 2999,
+    stock: 42
+}
+
+console.log("Product1: ", product1);
+
+let { product_name, price } = product1
+console.log(`${product_name} cost ${price}`);
+
+// Finance Tracker;;
+let expense = {
+    food: 200,
+    travel: 500,
+    entertainment: 150
+}
+
+let values = Object.values(expense)
+let total = values.reduce((sum, value) => sum + value, 0)
+console.log(`Total expense: ${total}`);
+let { food, travel } = expense
+console.log(`Food:${food}, Travel: ${travel}`);
+
+
+// Date and Time;;
+function addTransaction(amount, category) {
+    const date = new Date();
+
+    const transaction = {
+        amount,
+        category,
+        date: date.toLocaleString(),  // "4/7/2025, 5:45:30 PM"
+    };
+
+    console.log(transaction);
+}
+
+addTransaction(250, "Food");
+
+
+// expense logger;
+let expense2 = [];
+let addExpense = (amount, category) => {
+    const now = new Date();
+    const entry = {
+        amount,
+        category,
+        date: now.toLocaleDateString(),
+        time: now.toLocaleTimeString()
+    }
+    expense2.push(entry);
+    // expense2= entry;
+    console.log("Expense Added", entry);
+}
+addExpense(100, "Milk");
+
+
+// json;
+
+let str1 = '{"title":"Conference","date":"2017-11-30T12:00:00.000Z"}';
+let str2 = {
+    title: "Conference",
+    date: "2017-11-30T12:00:00.000Z",
+    toJSON() {
+        return this, this.title;
+    }
+}
+let meetup = JSON.parse(str1);
+console.log("Get the date:", meetup.date);
+
+// JSON.stringify();
+
+console.log("toJSON :", JSON.stringify(str2));
+
+
