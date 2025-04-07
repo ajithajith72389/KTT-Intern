@@ -769,3 +769,16 @@ console.log("Skills:", employee.skills.join(", "));
 console.log("Projects:", employee.projects.map(project => project.name).join(", "));
 // Output: "Projects: Traffic Management, Finance Tracker"
 
+let emp_skill = employee.skills.map(skill => skill)
+console.log(emp_skill);
+
+let emp_contact = Object.entries(employee.contact).map( item => item );
+console.log(emp_contact);
+
+let user1 = {
+    id : 101,
+    name : "John",
+    age : 25
+}
+
+console.log(Object.values(user1).map(item => item));
