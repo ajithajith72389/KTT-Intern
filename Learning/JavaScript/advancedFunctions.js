@@ -60,3 +60,22 @@ const counter = outer()
 counter();
 counter(); 
 counter();
+
+// var;
+console.log("***var***");
+// var is function scoped
+if (true) {
+    var x= 10;
+}
+console.log(x); // var ignores the {} block. 
+
+// hoisting
+console.log("***Hoisting***");
+console.log(a);
+var a;
+
+// Redeclaration
+console.log("***Redeclaration***");
+var num = 100;
+var num = 200;
+console.log(num);
