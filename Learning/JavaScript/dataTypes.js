@@ -368,7 +368,7 @@ function addTransaction(amount, category) {
     const transaction = {
         amount,
         category,
-        date: date.toLocaleString(),  // "4/7/2025, 5:45:30 PM"
+        date: date.toLocaleString(),
     };
 
     console.log(transaction);
