@@ -60,3 +60,17 @@ function updateSerialNumber(){
     })
     
 }
+
+function updateClock(){
+    const now = new Date();
+    const time = now.toLocaleTimeString();
+    document.getElementById("clock").textContent = time;
+    if (time === "3:29:00 PM"){
+        clearInterval(clockInterval);
+        document.getElementById("clock").textContent = "Clear";
+
+    }
+  
+}
+const clockInterval =setInterval(updateClock, 1000);
+updateClock();
