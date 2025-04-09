@@ -144,7 +144,7 @@ undefined
 // Function objects and NFE
 console.log("***Function objects and NFE***");
 
-let greet =function greeting(name) {
+let greet = function greeting(name) {
     console.log("Hello " + name);
 }
 
@@ -163,3 +163,73 @@ let userInput = "a*b + 10";
 let func = new Function("a", "b", `return ${userInput}`);
 
 console.log(func(5, 10)); // Output: 60
+
+
+// Function Forwarding..;
+console.log("***Function Forwarding***");
+
+function originalFunction(a, b) {
+    console.log("Original Function", a + b);
+
+}
+
+function wrapper(... args){
+    console.log("Wrapped");
+    originalFunction(...args);
+    
+}
+
+wrapper(10, 8);
+
+
+// 
+
+function multiply(a, b){
+    return a*b;
+}
+
+function wrapperFunction(... args){
+    console.log("Inputs:", args);
+    const multiple = multiply(... args);
+    console.log("Multiply:" , multiple);
+    
+}
+
+wrapperFunction(5, 10);
+
+
+// Modify args;
+
+function sendMessage(to, message){
+    console.log(`Sending "${message}" to ${to}`);
+}
+
+function wrapperFunc(... args){
+    args[1] = `***${args[1]}***`;
+    sendMessage(...args);
+}
+
+wrapperFunc("Ajith", "Your OTP is 1234");
+
+
+// Function Binding;
+console.log("***Function Binding***");
+
+function show(){
+    console.log(this.name);
+}
+
+const obj  = {name : "Ajith"};
+
+const boundShow = show.bind(obj);
+boundShow(); // Ajith
+
+const user11 = {
+    name : "Ajith",
+    greet(){
+        console.log(`Hi, I am ${this.name}`);
+    }
+}
+
+// setTimeout(user11.greet, 1000);
+setTimeout(user11.greet.bind(user11), 1000);
