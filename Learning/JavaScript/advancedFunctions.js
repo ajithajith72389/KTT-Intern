@@ -232,4 +232,17 @@ const user11 = {
 }
 
 // setTimeout(user11.greet, 1000);
-setTimeout(user11.greet.bind(user11), 1000);
+// setTimeout(user11.greet.bind(user11), 1000);
+
+// arrow function;
+
+console.log("***Arrow Function***");
+
+const ajith1 = {
+    peru : "Ajith",
+    greet111: function(){
+        console.log(this.peru);
+        
+    }
+}
+ajith1.greet111()
