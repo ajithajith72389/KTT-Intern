@@ -254,7 +254,7 @@ const reduceStockData = products.reduce((count, item) => item.inStock ? count + 
 console.log(reduceStockData);
 
 const expensiveProduct = products.reduce((prev, cur) => prev.price > cur.price ? prev : cur);
-console.log("Expensive Product",expensiveProduct);
+console.log("Expensive Product", expensiveProduct);
 
 const cheapProduct = products.reduce((prev, cur) => prev.price < cur.price ? prev : cur);
 console.log("Product with lowest price", cheapProduct);
@@ -309,7 +309,7 @@ const arr2 = [3, 4];
 const arr3 = [5, 6];
 
 const reduceArr = [arr1, arr2, arr3].reduce((prev, cur) => prev.concat(cur), []);
-console.log(reduceArr); 
+console.log(reduceArr);
 
 
 // // include;
