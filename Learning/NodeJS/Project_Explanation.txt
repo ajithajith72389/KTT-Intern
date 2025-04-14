@@ -1,0 +1,45 @@
+**Video Game Sales Analysis**
+-------------------------
+Description:	
+	This project aims to explore video game sales data, identify trends and apply python libraries to visualize the predicted output.
+
+Technologies:
+	Python ( including libraries like pandas, numpy, plotly for visualization ).
+
+Data Source:
+	This project uses "video game sales" dataset, which contains approximately over 1 lakhs entries of video game sales with column titles like name, publisher, genre, year, and so on.
+
+Project Flow:
+	1. Data pre-processing
+	2. Various visualizations are created to explore relationships and trends
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Fruits and Vegetables Delivery App
+----------------------------------
+Description:
+	The main objective for creating this is there are so many food delivery apps currently in the market. So, I thought I want to be unique so I created this project named "Fruits and Vegetables Delivery App". I had done by frontend completely ( not yet finished my backend works )
+
+Technologies used:
+	React.js, Node.js, Express, HTML, CSS
+
+Project Flow:
+	1. I created the home page or interface based on my thoughts and my friends requirement.
+	2. I had created so many components like separate page for fruits and separate page for vegetables and combine page also
+	3. For login and sign-up purpose I just created simple login and sing-up page for user.
+	4. Finally I had added pop-up message when you click the buy button 
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+QR Code Generator
+-----------------
+
+Description:
+	 
+
+Technologies used:
+	React.js, HTML, CSS
+
+Project Flow:
+	1. 
+	
