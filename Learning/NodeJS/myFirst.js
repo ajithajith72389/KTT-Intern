@@ -37,8 +37,8 @@ fs.readFile("./Project_Explanation.txt", "utf8", (err, data) => {
 // Reading Files stream based
 console.log("***Reading Files stream based***");
 const readStream = fs.createReadStream('./Project_Explanation.txt', 'utf8');
-readStream.on("data", chunk =>{
-    console.log("Chunk:",chunk);
+readStream.on("data", chunk => {
+    console.log("Chunk:", chunk);
 });
 
 // Writing Files (Async)
@@ -48,8 +48,8 @@ console.log("***Writing Files (Async)***");
 fs.writeFile("output.txt", "Hey bro... What's up", (err) => {
     if (err) throw err;
     console.log("File written successfully");
-    
-} );
+
+});
 
 // Writing Files stream based
 
@@ -64,5 +64,5 @@ console.log("***Working with Directories***");
 
 fs.readdir("./", (err, files) => {
     if (err) throw err;
-    console.log("Files: ",files);
+    console.log("Files: ", files);
 })
