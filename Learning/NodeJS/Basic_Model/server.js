@@ -16,6 +16,7 @@ app.use(express.json());
 //         app.listen(3000, () => {
 //             console.log("Server running on port 3000");
 
+
 //         })
 //     })
 //     .catch((err) => {
@@ -26,10 +27,10 @@ app.use(express.json());
 // FindAll
 (async () => {
     try {
-        await sequelize.sync();
+        await sequelize.sync({alter: true});
 
         //create user
-        const user = await User.create({ name: "Ajith", email: "ajith@gmail.com" });
+        const user = await User.create({ name: "Aji", email: "aji@gmail.com", age:21, dob:'2025-01-01' });
 
         // findAll()
         const alluser = await User.findAll();

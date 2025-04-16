@@ -14,7 +14,11 @@ const User = sequelize.define("User", {
     },
     age : {
         type : DataTypes.INTEGER
+    },
+    dob: {
+        type : DataTypes.DATE
     }
+
 })
 
 
