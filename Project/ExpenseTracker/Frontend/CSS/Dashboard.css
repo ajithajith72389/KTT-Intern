@@ -1,0 +1,165 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    background-color: #f4f6f8;
+}
+
+.main-container {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    height: 100vh;
+}
+
+/* Sidebar (menu) */
+.menu {
+    grid-column: 1;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, #0f2027, #203a43, #2c5364);
+    color: white;
+    padding: 20px;
+    height: 100vh;
+    position: fixed;
+}
+
+.menu img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 20px auto;
+    border: 3px solid #00feba;
+    object-fit: cover;
+}
+
+.menu a {
+    text-decoration: none;
+    padding: 12px;
+    margin: 10px 0;
+    text-align: center;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+}
+
+.menu a:hover {
+    background-color: #00feba;
+    color: #000;
+}
+
+/* Dashboard */
+.dashboard {
+    grid-column: 2;
+    display: grid;
+    grid-template-rows: 1fr 2fr 1fr 2fr;
+    padding: 20px;
+    gap: 10px;
+    height: 100vh;
+}
+
+.dashboard>div {
+    background-color: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.main-header{
+    grid-row: 1;
+    margin-top: 20px;
+}
+
+/* Expense Report Cards */
+.expense-report {
+    grid-row: 2;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.expense-report div {
+    border: 1px solid #ddd;
+    background-color: #ffffff;
+    width: 22%;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+}
+
+.expense-report div:hover {
+    transform: translateY(-5px);
+}
+
+.sub-head{
+    grid-row: 3;
+    margin-top: 20px;
+}
+
+/* Monthly Horizontal Report */
+.expense-monthly-report {
+    grid-row: 4;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 15px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.expense-monthly-report div {
+    border: 1px solid #ddd;
+    padding: 15px;
+    width: 22%;
+    min-width: 120px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background-color: #f9fafb;
+    transition: background 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.expense-monthly-report div:hover {
+    background-color: #e0f7fa;
+}
+
+.expense-monthly-report div h2 {
+    font-size: 1rem;
+    color: #333;
+    
+}
+
+/* Custom Scrollbar */
+.expense-monthly-report::-webkit-scrollbar {
+    height: 8px;
+}
+
+.expense-monthly-report::-webkit-scrollbar-thumb {
+    background-color: #bbb;
+    border-radius: 4px;
+}
+
+.expense-monthly-report::-webkit-scrollbar-thumb:hover {
+    background: #999;
+}

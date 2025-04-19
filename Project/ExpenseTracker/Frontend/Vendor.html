@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Vendor Form</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./CSS/Vendor.css">
+    
+</head>
+
+<body>
+
+    <div class="main-container">
+        <div class="menu">
+            <img src="./Images/image.png" alt="User Profile">
+            <a href="./Dashboard.html">Dashboard</a>
+            <a href="./addExpense.html">Add Expenses</a>
+            <a href="./History.html">History</a>
+            <a href="./Vendor.html">Vendors</a>
+            <a href="./Category.html">Category</a>
+            <a href="#">Settings</a>
+        </div>
+        <div class="vendor-form-container">
+            <h2 style="text-align: center;">Add Vendor</h2>
+            <form action="">
+                <label for="vendorName">Vendor Name</label>
+                <input type="text" id="vendorName" name="vendorName" required>
+        
+                <label for="vendorType">Category / Type</label>
+                <select id="vendorType" name="vendorType" required>
+                    <option value="">Select</option>
+                    <option value="Grocery">Milk</option>
+                    <option value="Water Supply">Water Supply</option>
+                    <option value="Electricity">Electricity</option>
+                    <option value="Internet">Internet</option>
+                    <option value="Snacks">Snacks</option>
+                    <option value="Cleaning">Cleaning</option>
+                </select>
+        
+                <label for="price">Price</label>
+                <input type="number" id="price" name="price" required>
+        
+                <label for="contact">Contact Number</label>
+                <input type="tel" id="contact" name="contact" pattern="[0-9]{10}" required>
+        
+                <label for="email">Email (Optional)</label>
+                <input type="email" id="email" name="email">
+        
+                <label for="address">Address</label>
+                <textarea id="address" name="address" rows="3" required></textarea>
+        
+                <button type="submit">Add Vendor</button>
+            </form>
+        </div>
+        
+    </div>
+
+</body>
+
+</html>

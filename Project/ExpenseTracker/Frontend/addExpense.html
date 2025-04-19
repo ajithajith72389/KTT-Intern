@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Expenses</title>
+    <link rel="stylesheet" href="./CSS/addExpense.css">
+</head>
+
+<body>
+    <div class="main-container" id="addExpense">
+        <div class="menu">
+            <img src="./Images/image.png" alt="User Profile">
+            <a href="./Dashboard.html">Dashboard</a>
+            <a href="./addExpense.html">Add Expenses</a>
+            <a href="./History.html">History</a>
+            <a href="./Vendor.html">Vendors</a>
+            <a href="./Category.html">Category</a>
+            <a href="#">Settings</a>
+        </div>
+        <div class="expense-form-container">
+            <h2 style="text-align: center;">Add Expenses</h2>
+            <form action="">
+                <label for="vendor">Add Vendor</label>
+                <select name="vendor" id="">
+                    <option value="">Select</option>
+                    <option value="A">A</option>
+                    <option value="S">B</option>
+                    <option value="D">C</option>
+                    <option value="Z">D</option>
+                </select>
+
+                <label for="vendor">Category</label>
+                <select name="vendor" id="">
+                    <option value="">Select</option>
+                    <option value="A">A</option>
+                    <option value="S">B</option>
+                    <option value="D">C</option>
+                    <option value="Z">D</option>
+                </select>
+
+                <label for="quantity">Quantity</label>
+                <input type="number" id="quantity" name="quantity">
+
+                <label for="price">Price</label>
+                <input type="number" id="price" name="price">
+
+                <label for="addedBy">Added By</label>
+                <input type="text" id="addedBy" name="addedBy" readonly>
+
+                <button type="submit">Add Expense</button>
+
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>

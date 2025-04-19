@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Management</title>
+    <style>
+        /* Reset some styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            background-color: #f9f9f9;
+        }
+
+        .main-container {
+            display: flex;
+            width: 100%;
+        }
+
+        .side-bar {
+            background: linear-gradient(180deg, #0f2027, #203a43, #2c5364);
+            color: white;
+            padding: 20px;
+            width: 250px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .side-bar img {
+            width: 80px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
+        .side-bar a {
+            text-decoration: none;
+            color: white;
+            margin: 10px 0;
+            font-size: 18px;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .side-bar a:hover {
+            background-color: #00feba;
+            color: #000;
+        }
+
+        .content {
+            display: none;
+            padding: 20px;
+            flex: 1;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        .expense-form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #0f2027;
+        }
+
+        .expense-report,
+        .expense-monthly-report {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            height: 150px;
+        }
+
+        .expense-report div,
+        .expense-monthly-report div {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            flex: 1;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #ddd;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #203a43;
+            color: white;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        form input,
+        form select,
+        form textarea {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        form button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        form button:hover {
+            background-color: #45a049;
+        }
+
+
+        .edit {
+            width: 100%;
+            padding: 12px;
+            background: #00b894;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .edit:hover {
+            background: #019875;
+        }
+
+        .del {
+            width: 100%;
+            padding: 12px;
+            background: #f44336;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .del:hover {
+            background: #e53935;
+        }
+
+        .user-info {
+            margin-bottom: 20px;
+        }
+
+        .user-info p {
+            font-size: 18px;
+            margin: 5px 0;
+        }
+
+        .logout-btn {
+            padding: 10px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100px;
+            margin-top: 20px;
+        }
+
+        .logout-btn:hover {
+            background-color: #e53935;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main-container">
+        <!-- Sidebar -->
+        <div class="side-bar active">
+            <img src="./Images/image.png" alt="User Profile">
+            <a href="#Dashboard" onclick="showContent('Dashboard')">Dashboard</a>
+            <a href="#addExpense" onclick="showContent('addExpense')">Add Expenses</a>
+            <a href="#expenseHistory" onclick="showContent('expenseHistory')">History</a>
+            <a href="#addVentor" onclick="showContent('addVentor')">Vendors</a>
+            <a href="#addCategory" onclick="showContent('addCategory')">Category</a>
+            <a href="#Settings" onclick="showContent('Settings')">Settings</a>
+        </div>
+
+        <!-- Content -->
+        <div class="dashboard content active" id="Dashboard">
+            <h2 class="main-header" style="text-align: left;">Hi Ajith, Welcome Back</h2>
+            <div class="expense-report">
+                <div>
+                    <h2>Daily</h2>
+                </div>
+                <div>
+                    <h2>Weekly</h2>
+                </div>
+                <div>
+                    <h2>Monthly</h2>
+                </div>
+            </div>
+            <h2 class="sub-head" style="text-align: left;">Monthly Report</h2>
+            <div class="expense-monthly-report">
+                <div>
+                    <h2>Milk</h2>
+                </div>
+                <div>
+                    <h2>Water</h2>
+                </div>
+                <div>
+                    <h2>Snacks</h2>
+                </div>
+                <div>
+                    <h2>EB</h2>
+                </div>
+                <div>
+                    <h2>Internet</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="expense-form-container content" id="addExpense">
+            <h2 style="text-align: center;">Add Expenses</h2>
+            <form onsubmit="addExpense(event)">
+                <label for="vendor">Add Vendor</label>
+                <select name="vendor" id="vendorDropdown">
+                    <!-- <option value="">Select</option>
+                    <option value="Milk">Milk</option>
+                    <option value="Water">Water</option>
+                    <option value="Snacks">Snacks</option>
+                    <option value="EB">EB</option>
+                    <option value="Internet">Internet</option> -->
+                </select>
+                <label for="category">Category</label>
+                <select name="category" id="categoryDropdown">
+                    <!-- <option value="">Select</option>
+                    <option value="">Select</option>
+                    <option value="Milk">Milk</option>
+                    <option value="Water">Water</option>
+                    <option value="Snacks">Snacks</option>
+                    <option value="EB">EB</option>
+                    <option value="Internet">Internet</option> -->
+                </select>
+                <label for="quantity">Quantity</label>
+                <input type="number" id="quantity" name="quantity">
+                <label for="price">Price</label>
+                <input type="number" id="price" name="price">
+                <label for="addedBy">Added By</label>
+                <input type="text" id="addedBy" name="addedBy">
+                <button type="submit">Add Expense</button>
+            </form>
+        </div>
+
+        <div class="expense-history content" id="expenseHistory">
+            <h2 style="text-align: center;">Expenses History</h2>
+            <table>
+                <thead>
+                    <th>Date</th>
+                    <th>Vendor Name</th>
+                    <th>Category / Type</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Added By</th>
+                    <th colspan="2">Actions</th>
+                </thead>
+                <tbody id="expenseTableBody">
+                    <tr>
+                        <td>12</td>
+                        <td>AK</td>
+                        <td>Milk</td>
+                        <td>6</td>
+                        <td>90</td>
+                        <td>Aj</td>
+                        <td><button class="edit">Edit</button></td>
+                        <td><button class="del">Delete</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="vendor-form-container content" id="addVentor">
+            <h2 style="text-align: center;">Add Vendor</h2>
+            <form onsubmit="addVendor(event)">
+                <label for="vendorName">Vendor Name</label>
+                <input type="text" id="vendorName" name="vendorName" required>
+                <label for="vendorType">Category / Type</label>
+                <select id="vendorType" name="vendorType" required>
+                    <option value="">Select</option>
+                    <option value="Grocery">Milk</option>
+                    <option value="Water Supply">Water Supply</option>
+                    <option value="Electricity">Electricity</option>
+                    <option value="Internet">Internet</option>
+                    <option value="Snacks">Snacks</option>
+                    <option value="Cleaning">Cleaning</option>
+                </select>
+                <label for="price">Price</label>
+                <input type="number" id="price" name="price" required>
+                <label for="contact">Contact Number</label>
+                <input type="tel" id="contact" name="contact" pattern="[0-9]{10}" required>
+                <label for="email">Email (Optional)</label>
+                <input type="email" id="email" name="email">
+                <!-- <label for="address">Address</label>
+                <textarea id="address" name="address" rows="3" required></textarea> -->
+                <button type="submit">Add Vendor</button>
+            </form>
+        </div>
+
+        <div class="category-form-container content" id="addCategory">
+            <h2 style="text-align: center;">Add Category</h2>
+            <form onsubmit="addCategory(event)">
+                <label for="categoryName">Category / Type</label>
+                <input type="text" id="categoryName" name="categoryName" required>
+                <label for="vendorName">Vendor Name</label>
+                <input type="text" id="vendorName" name="vendorName" required>
+                <label for="price">Price</label>
+                <input type="text" id="price" name="price">
+                <button type="submit">Add Category</button>
+            </form>
+        </div>
+
+        <div class="content" id="Settings">
+            <h2>Hi bro</h2>
+            <div class="user-info">
+                <p><strong>Name:</strong> Ajith V</p>
+                <p><strong>Email:</strong> ajith@example.com</p>
+            </div>
+            <button class="logout-btn">Logout</button>
+        </div>
+    </div>
+
+    <script>
+        function showContent(id) {
+            const contents = document.querySelectorAll('.content');
+            contents.forEach(c => c.classList.remove('active'));
+
+            const target = document.getElementById(id);
+            if (target) {
+                target.classList.add('active');
+            }
+        }
+
+        function addExpense(event) {
+                event.preventDefault();
+                const vendor = document.getElementById('vendor').value;
+                const category = document.getElementById('category').value;
+                const quantity = document.getElementById('quantity').value;
+                const price = document.getElementById('price').value;
+                const addedBy = document.getElementById('addedBy').value;
+
+                const now = new Date();
+                const date = now.toLocaleDateString();
+
+                const table = document.getElementById('expenseTableBody');
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                <td>${date}</td>
+                <td>${vendor}</td>
+                <td>${category}</td>
+                <td>${quantity}</td>
+                <td>${price}</td>
+                <td>${addedBy}</td>
+                <td><button onclick="updateExpense(this)" class="edit">Edit</button></td>
+                <td><button onclick="deleteExpense(this)" class="del">Delete</button></td>`;
+
+                table.appendChild(row);
+                event.target.reset();
+                //document.getElementById('ventor').value = ' ';
+                //document.getElementById('category').value = ' ';
+                //document.getElementById('quantity').value = ' ';
+                //document.getElementById('price').value = ' ';
+            }
+
+            function addVendor(event){
+                event.preventDefault();
+
+                const name = document.getElementById('vendorName').value;
+
+                const option = document.createElement('option');
+                option.value = name;
+                option.text = name;
+
+                document.getElementById('vendorDropdown').appendChild(option);
+
+                event.target.reset();
+            }
+
+            function addCategory(event){
+                event.preventDefault();
+
+                const vendorName = document.getElementById('vendorName').value;
+                const categoryName = document.getElementById('categoryName').value;
+                
+                const vendorOption = document.createElement('option');
+                vendorOption.value = vendorName
+                vendorOption.text  = vendorName
+
+                const categoryOption = document.createElement('option');
+                categoryOption.value = categoryName;
+                categoryOption.text = categoryName;
+
+
+                document.getElementById('vendorDropdown').appendChild(vendorOption);
+                document.getElementById('categoryDropdown').appendChild(categoryOption);
+                
+                event.target.reset();
+            }
+    </script>
+
+</body>
+
+</html>
