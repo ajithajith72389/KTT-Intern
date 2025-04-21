@@ -321,8 +321,8 @@
         <div class="vendor-form-container content" id="addVentor">
             <h2 style="text-align: center;">Add Vendor</h2>
             <form onsubmit="addVendor(event)">
-                <label for="vendorName">Vendor Name</label>
-                <input type="text" id="vendorName" name="vendorName" required>
+                <label for="vendor">Vendor Name</label>
+                <input type="text" id="vendor" name="vendor" required>
                 <label for="vendorType">Category / Type</label>
                 <select id="vendorType" name="vendorType" required>
                     <option value="">Select</option>
@@ -335,8 +335,8 @@
                 </select>
                 <label for="price">Price</label>
                 <input type="number" id="price" name="price" required>
-                <label for="contact">Contact Number</label>
-                <input type="tel" id="contact" name="contact" pattern="[0-9]{10}" required>
+                <!-- <label for="contact">Contact Number</label>
+                <input type="tel" id="contact" name="contact" pattern="[0-9]{10}" required> -->
                 <label for="email">Email (Optional)</label>
                 <input type="email" id="email" name="email">
                 <!-- <label for="address">Address</label>
@@ -352,6 +352,8 @@
                 <input type="text" id="categoryName" name="categoryName" required>
                 <label for="vendorName">Vendor Name</label>
                 <input type="text" id="vendorName" name="vendorName" required>
+                <label for="contact">Contact Number</label>
+                <input type="tel" id="contact" name="contact" pattern="[0-9]{10}" required>
                 <label for="price">Price</label>
                 <input type="text" id="price" name="price">
                 <button type="submit">Add Category</button>
@@ -380,20 +382,20 @@
         }
 
         function addExpense(event) {
-                event.preventDefault();
-                const vendor = document.getElementById('vendor').value;
-                const category = document.getElementById('category').value;
-                const quantity = document.getElementById('quantity').value;
-                const price = document.getElementById('price').value;
-                const addedBy = document.getElementById('addedBy').value;
+            event.preventDefault();
+            const vendor = document.getElementById('vendor').value;
+            const category = document.getElementById('category').value;
+            const quantity = document.getElementById('quantity').value;
+            const price = document.getElementById('price').value;
+            const addedBy = document.getElementById('addedBy').value;
 
-                const now = new Date();
-                const date = now.toLocaleDateString();
+            const now = new Date();
+            const date = now.toLocaleDateString();
 
-                const table = document.getElementById('expenseTableBody');
+            const table = document.getElementById('expenseTableBody');
 
-                const row = document.createElement('tr');
-                row.innerHTML = `
+            const row = document.createElement('tr');
+            row.innerHTML = `
                 <td>${date}</td>
                 <td>${vendor}</td>
                 <td>${category}</td>
@@ -403,48 +405,48 @@
                 <td><button onclick="updateExpense(this)" class="edit">Edit</button></td>
                 <td><button onclick="deleteExpense(this)" class="del">Delete</button></td>`;
 
-                table.appendChild(row);
-                event.target.reset();
-                //document.getElementById('ventor').value = ' ';
-                //document.getElementById('category').value = ' ';
-                //document.getElementById('quantity').value = ' ';
-                //document.getElementById('price').value = ' ';
-            }
+            table.appendChild(row);
+            event.target.reset();
+            //document.getElementById('ventor').value = ' ';
+            //document.getElementById('category').value = ' ';
+            //document.getElementById('quantity').value = ' ';
+            //document.getElementById('price').value = ' ';
+        }
 
-            function addVendor(event){
-                event.preventDefault();
+        function addVendor(event) {
+            event.preventDefault();
 
-                const name = document.getElementById('vendorName').value;
+            const name = document.getElementById('vendorName').value;
 
-                const option = document.createElement('option');
-                option.value = name;
-                option.text = name;
+            const option = document.createElement('option');
+            option.value = name;
+            option.text = name;
 
-                document.getElementById('vendorDropdown').appendChild(option);
+            document.getElementById('vendorDropdown').appendChild(option);
 
-                event.target.reset();
-            }
+            event.target.reset();
+        }
 
-            function addCategory(event){
-                event.preventDefault();
+        function addCategory(event) {
+            event.preventDefault();
 
-                const vendorName = document.getElementById('vendorName').value;
-                const categoryName = document.getElementById('categoryName').value;
-                
-                const vendorOption = document.createElement('option');
-                vendorOption.value = vendorName
-                vendorOption.text  = vendorName
+            const vendorName = document.getElementById('vendorName').value;
+            const categoryName = document.getElementById('categoryName').value;
 
-                const categoryOption = document.createElement('option');
-                categoryOption.value = categoryName;
-                categoryOption.text = categoryName;
+            const vendorOption = document.createElement('option');
+            vendorOption.value = vendorName
+            vendorOption.text = vendorName
+
+            const categoryOption = document.createElement('option');
+            categoryOption.value = categoryName;
+            categoryOption.text = categoryName;
 
 
-                document.getElementById('vendorDropdown').appendChild(vendorOption);
-                document.getElementById('categoryDropdown').appendChild(categoryOption);
-                
-                event.target.reset();
-            }
+            document.getElementById('vendorDropdown').appendChild(vendorOption);
+            document.getElementById('categoryDropdown').appendChild(categoryOption);
+
+            event.target.reset();
+        }
     </script>
 
 </body>
