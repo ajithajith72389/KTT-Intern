@@ -1,29 +1,25 @@
-const sequelize = require("../config/database");
 const { DataTypes } = require("sequelize");
+const sequelize = require("../config/database");
 
-const category = sequelize.define("categories", {
-    categoryType : {
-        type : DataTypes.STRING,
-        allowNull : false,
-    },
+module.exports = (sequelize, DataTypes) => {
+    const category = sequelize.define("categories", {
+        categoryType: {
+            type: DataTypes.STRING,
+            primaryKey: true
+        }
+    });
 
-    vendor : {
-        type : DataTypes.STRING,
-        allowNull: false,
-    },
+    category.associate = (models) => {
+        category.hasMany(models.expenses, {
+            foreignKey: 'categoryType',
+            sourceKey: 'categoryType',
+        });
 
-    contactNumber : {
-        type : DataTypes.STRING,
-        allowNull : false,
+        category.hasMany(models.vendors, {
+            foreignKey: 'categoryType',
+            sourceKey: 'categoryType',
+        })
+    };
 
-    },
-
-    price : {
-        type : DataTypes.STRING,
-        allowNull: false
-    }
-    
-})
-
-
-module.exports = category;
+    return category;
+};

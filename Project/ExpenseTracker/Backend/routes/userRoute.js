@@ -1,32 +1,32 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const router = express.Router();
-const userDetails = require("../models/userDetails");
+const { userDetails } = require("../models");
 
 router.post('/register', async (req, res) => {
-    const {name, empID, password} = req.body;
+    const { name, empID, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10)
     try {
         const newUser = await userDetails.create({
             name,
             empID,
-            password : hashedPassword
+            password: hashedPassword
         })
 
-        res.status(201).json({message: "User Registered Successfully"});
+        res.status(201).json({ message: "User Registered Successfully" });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 })
 
 
-router.post("/login", async(req, res) => {
+router.post("/login", async (req, res) => {
     const { empID, password } = req.body;
     try {
         const user = await userDetails.findOne({ where: { empID } });
 
         if (!user) {
-            res.status(404).json({ rrror: "User not found" });
+            res.status(404).json({ error: "User not found" });
         }
 
         const isMatched = await bcrypt.compare(password, user.password);
