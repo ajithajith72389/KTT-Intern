@@ -6,7 +6,8 @@ module.exports = (sequelize, DataTypes) => {
     const vendors = sequelize.define("vendors", {
         vendor: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            unique: true
         },
         categoryType: {
             type: DataTypes.STRING,

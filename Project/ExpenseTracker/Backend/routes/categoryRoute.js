@@ -15,10 +15,10 @@ router.get("/get-category", async (req, res) => {
 // Add a new category
 router.post("/categories", async (req, res) => {
     console.log(req.body); // Inspect the data from the frontend
-    const { categoryType } = req.body;
+    const { categoryType, vendor, price } = req.body;
 
     try {
-        const newCategory = await categories.create({ categoryType });
+        const newCategory = await categories.create({ categoryType, vendor, price });
         res.status(201).json({ message: "Category added successfully" });
     } catch (error) {
         console.error("Error while adding category:", error);
@@ -41,7 +41,7 @@ router.get("/categories", async (req, res) => {
 router.get('/get-categories-dropdown', async (req, res) => {
     try {
         const categoriesDropdown = await categories.findAll({
-            attributes: ["categoryType"]
+            attributes: ["categoryType", "vendor"]
         });
         res.json(categoriesDropdown);
     } catch (error) {

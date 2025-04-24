@@ -6,7 +6,9 @@ module.exports = (sequelize, DataTypes) => {
         categoryType: {
             type: DataTypes.STRING,
             primaryKey: true
-        }
+        },
+        vendor : DataTypes.STRING,
+        price: DataTypes.INTEGER
     });
 
     category.associate = (models) => {
