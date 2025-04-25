@@ -12,15 +12,26 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
     <style>
         body {
             margin: 0;
             padding: 0;
+
         }
 
         .sidebar {
-            width: 220px;
-            height: 100vh;
+            width: 100vw;
+            height: 80px;
             position: fixed;
             top: 0;
             left: 0;
@@ -28,12 +39,10 @@
             color: white;
         }
 
-        .sidebar a,
-        .sidebar img {
+        .sidebar a {
             margin-left: 20px;
             padding: 20px;
             display: flex;
-            align-items: center;
             text-decoration: none;
             color: white;
             transition: background-color 0.2s;
@@ -47,13 +56,65 @@
             margin-right: 10px;
         }
 
+        /* Fix the top section (title + button) */
+        .fixed-header {
+            position: fixed;
+            top: 100px;
+            left: 0;
+            right: 0;
+            z-index: 1040;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Scrollable expense history table */
+        .scrollable-table {
+            margin-top: 200px;
+            /* Push below the fixed header */
+            height: calc(100vh - 220px);
+            /* Adjust this value as needed */
+            overflow-y: auto;
+            padding: 0 20px;
+        }
+        .dataTables_wrapper{
+            width: 90%;
+            margin: 0 auto;
+        }
+        .dataTables_wrapper .dataTables_paginate{
+            margin-top: 10px;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            padding: 5px 10px;
+            margin: 2px;
+            border: 1px solid #007bff;
+            background-color: #fff;
+            color: #007bff;
+            cursor: pointer;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            background-color: #007bff;
+            color: white !important;
+        }
+
+        /* Search input */
+        .dataTables_wrapper .dataTables_filter input {
+            padding: 5px;
+            margin-left: 0.5em;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+        }
+
         .content {
-            margin-left: 220px;
-            padding: 30px;
+            width: 90%;
+            margin: 0 auto;
         }
 
         .main-content {
-            margin-left: 250px;
+            margin-top: 100px;
             /* Match your sidebar width */
             padding: 20px;
         }
@@ -62,11 +123,12 @@
             width: 150px;
             margin-top: 10px;
         }
-        .inactive{
+
+        .inactive {
             display: none;
         }
 
-        .active{
+        .active {
             display: block;
         }
     </style>
@@ -76,15 +138,27 @@
 
     <div class="main-container">
         <!-- Sidebar -->
-        <div class="sidebar d-flex flex-column">
-            <img src="./Images/image.png" alt="User Profile" class="img-fluid rounded-circle mx-auto my-3"
-                style="width: 100px; height: 100px; object-fit: cover;">
-
-            <a href="#Dashboard" onclick="showContent('Dashboard')"><i class="bi bi-speedometer2" data-bs-toggle="tab"></i>Dashboard</a>
-            <a href="#Expenses" onclick="showContent('Expenses')"><i class="bi bi-cash-stack"></i>Expenses</a>
-            <a href="#Vendors" onclick="showContent('Vendors')"><i class="bi bi-people-fill"></i>Vendors</a>
-            <a href="#Categories" onclick="showContent('Categories')"><i class="bi bi-tags-fill"></i>Categories</a>
-            <a href="#Settings" onclick="showContent('Settings')"><i class="bi bi-gear-fill"></i>Settings</a>
+        <div class="sidebar d-flex justify-content-between flex-row" id="sidebar">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <a href="#Dashboard" onclick="showContent('Dashboard')" class="a-inactive a-active"><i
+                    class="bi bi-speedometer2" data-bs-toggle="tab"></i>Dashboard</a>
+            <a href="#Expenses" onclick="showContent('Expenses')" class="a-inactive"><i
+                    class="bi bi-cash-stack"></i>Expenses</a>
+            <a href="#Vendors" onclick="showContent('Vendors')" class="a-inactive"><i
+                    class="bi bi-people-fill"></i>Vendors</a>
+            <a href="#Categories" onclick="showContent('Categories')" class="a-inactive"><i
+                    class="bi bi-tags-fill"></i>Type of Expense</a>
+            <a href="#Settings" onclick="showContent('Settings')" class="a-inactive"><i
+                    class="bi bi-gear-fill"></i>Settings</a>
+            <a href="#"><i class="bi bi-person-fill-check" class="a-inactive"></i> SignedIn</a>
         </div>
 
 
@@ -174,10 +248,10 @@
         </div>
 
         <!-- Expenses div-->
-        <div class="inactive" id="Expenses">
+        <div class="inactive content" id="Expenses">
             <!-- Button to trigger modal -->
-            <div class="main-content" style="margin-left: 250px; padding: 20px;">
-                <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="fixed-header">
+                <div class="d-flex justify-content-between align-items-center">
                     <h2 class="mb-0">Expenses History</h2>
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addExpenseModal">
                         <i class="bi bi-plus-circle me-1"></i> Add New Expense
@@ -210,7 +284,7 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    <label for="category" class="form-label">Product / Category</label>
+                                    <label for="categoryDropdown" class="form-label">Type of Expense</label>
                                     <select class="form-select" name="category" id="categoryDropdown" required></select>
                                 </div>
 
@@ -240,20 +314,22 @@
                 </div>
             </div>
 
-            <div class="expense-history content" id="expenseHistory">
+            <div class="expense-history scrollable-table" id="expenseHistory">
+
                 <!-- <h2 class="text-center mb-4">Expenses History</h2> -->
                 <div class="table-responsive">
-                    <table class="table table-bordered table-hover align-middle text-center">
+                    <table class="table table-bordered table-hover text-center display" id="expenseTable">
                         <thead class="table-dark">
                             <tr>
                                 <th>Date</th>
                                 <th>Vendor Name</th>
                                 <th>Contact Number</th>
-                                <th>Product / Category</th>
+                                <th>Type of Expense</th>
                                 <th>Quantity</th>
                                 <th>Price</th>
                                 <th>Added By</th>
-                                <th colspan="2">Actions</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody id="expenseTableBody">
@@ -272,6 +348,7 @@
                                     <button class="btn btn-sm btn-danger">Delete</button>
                                 </td>
                             </tr>
+
                             <!-- Additional rows will be appended here -->
                         </tbody>
                     </table>
@@ -280,9 +357,9 @@
         </div>
 
         <!-- Vendor div-->
-        <div class="inactive" id="Vendors">
+        <div class="inactive content" id="Vendors">
             <!-- Top Heading + Add Button -->
-            <div class="main-content">
+            <div class="fixed-header">
                 <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
                     <h2 class="mb-0">Vendors History</h2>
                     <button class="btn btn-primary mt-2 mt-sm-0" data-bs-toggle="modal"
@@ -309,8 +386,8 @@
                                     <input type="text" class="form-control" id="vendorName" required>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="productCategory" class="form-label">Product / Category</label>
-                                    <input type="text" class="form-control" id="productCategory" required>
+                                    <label for="vendorProduct" class="form-label">Type of Expense</label>
+                                    <input type="text" class="form-control" id="vendorProduct" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="vendorContact" class="form-label">Contact Number</label>
@@ -337,104 +414,40 @@
             </div>
 
             <!-- Vendor Cards Display -->
-            <div class="content overflow-auto" style="max-width: 100%; padding-right: 1rem;">
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="vendorCardContainer">
-                    <!-- Cards here -->
-                    <div class="col">
-                        <div class="card h-100 shadow-sm">
-                            <div class="card-body">
-                                <h5 class="card-title mb-2 ">Internet</h5>
-                                <p class="card-text mb-1"><strong>Date:</strong> 2025-04-21</p>
-                                <p class="card-text mb-1"><strong>Category:</strong> Vegetables</p>
-                                <p class="card-text mb-1"><strong>Contact:</strong> 9876543210</p>
-                                <p class="card-text mb-1"><strong>Price:</strong> 250</p>
-                                <p class="card-text mb-3"><strong>Address:</strong> No.10, Gandhi Street, Coimbatore</p>
-                                <div class="d-flex justify-content-between">
-                                    <button class="btn btn-sm btn-warning">Edit</button>
-                                    <button class="btn btn-sm btn-danger">Delete</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="vendor-history scrollable-table" id="vendorHistory">
 
-                    <div class="col">
-                        <div class="card h-100 shadow-sm">
-                            <div class="card-body">
-                                <h5 class="card-title mb-2">Water</h5>
-                                <p class="card-text mb-1"><strong>Date:</strong> 2025-04-20</p>
-                                <p class="card-text mb-1"><strong>Category:</strong> Milk</p>
-                                <p class="card-text mb-1"><strong>Contact:</strong> 9123456789</p>
-                                <p class="card-text mb-1"><strong>Price:</strong> 600</p>
-                                <p class="card-text mb-3"><strong>Address:</strong> 45/2, Dairy Road, Madurai</p>
-                                <div class="d-flex justify-content-between">
-                                    <button class="btn btn-sm btn-warning">Edit</button>
-                                    <button class="btn btn-sm btn-danger">Delete</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col">
-                        <div class="card h-100 shadow-sm">
-                            <div class="card-body">
-                                <h5 class="card-title mb-2">Others</h5>
-                                <p class="card-text mb-1"><strong>Date:</strong> 2025-04-19</p>
-                                <p class="card-text mb-1"><strong>Category:</strong> Packaged Foods</p>
-                                <p class="card-text mb-1"><strong>Contact:</strong> 9000000000</p>
-                                <p class="card-text mb-1"><strong>Price:</strong> 1450</p>
-                                <p class="card-text mb-3"><strong>Address:</strong> 78, High Road, Salem</p>
-                                <div class="d-flex justify-content-between">
-                                    <button class="btn btn-sm btn-warning">Edit</button>
-                                    <button class="btn btn-sm btn-danger">Delete</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col">
-                        <div class="card h-100 shadow-sm">
-                            <div class="card-body">
-                                <h5 class="card-title mb-2">Dairy Dream</h5>
-                                <p class="card-text mb-1"><strong>Date:</strong> 2025-04-18</p>
-                                <p class="card-text mb-1"><strong>Category:</strong> Milk</p>
-                                <p class="card-text mb-1"><strong>Contact:</strong> 9988776655</p>
-                                <p class="card-text mb-1"><strong>Price:</strong> 900</p>
-                                <p class="card-text mb-3"><strong>Address:</strong> 120, Market Lane, Trichy</p>
-                                <div class="d-flex justify-content-between">
-                                    <button class="btn btn-sm btn-warning">Edit</button>
-                                    <button class="btn btn-sm btn-danger">Delete</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col">
-                        <div class="card h-100 shadow-sm">
-                            <div class="card-body">
-                                <h5 class="card-title mb-2 text-center">Snack Haven</h5>
-                                <p class="card-text mb-1"><strong>Date:</strong> 2025-04-17</p>
-                                <p class="card-text mb-1"><strong>Category:</strong> Snacks</p>
-                                <p class="card-text mb-1"><strong>Contact:</strong> 8112233445</p>
-                                <p class="card-text mb-1"><strong>Price:</strong> 400</p>
-                                <p class="card-text mb-3"><strong>Address:</strong> 33, Bazaar Street, Erode</p>
-                                <div class="d-flex justify-content-between">
-                                    <button class="btn btn-sm btn-warning">Edit</button>
-                                    <button class="btn btn-sm btn-danger">Delete</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                <!-- <h2 class="text-center mb-4">Expenses History</h2> -->
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover text-center display" id="vendorTable">
+                        <thead class="table-dark">
+                            <th>Date</th>
+                            <th>Vendor</th>
+                            <th>Type of Expense</th>
+                            <th>Price</th>
+                            <th>Contact Number</th>
+                            <th>Address</th>
+                        </thead>
+                        <tbody id="vendorTableBody">
+                            <tr>
+                                <td>12</td>
+                                <td>Snacks Haven</td>
+                                <td>Snacks</td>
+                                <td>200</td>
+                                <td>1122334455</td>
+                                <td>Namakkal</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
 
         <!-- Product div-->
-        <div class="inactive" id="Categories">
+        <div class="inactive content" id="Categories">
             <!-- Top Heading + Add Button -->
-            <div class="main-content">
+            <div class="fixed-header">
                 <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
-                    <h2 class="mb-0">Product / Category History</h2>
+                    <h2 class="mb-0">Type of Expense</h2>
                     <button class="btn btn-primary mt-2 mt-sm-0" data-bs-toggle="modal"
                         data-bs-target="#addCategoryModal">
                         <i class="bi bi-plus-circle me-1"></i>Add New Category
@@ -456,14 +469,24 @@
 
                             <div class="modal-body">
                                 <div class="mb-3">
-                                    <label for="productCategory" class="form-label">Product / Category Type</label>
+                                    <label for="productCategory" class="form-label">Type of Expense</label>
                                     <input type="text" class="form-control" id="productCategory"
-                                        placeholder="Enter product or category name" required>
+                                        placeholder="Enter Type of Expense" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="vendorProductCategory" class="form-label">Vendor Name</label>
+                                    <input type="text" class="form-control" id="vendorProductCategory"
+                                        placeholder="Enter vendor name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="" productPrice"" class="form-label">Price</label>
+                                    <input type="number" class="form-control" id="productPrice"
+                                        placeholder="Enter the price" required>
                                 </div>
                             </div>
 
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-success">Add Product / Category</button>
+                                <button type="submit" class="btn btn-success">Add Type of Expense</button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                             </div>
                         </form>
@@ -471,22 +494,27 @@
                 </div>
             </div>
 
-            <!-- Category Cards Display -->
-            <div class="content overflow-auto" style="max-width: 100%; padding-right: 1rem;">
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="vendorCardContainer">
+            <!-- Category Table Display -->
+            <div class="productCategory-history scrollable-table" id="productCategoryHistory">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover text-center display" id="productTable">
+                        <thead class="table-dark">
+                            <th>Date</th>
+                            <th>Type of Expense</th>
+                            <th>Vendor Name</th>
+                            <th>Price</th>
+                        </thead>
+                        <tbody id="productTableBody">
+                            <tr>
+                                <td>21</td>
+                                <td>Snacks</td>
+                                <td>Snacks Haven</td>
+                                <td>200</td>
+                            </tr>
+                        </tbody>
+                    </table>
                     <!-- Cards here -->
-                    <div class="col">
-                        <div class="card h-100 shadow-sm">
-                            <div class="card-body">
-                                <div class="img-fluid rounded-circle mx-auto my-3" style="width: 100px; height: 100px; object-fit: cover; border:1px solid black"></div>
-                                <h5 class="card-title mb-2 text-center">Snacks</h5>
-                                <div class="d-flex justify-content-end gap-2">
-                                    <button class="btn btn-sm btn-warning">Edit</button>
-                                    <button class="btn btn-sm btn-danger">Delete</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
 
@@ -498,7 +526,7 @@
                 <h3 class="mb-4">Account Settings</h3>
                 <div class="user-info mb-3">
                     <p><strong>Name:</strong> Ajith V</p>
-                    <p><strong>empID:</strong> ajith@example.com</p>
+                    <p><strong>empID:</strong> 614</p>
                 </div>
                 <button class="btn btn-danger logout-btn">Logout</button>
             </div>
@@ -507,6 +535,8 @@
     </div>
 
     <script>
+
+        // show content based on ID
         function showContent(id) {
             const contents = document.querySelectorAll('.inactive');
             contents.forEach(c => c.classList.remove('active'));
@@ -516,6 +546,49 @@
                 target.classList.add('active');
             }
         }
+
+        var header = document.getElementById("sidebar");
+        var btns = header.getElementsByClassName("a-inactive");
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].addEventListener("click", function () {
+                var current = document.getElementsByClassName("a-active");
+                current[0].className = current[0].className.replace(" a-active", "");
+                this.className += " a- active";
+            });
+        }
+
+        // DataTable for Expense Page
+        $(document).ready(function () {
+            $('#expenseTable').DataTable({
+                responsive: true,
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search..."
+                }
+            });
+        });
+
+        // DataTable for Vendors Page
+        $(document).ready(function () {
+            $("#vendorTable").DataTable({
+                responsive: true,
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search..."
+                }
+            })
+        })
+
+        // DataTable for Product/Category Page
+        $(document).ready(function () {
+            $("#productTable").DataTable({
+                responsive: true,
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search..."
+                }
+            })
+        })
 
         async function addNewExpense(event) {
             event.preventDefault();
@@ -552,62 +625,124 @@
                 alert("Fetch error:", error.message)
             }
         }
-        /*
-                function addVendor(event) {
-                    event.preventDefault();
-        
-                    const name = document.getElementById('vendorName').value;
-        
-                    const option = document.createElement('option');
-                    option.value = name;
-                    option.text = name;
-        
-                    document.getElementById('vendorDropdown').appendChild(option);
-        
-                    event.target.reset();
-                }   
-        */
 
-        async function addNewCategory(event){
+
+        async function addNewCategory(event) {
             event.preventDefault();
 
-            const categoryName = document.getElementById('productCategory').value;
+            const categoryType = document.getElementById('productCategory').value;
+            const vendor = document.getElementById('vendorProductCategory').value;
+            const price = document.getElementById("productPrice").value;
 
-            try{
-                const response = await fetch()
+            try {
+                const response = await fetch('api/categories', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'Application/json' },
+                    body: JSON.stringify({
+                        categoryType,
+                        vendor,
+                        price
+                    })
+                })
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert("Category added successfully", data);
+                } else {
+                    alert("Error" + data.error || "Something went wrong")
+                }
+
             }
-            catch(error){
+            catch (error) {
                 alert("Fetch error:", error.message)
             }
+
+            event.target.reset()
         }
 
-
-
-        //const vendorTableBody = document.querySelector("#vendorTableBody")
-
         async function getAllcategory(event) {
-            const response = await fetch('/api/categories');
+            const response = await fetch('api/categories');
             const data = await response.json();
 
             data.forEach(item => {
                 //const date = item.createdAt.toLocaleDateString()
-                const { vendor, categoryType, contactNumber, price, createdAt } = item
+                const { vendor, categoryType, price, createdAt } = item
                 const date = new Date(createdAt).toLocaleDateString()
-                const table = document.getElementById('vendorTableBody')
+                const table = document.getElementById('productTableBody')
                 const row = document.createElement('tr')
                 row.innerHTML = `
                 <td>${date}</td>
-                <td>${vendor}</td>
-                <td>${contactNumber}</td>
                 <td>${categoryType}</td>
+                <td>${vendor}</td>
                 <td>${price}</td>
-                <td><button onclick="updateExpense(this)" class="edit">Edit</button></td>
-                <td><button onclick="deleteExpense(this)" class="del">Delete</button></td>
                 `;
 
                 table.appendChild(row);
             })
+
+
         } getAllcategory();
+
+
+        async function addNewVendor(event) {
+            event.preventDefault();
+
+            const vendor = document.getElementById('vendorName').value;
+            const categoryType = document.getElementById('vendorProduct').value;
+            const contactNumber = document.getElementById('vendorContact').value;
+            const price = document.getElementById('vendorPrice').value;
+            const address = document.getElementById('vendorAddress').value;
+
+            try {
+                const response = await fetch('/api/vendors', {  // Added `/` to be safe
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        vendor,
+                        categoryType,
+                        contactNumber,
+                        price: parseInt(price), // Optional: cast to int if needed
+                        address
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert("Vendor added successfully");
+                    // optionally update UI here
+                } else {
+                    alert("Error: " + (data.message || "Something went wrong"));
+                }
+            } catch (error) {
+                alert("Fetch error: " + error.message);
+            }
+        }
+
+        async function getAllVendors() {
+            const response = await fetch('/api/vendors');
+            const data = await response.json();
+
+            data.forEach(item => {
+                const { vendor, categoryType, contactNumber, price, address, createdAt } = item;
+                const date = new Date(createdAt).toLocaleDateString();
+
+                const table = document.getElementById('vendorTableBody');
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                <td>${date}</td>
+                <td>${vendor}</td>
+                <td>${categoryType}</td>
+                <td>${price}</td>
+                <td>${contactNumber}</td>
+                <td>${address}</td>
+                `;
+
+                table.appendChild(row)
+            });
+
+
+        } getAllVendors();
 
 
         async function getAllExpense() {
@@ -615,7 +750,7 @@
             const data = await response.json();
 
             data.forEach(item => {
-                const { createdAt, vendor, categoryType, contactNumber, quantity, price, addedBy } = item;
+                const { createdAt, vendor, contactNumber, categoryType, quantity, price, addedBy } = item;
                 const date = new Date(createdAt).toLocaleDateString();
 
                 const table = document.getElementById('expenseTableBody');
@@ -628,13 +763,13 @@
                 <td>${quantity}</td>
                 <td>${price}</td>
                 <td>${addedBy}</td>
-                <td><button onclick="updateExpense(this)" class="edit">Edit</button></td>
-                <td><button onclick="deleteExpense(this)" class="del">Delete</button></td>`;
+                <td><button onclick="updateExpense(this)" class="btn btn-sm btn-warning">Edit</button></td>
+                <td><button onclick="deleteExpense(this)" class="btn btn-sm btn-danger">Delete</button></td>`;
 
                 table.appendChild(row);
-            })
+            });
 
-        }; getAllExpense();
+        } getAllExpense();
 
 
         async function getDropdown() {
@@ -672,12 +807,16 @@
             }
         }; getDropdown();
 
+
+
         document.getElementById('add-expense-btn').addEventListener('click', function () {
             const form = document.getElementById('expense-form');
             form.style.display = form.style.display === 'none' ? 'block' : 'none';
         });
 
         // document.addEventListener("DOMContentLoaded", getDropdown)
+
+
     </script>
 
 </body>
