@@ -7,8 +7,9 @@ const sequelize = require("../config/database");
 
 module.exports = (sequelize, DataTypes) => {
     const expenses = sequelize.define("expenses", {
+        typeofExpense: DataTypes.STRING,
         vendor: DataTypes.STRING,
-        categoryType: DataTypes.STRING,
+        vendorPerson: DataTypes.STRING,
         contactNumber: DataTypes.STRING,
             // validate: { isNumeric: true }
         quantity: DataTypes.INTEGER,
@@ -23,8 +24,8 @@ module.exports = (sequelize, DataTypes) => {
         });
 
         expenses.belongsTo(models.categories, {
-            foreignKey: 'categoryType',
-            targetKey: 'categoryType',
+            foreignKey: 'vendor',
+            targetKey: 'vendor',
         });
 
         expenses.belongsTo(models.vendors, {
