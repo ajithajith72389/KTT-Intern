@@ -2,13 +2,15 @@
 const express = require("express");
 const router = express.Router();
 const {expenses} = require("../models");
+const { where } = require("sequelize");
 
 router.post("/addExpense", async (req, res) => {
-    const {vendor, categoryType, contactNumber, quantity, price, addedBy} = req.body;
+    const { typeofExpense, vendor, vendorPerson,  contactNumber, quantity, price, addedBy} = req.body;
     try {
         const data = await expenses.create({
+            typeofExpense,
             vendor,
-            categoryType,
+            vendorPerson,
             contactNumber,
             quantity,
             price,
@@ -28,6 +30,48 @@ router.get("/expenses", async (req, res) =>{
         
     } catch (error) {
         res.status(500).json({ error: "Failed to fetch Expenses" });
+    }
+})
+
+
+// update expense
+router.patch('/expenses/:id', async (req, res) => {
+    const {vendor, vendorPerson, contactNumber, quantity, typeofExpense, price, addedBy} = req.body;
+    try {
+
+        const updated = await expenses.update({
+            vendor,
+            vendorPerson,
+            contactNumber,
+            quantity,
+            typeofExpense,
+            price,
+            addedBy
+
+        }, {where: {id: req.params.id}})
+
+        if(updated[0] === 0){
+            return res.status(404).json({ message: "Expense not found"})
+        }
+        res.json({ message: "Expense updated"})
+        
+    } catch (error) {
+        res.status(500).json({error: "Failed to fetch Expenses"});
+    }
+})
+
+// delete expense
+router.delete("/expenses/:id", async (req, res) => {
+    try {
+        const deleted = await expenses.destroy({where:{id: req.params.id}});
+
+        if (!deleted) {
+           return res.status(404).json({message: "Expense not found"})
+        }
+        res.json({message: "Expense deleted Successfully"})
+        
+    } catch (error) {
+        res.status(500).jsonp({error: "Failed to fetch Expenses"})
     }
 })
 
