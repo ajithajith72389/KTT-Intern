@@ -14,7 +14,7 @@ app.use(express.static(path.join(__dirname, "../Frontend")));
 
 const PORT = 3000;
 
-db.sequelize.sync({ force: false }).then(() => {
+db.sequelize.sync().then(() => {
     console.log("DB Synced Successfully");
 });
 
