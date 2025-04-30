@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Daily Expense Line Chart</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        #line-chart-container {
+            margin-top: 30px;
+            max-width: 700px;
+        }
+
+        select {
+            padding: 6px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Daily Expense - Line Chart</h2>
+    <label for="monthFilter">Filter by Month:</label>
+    <select id="monthFilter" onchange="renderLineChart()">
+        <!-- Populated dynamically -->
+    </select>
+
+    <div id="line-chart-container"></div>
+
+    <script>
+        let fullExpenseData = [];
+
+        async function fetchData() {
+            const response = await fetch('/api/expenses'); // Expecting: [{ date: "2025-04-01", price: 100, ... }, ...]
+            const data = await response.json();
+            fullExpenseData = data.map(d => ({
+                ...d,
+                date: new Date(d.createdAt)
+            }));
+            populateMonthOptions(fullExpenseData);
+            renderLineChart();
+        }
+
+        function populateMonthOptions(data) {
+            const monthSet = new Set(data.map(d => `${d.date.getFullYear()}-${(d.date.getMonth() + 1).toString().padStart(2, '0')}`));
+            const select = document.getElementById("monthFilter");
+            monthSet.forEach(month => {
+                const option = document.createElement("option");
+                option.value = month;
+                option.text = month;
+                select.appendChild(option);
+            });
+        }
+
+        function renderLineChart() {
+            const selectedMonth = document.getElementById("monthFilter").value;
+            const filtered = fullExpenseData.filter(d => {
+                const m = `${d.date.getFullYear()}-${(d.date.getMonth() + 1).toString().padStart(2, '0')}`;
+                return m === selectedMonth;
+            });
+
+            // Aggregate by date
+            const dailyTotals = d3.rollups(
+                filtered,
+                v => d3.sum(v, d => d.price),
+                d => d3.timeDay(d.date)
+            ).map(([date, sum]) => ({ date, sum }));
+
+            // Sort by date
+            dailyTotals.sort((a, b) => a.date - b.date);
+
+            // Setup SVG
+            const margin = { top: 20, right: 30, bottom: 30, left: 60 };
+            const width = 400;
+            const height = 300;
+
+            d3.select("#line-chart-container").selectAll("*").remove(); // Clear previous
+
+            const svg = d3.select("#line-chart-container")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height);
+            
+            const x = d3.scaleTime()
+                .domain(d3.extent(dailyTotals, d => d.date))
+                .range([margin.left, width - margin.right]);
+
+            const y = d3.scaleLinear()
+                .domain([0, d3.max(dailyTotals, d => d.sum)]).nice()
+                .range([height - margin.bottom, margin.top]);
+
+            const line = d3.line()
+                .x(d => x(d.date))
+                .y(d => y(d.sum));
+
+            svg.append("g")
+                .attr("transform", `translate(0,${height - margin.bottom})`)
+                .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%d")));
+
+            svg.append("g")
+                .attr("transform", `translate(${margin.left},0)`)
+                .call(d3.axisLeft(y).ticks(5).tickFormat(d => `₹${d}`));
+
+            svg.append("path")
+                .datum(dailyTotals)
+                .attr("fill", "none")
+                .attr("stroke", "#2196F3")
+                .attr("stroke-width", 2)
+                .attr("d", line);
+
+            svg.selectAll("circle")
+                .data(dailyTotals)
+                .enter()
+                .append("circle")
+                .attr("cx", d => x(d.date))
+                .attr("cy", d => y(d.sum))
+                .attr("r", 3)
+                .attr("fill", "#FF5722")
+                .append("title")
+                .text(d => `₹${d.sum} on ${d3.timeFormat("%Y-%m-%d")(d.date)}`);
+        }
+
+        fetchData();
+    </script>
+</body>
+
+</html>
