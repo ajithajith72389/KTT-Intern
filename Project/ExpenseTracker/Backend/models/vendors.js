@@ -9,13 +9,13 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             unique: true
         },
-        categoryType: {
+        typeofExpense: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        contactNumber: DataTypes.STRING,
-        price: {
-            type: DataTypes.INTEGER,
+        contactPerson: DataTypes.STRING,
+        contactNumber: {
+            type: DataTypes.STRING,
             allowNull: false
         },
         address: {
@@ -32,8 +32,8 @@ module.exports = (sequelize, DataTypes) => {
         })
 
         vendors.belongsTo(models.categories, {
-            foreignKey: 'categoryType',
-            targetKey: 'categoryType',
+            foreignKey: 'vendor',
+            targetKey: 'vendor',
             as: 'vendorCategory'
         });
 
