@@ -3,16 +3,16 @@ const router = express.Router();
 const { vendors } = require("../models");
 
 router.post("/vendors", async(req, res,) =>{
-    const {vendor, categoryType, contactNumber, price, address } = req.body;
+    const { typeofExpense, vendor,contactPerson,  contactNumber, address } = req.body;
     try {
         const newVendor = await vendors.create({
+            typeofExpense,
             vendor,
-            categoryType,
+            contactPerson,
             contactNumber,
-            price,
             address
         })
-        res.status(201).json({message: "Vendor added successfully"});
+        res.status(201).json({message: "Vendor added successfully", newVendor});
         
     } catch (error) {
         res.status(500).json({error: error.message, details: error.error});
