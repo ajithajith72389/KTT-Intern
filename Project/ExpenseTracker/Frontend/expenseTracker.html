@@ -22,6 +22,11 @@
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- d3 js -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+
     <style>
         body {
             margin: 0;
@@ -31,7 +36,7 @@
 
         .sidebar {
             width: 100vw;
-            height: 80px;
+            height: 50px;
             position: fixed;
             top: 0;
             left: 0;
@@ -40,9 +45,10 @@
         }
 
         .sidebar a {
-            margin-left: 20px;
-            padding: 20px;
+            margin-right: 20px;
+            padding: 10px;
             display: flex;
+            align-items: center;
             text-decoration: none;
             color: white;
             transition: background-color 0.2s;
@@ -59,29 +65,30 @@
         /* Fix the top section (title + button) */
         .fixed-header {
             position: fixed;
-            top: 100px;
-            left: 0;
-            right: 0;
+            top: 60px;
+            width: 90%;
             z-index: 1040;
             background-color: white;
-            padding: 20px;
+            padding: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         /* Scrollable expense history table */
         .scrollable-table {
-            margin-top: 200px;
+            margin-top: 160px;
             /* Push below the fixed header */
             height: calc(100vh - 220px);
             /* Adjust this value as needed */
             overflow-y: auto;
             padding: 0 20px;
         }
-        .dataTables_wrapper{
+
+        .dataTables_wrapper {
             width: 90%;
             margin: 0 auto;
         }
-        .dataTables_wrapper .dataTables_paginate{
+
+        .dataTables_wrapper .dataTables_paginate {
             margin-top: 10px;
         }
 
@@ -131,6 +138,70 @@
         .active {
             display: block;
         }
+
+        #filters {
+            margin-bottom: 20px;
+        }
+
+        label,
+        select,
+        input {
+            margin-right: 10px;
+        }
+
+        #chart-container {
+            margin-top: 30px;
+        }
+
+        .chart-wrapper {
+            max-width: 540px;
+            margin: 30px auto;
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-wrapper h4 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .chart-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .chart-controls label {
+            font-weight: bold;
+            font-size: 1rem;
+            color: #444;
+        }
+
+        .chart-controls select {
+            padding: 8px 12px;
+            font-size: 1rem;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            background: white;
+            transition: border-color 0.3s;
+        }
+
+        .chart-controls select:focus {
+            border-color: #007BFF;
+            outline: none;
+        }
+
+        #line-chart-container {
+            margin-top: 10px;
+            width: 100%;
+        }
     </style>
 </head>
 
@@ -163,84 +234,135 @@
 
 
         <!-- Content div-->
-        <div class="dashboard content inactive active" id="Dashboard">
-            <h2 class="main-header mb-4">Hi <span id="username"></span>, Welcome Back</h2>
+        <div class="dashboard content inactive active mt-5 p-5" id="Dashboard">
+            <h4 class="main-header mb-4">Hi <span id="username"></span>, Welcome Back</h4>
 
             <!-- Expense Report -->
-            <div class="row mb-5">
+            <!-- <div class="row mb-5">
                 <div class="col-md-4">
                     <div class="card text-center shadow-sm">
                         <div class="card-body">
-                            <h4 class="card-title">Daily</h4>
+                            <h4 class="card-title">Daily <br> <span id="daily-total-cost">0</span></h4>
+                            <canvas id="expenseChart" width="600" height="400"></canvas>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="card text-center shadow-sm">
                         <div class="card-body">
-                            <h4 class="card-title">Weekly</h4>
+                            <h4 class="card-title">Weekly <br> <span id="weekly-total-cost">0</span></h4>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="card text-center shadow-sm">
                         <div class="card-body">
-                            <h4 class="card-title">Monthly</h4>
+                            <h4 class="card-title">Monthly <br> <span id="monthly-total-cost">0</span></h4>
                         </div>
                     </div>
+                </div>
+            </div> -->
+
+            <div style="display: flex; justify-content:space-between; align-items:center">
+                <div
+                    style="width: 440px; height: auto; padding: 16px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); background: #f9f9f9; font-family: Arial, sans-serif;">
+                    <h4 style="font-size: 20px; margin-bottom: 12px; color: #333;">Bar Chart</h1>
+
+                        <div id="filters" style="margin-bottom: 16px;">
+                            <label for="categoryFilter"
+                                style="display: block; margin-bottom: 4px; font-weight: bold;">Type of
+                                Expense:</label>
+                            <select id="categoryFilter"
+                                style="width: 100%; padding: 6px; margin-bottom: 10px; border-radius: 4px; border: 1px solid #ccc;">
+                                <option value="All">All</option>
+                            </select>
+
+                            <label for="minPrice" style="display: block; margin-bottom: 4px; font-weight: bold;">Min
+                                Price:</label>
+                            <input type="number" id="minPrice" placeholder="e.g. 50"
+                                style="width: 100%; padding: 6px; margin-bottom: 10px; border-radius: 4px; border: 1px solid #ccc;">
+
+                            <label for="maxPrice" style="display: block; margin-bottom: 4px; font-weight: bold;">Max
+                                Price:</label>
+                            <input type="number" id="maxPrice" placeholder="e.g. 500"
+                                style="width: 100%; padding: 6px; margin-bottom: 10px; border-radius: 4px; border: 1px solid #ccc;">
+
+                            <button onclick="applyFilters()"
+                                style="width: 100%; padding: 8px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">Apply
+                                Filters</button>
+                        </div>
+
+                        <button onclick="sortByPrice()"
+                            style="width: 100%; padding: 8px; background-color: #2196F3; color: white; border: none; border-radius: 4px; cursor: pointer;">Sort
+                            by Price</button>
+
+                        <div id="chart-container" style="margin-top: 20px;"></div>
+                </div>
+
+                <div class="chart-wrapper">
+                    <h4>Line Chart</h4>
+
+                    <div class="chart-controls">
+                        <label for="monthFilter">Filter by Month:</label>
+                        <select id="monthFilter" onchange="renderLineChart()">
+                            <!-- Options dynamically added -->
+                        </select>
+                    </div>
+
+                    <div id="line-chart-container"></div>
                 </div>
             </div>
 
-            <h2 class="sub-head mb-4">Monthly Report</h2>
+            <h4 class="sub-head mb-4">Total Expense History of each</h4>
 
             <!-- Monthly Report Cards -->
             <div class="row g-3">
                 <div class="col-md-4 col-lg-3">
                     <div class="card text-center shadow-sm">
                         <div class="card-body">
-                            <h5 class="card-title">Milk</h5>
+                            <h5 class="card-title">Milks <br>💰<span id="milk-total-cost">0</span></h5>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4 col-lg-3">
                     <div class="card text-center shadow-sm">
                         <div class="card-body">
-                            <h5 class="card-title">Water</h5>
+                            <h5 class="card-title">Water <br> 💰<span id="water-total-cost">0</span></h5>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4 col-lg-3">
                     <div class="card text-center shadow-sm">
                         <div class="card-body">
-                            <h5 class="card-title">Snacks</h5>
+                            <h5 class="card-title">Snacks <br> 💰<span id="snacks-total-cost">0</span></h5>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4 col-lg-3">
                     <div class="card text-center shadow-sm">
                         <div class="card-body">
-                            <h5 class="card-title">EB</h5>
+                            <h5 class="card-title">EB <br> 💰<span id="eb-total-cost">0</span></h5>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4 col-lg-3">
                     <div class="card text-center shadow-sm">
                         <div class="card-body">
-                            <h5 class="card-title">Internet</h5>
+                            <h5 class="card-title">Internet <br> 💰<span id="internet-total-cost">0</span></h5>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4 col-lg-3">
                     <div class="card text-center shadow-sm">
                         <div class="card-body">
-                            <h5 class="card-title">Cleaning</h5>
+                            <h5 class="card-title">Cleaning <br> 💰<span id="cleaning-total-cost">0</span></h5>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4 col-lg-3">
                     <div class="card text-center shadow-sm">
                         <div class="card-body">
-                            <h5 class="card-title">Others</h5>
+                            <h5 class="card-title">Others <br> 💰<span id="others-total-cost">0</span></h5>
                         </div>
                     </div>
                 </div>
@@ -252,7 +374,7 @@
             <!-- Button to trigger modal -->
             <div class="fixed-header">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h2 class="mb-0">Expenses History</h2>
+                    <h4 class="mb-0">Expenses History</h4>
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addExpenseModal">
                         <i class="bi bi-plus-circle me-1"></i> Add New Expense
                     </button>
@@ -265,6 +387,7 @@
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <form onsubmit="addNewExpense(event)" id="expense-form">
+                            <input type="hidden" id="expense-id">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="addExpenseLabel">Add Expense</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -273,19 +396,33 @@
 
                             <div class="modal-body row g-3">
                                 <div class="col-md-6">
-                                    <label for="vendor" class="form-label">Add Vendor</label>
-                                    <select class="form-select" name="vendor" id="vendorDropdown" required></select>
+                                    <label for="categoryDropdown" class="form-label">Type of Expense</label>
+                                    <select class="form-select" name="category" id="categoryDropdown" required>
+                                        <option value="Water">Water</option>
+                                        <option value="Milk">Milk</option>
+                                        <option value="Snacks">Snacks</option>
+                                        <option value="EB">EB</option>
+                                        <option value="Internet">Internet</option>
+                                        <option value="Cleaning">Cleaning</option>
+                                        <option value="Others">Others</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="vendor" class="form-label">Vendor</label>
+                                    <input type="text" class="form-control" name="vendor" id="vendorDropdown" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="vendorPerson" class="form-label">Contact Person</label>
+                                    <input type="text" class="form-control" name="vendorPerson" id="vendorPerson"
+                                        required>
                                 </div>
 
                                 <div class="col-md-6">
                                     <label for="contactNumber" class="form-label">Contact Number</label>
                                     <input type="number" class="form-control" id="contactNumber" name="contactNumber"
                                         pattern="[0-9]{10}" required>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="categoryDropdown" class="form-label">Type of Expense</label>
-                                    <select class="form-select" name="category" id="categoryDropdown" required></select>
                                 </div>
 
                                 <div class="col-md-6">
@@ -316,15 +453,16 @@
 
             <div class="expense-history scrollable-table" id="expenseHistory">
 
-                <!-- <h2 class="text-center mb-4">Expenses History</h2> -->
+                <!-- <h4 class="text-center mb-4">Expenses History</h4> -->
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover text-center display" id="expenseTable">
                         <thead class="table-dark">
                             <tr>
                                 <th>Date</th>
-                                <th>Vendor Name</th>
-                                <th>Contact Number</th>
+                                <th>Vendor</th>
                                 <th>Type of Expense</th>
+                                <th>Contact Person</th>
+                                <th>Contact Number</th>
                                 <th>Quantity</th>
                                 <th>Price</th>
                                 <th>Added By</th>
@@ -333,21 +471,7 @@
                             </tr>
                         </thead>
                         <tbody id="expenseTableBody">
-                            <tr>
-                                <td>12</td>
-                                <td>AK</td>
-                                <td>1234567890</td>
-                                <td>Milk</td>
-                                <td>6</td>
-                                <td>90</td>
-                                <td>Aj</td>
-                                <td>
-                                    <button class="btn btn-sm btn-warning">Edit</button>
-                                </td>
-                                <td>
-                                    <button class="btn btn-sm btn-danger">Delete</button>
-                                </td>
-                            </tr>
+
 
                             <!-- Additional rows will be appended here -->
                         </tbody>
@@ -360,8 +484,8 @@
         <div class="inactive content" id="Vendors">
             <!-- Top Heading + Add Button -->
             <div class="fixed-header">
-                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
-                    <h2 class="mb-0">Vendors History</h2>
+                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                    <h4 class="mb-0">Vendors History</h4>
                     <button class="btn btn-primary mt-2 mt-sm-0" data-bs-toggle="modal"
                         data-bs-target="#addVendorModal">
                         <i class="bi bi-plus-circle me-1"></i>Add New Vendor
@@ -380,24 +504,29 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
+
                             <div class="modal-body row g-3">
                                 <div class="col-md-6">
-                                    <label for="vendorName" class="form-label">Vendor Name</label>
+                                    <label for="vendorName" class="form-label">Vendor</label>
                                     <input type="text" class="form-control" id="vendorName" required>
                                 </div>
+
                                 <div class="col-md-6">
                                     <label for="vendorProduct" class="form-label">Type of Expense</label>
                                     <input type="text" class="form-control" id="vendorProduct" required>
                                 </div>
+
+                                <div class="col-md-6">
+                                    <label for="vendorContactPerson" class="form-label">Contact Person</label>
+                                    <input type="text" class="form-control" id="vendorContactPerson" required>
+                                </div>
+
                                 <div class="col-md-6">
                                     <label for="vendorContact" class="form-label">Contact Number</label>
                                     <input type="tel" class="form-control" id="vendorContact" pattern="[0-9]{10}"
                                         required>
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="vendorPrice" class="form-label">Price</label>
-                                    <input type="number" class="form-control" id="vendorPrice" required>
-                                </div>
+
                                 <div class="col-12">
                                     <label for="vendorAddress" class="form-label">Address</label>
                                     <!-- <input type="text" class="form-control" id="vendorAddress" required> -->
@@ -416,26 +545,19 @@
             <!-- Vendor Cards Display -->
             <div class="vendor-history scrollable-table" id="vendorHistory">
 
-                <!-- <h2 class="text-center mb-4">Expenses History</h2> -->
+                <!-- <h4 class="text-center mb-4">Expenses History</h4> -->
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover text-center display" id="vendorTable">
                         <thead class="table-dark">
                             <th>Date</th>
                             <th>Vendor</th>
                             <th>Type of Expense</th>
-                            <th>Price</th>
+                            <th>Contact Person</th>
                             <th>Contact Number</th>
                             <th>Address</th>
                         </thead>
                         <tbody id="vendorTableBody">
-                            <tr>
-                                <td>12</td>
-                                <td>Snacks Haven</td>
-                                <td>Snacks</td>
-                                <td>200</td>
-                                <td>1122334455</td>
-                                <td>Namakkal</td>
-                            </tr>
+
                         </tbody>
                     </table>
                 </div>
@@ -446,8 +568,8 @@
         <div class="inactive content" id="Categories">
             <!-- Top Heading + Add Button -->
             <div class="fixed-header">
-                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
-                    <h2 class="mb-0">Type of Expense</h2>
+                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                    <h4 class="mb-0">Type of Expense</h4>
                     <button class="btn btn-primary mt-2 mt-sm-0" data-bs-toggle="modal"
                         data-bs-target="#addCategoryModal">
                         <i class="bi bi-plus-circle me-1"></i>Add New Category
@@ -462,7 +584,7 @@
                     <div class="modal-content">
                         <form onsubmit="addNewCategory(event)">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="addCategoryLabel">Add Category</h5>
+                                <h5 class="modal-title" id="addCategoryLabel">Add Type of Expense</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
@@ -474,7 +596,7 @@
                                         placeholder="Enter Type of Expense" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="vendorProductCategory" class="form-label">Vendor Name</label>
+                                    <label for="vendorProductCategory" class="form-label">Vendor</label>
                                     <input type="text" class="form-control" id="vendorProductCategory"
                                         placeholder="Enter vendor name" required>
                                 </div>
@@ -505,12 +627,7 @@
                             <th>Price</th>
                         </thead>
                         <tbody id="productTableBody">
-                            <tr>
-                                <td>21</td>
-                                <td>Snacks</td>
-                                <td>Snacks Haven</td>
-                                <td>200</td>
-                            </tr>
+
                         </tbody>
                     </table>
                     <!-- Cards here -->
@@ -522,13 +639,13 @@
 
         <!-- Settings div-->
         <div class="content inactive" id="Settings">
-            <div class="card shadow-sm p-4">
-                <h3 class="mb-4">Account Settings</h3>
+            <div class="card shadow-sm p-4 d-flex justify-center items" style="margin-top: 150px;">
+                <h4 class="mb-4">Account Settings</h4>
                 <div class="user-info mb-3">
                     <p><strong>Name:</strong> Ajith V</p>
                     <p><strong>empID:</strong> 614</p>
                 </div>
-                <button class="btn btn-danger logout-btn">Logout</button>
+                <a href="./Login.html" class="btn btn-danger logout-btn" src>Logout</a>
             </div>
         </div>
 
@@ -557,43 +674,12 @@
             });
         }
 
-        // DataTable for Expense Page
-        $(document).ready(function () {
-            $('#expenseTable').DataTable({
-                responsive: true,
-                language: {
-                    search: "_INPUT_",
-                    searchPlaceholder: "Search..."
-                }
-            });
-        });
-
-        // DataTable for Vendors Page
-        $(document).ready(function () {
-            $("#vendorTable").DataTable({
-                responsive: true,
-                language: {
-                    search: "_INPUT_",
-                    searchPlaceholder: "Search..."
-                }
-            })
-        })
-
-        // DataTable for Product/Category Page
-        $(document).ready(function () {
-            $("#productTable").DataTable({
-                responsive: true,
-                language: {
-                    search: "_INPUT_",
-                    searchPlaceholder: "Search..."
-                }
-            })
-        })
 
         async function addNewExpense(event) {
             event.preventDefault();
             const vendor = document.getElementById('vendorDropdown').value;
-            const categoryType = document.getElementById('categoryDropdown').value;
+            const typeofExpense = document.getElementById('categoryDropdown').value;
+            const vendorPerson = document.getElementById('vendorPerson').value;
             const contactNumber = document.getElementById('contactNumber').value;
             const quantity = document.getElementById('quantity').value;
             const price = document.getElementById('expense-price').value;
@@ -604,8 +690,9 @@
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
+                        typeofExpense,
                         vendor,
-                        categoryType,
+                        vendorPerson,
                         contactNumber,
                         quantity,
                         price,
@@ -616,6 +703,7 @@
                 const data = await response.json();
                 if (response.ok) {
                     alert("Expense added successfully")
+                    getAllExpense()
                 } else {
                     alert("Error:" + data.error || "Something went wrong")
                 }
@@ -630,7 +718,7 @@
         async function addNewCategory(event) {
             event.preventDefault();
 
-            const categoryType = document.getElementById('productCategory').value;
+            const typeofExpense = document.getElementById('productCategory').value;
             const vendor = document.getElementById('vendorProductCategory').value;
             const price = document.getElementById("productPrice").value;
 
@@ -639,7 +727,7 @@
                     method: 'POST',
                     headers: { 'Content-Type': 'Application/json' },
                     body: JSON.stringify({
-                        categoryType,
+                        typeofExpense,
                         vendor,
                         price
                     })
@@ -648,6 +736,7 @@
 
                 if (response.ok) {
                     alert("Category added successfully", data);
+                    getAllcategory()
                 } else {
                     alert("Error" + data.error || "Something went wrong")
                 }
@@ -663,21 +752,37 @@
         async function getAllcategory(event) {
             const response = await fetch('api/categories');
             const data = await response.json();
+            const table = document.getElementById('productTableBody');
+            table.innerHTML = "";
+
+            if ($.fn.DataTable.isDataTable('#productTable')) {
+                $('#productTable').DataTable().clear().destroy();
+            }
 
             data.forEach(item => {
                 //const date = item.createdAt.toLocaleDateString()
-                const { vendor, categoryType, price, createdAt } = item
+                const { typeofExpense, vendor, price, createdAt } = item
                 const date = new Date(createdAt).toLocaleDateString()
-                const table = document.getElementById('productTableBody')
                 const row = document.createElement('tr')
                 row.innerHTML = `
                 <td>${date}</td>
-                <td>${categoryType}</td>
+                <td>${typeofExpense}</td>
                 <td>${vendor}</td>
                 <td>${price}</td>
                 `;
 
                 table.appendChild(row);
+            });
+
+            // DataTable for Product/Category Page
+            $(document).ready(function () {
+                $("#productTable").DataTable({
+                    responsive: true,
+                    language: {
+                        search: "_INPUT_",
+                        searchPlaceholder: "Search..."
+                    }
+                })
             })
 
 
@@ -688,9 +793,9 @@
             event.preventDefault();
 
             const vendor = document.getElementById('vendorName').value;
-            const categoryType = document.getElementById('vendorProduct').value;
+            const typeofExpense = document.getElementById('vendorProduct').value;
+            const contactPerson = document.getElementById('vendorContactPerson').value;
             const contactNumber = document.getElementById('vendorContact').value;
-            const price = document.getElementById('vendorPrice').value;
             const address = document.getElementById('vendorAddress').value;
 
             try {
@@ -699,9 +804,9 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         vendor,
-                        categoryType,
+                        typeofExpense,
+                        contactPerson,
                         contactNumber,
-                        price: parseInt(price), // Optional: cast to int if needed
                         address
                     })
                 });
@@ -710,7 +815,7 @@
 
                 if (response.ok) {
                     alert("Vendor added successfully");
-                    // optionally update UI here
+                    getAllVendors()
                 } else {
                     alert("Error: " + (data.message || "Something went wrong"));
                 }
@@ -722,24 +827,40 @@
         async function getAllVendors() {
             const response = await fetch('/api/vendors');
             const data = await response.json();
+            const table = document.getElementById('vendorTableBody');
+            table.innerHTML = "";
+
+             if ($.fn.DataTable.isDataTable('#vendorTable')) {
+                $('#vendorTable').DataTable().clear().destroy();
+            }
 
             data.forEach(item => {
-                const { vendor, categoryType, contactNumber, price, address, createdAt } = item;
+                const { vendor, typeofExpense, contactPerson, contactNumber, address, createdAt } = item;
                 const date = new Date(createdAt).toLocaleDateString();
 
-                const table = document.getElementById('vendorTableBody');
                 const row = document.createElement('tr');
                 row.innerHTML = `
                 <td>${date}</td>
                 <td>${vendor}</td>
-                <td>${categoryType}</td>
-                <td>${price}</td>
+                <td>${typeofExpense}</td>
+                <td>${contactPerson}</td>
                 <td>${contactNumber}</td>
                 <td>${address}</td>
                 `;
 
                 table.appendChild(row)
             });
+
+            // DataTable for Vendors Page
+            $(document).ready(function () {
+                $("#vendorTable").DataTable({
+                    responsive: true,
+                    language: {
+                        search: "_INPUT_",
+                        searchPlaceholder: "Search..."
+                    }
+                })
+            })
 
 
         } getAllVendors();
@@ -748,74 +869,439 @@
         async function getAllExpense() {
             const response = await fetch('/api/expenses');
             const data = await response.json();
+            const table = document.getElementById('expenseTableBody');
+            table.innerHTML = "";
+
+            // Destroy existing DataTable instance if already initialized
+            if ($.fn.DataTable.isDataTable('#expenseTable')) {
+                $('#expenseTable').DataTable().clear().destroy();
+            }
 
             data.forEach(item => {
-                const { createdAt, vendor, contactNumber, categoryType, quantity, price, addedBy } = item;
+                const { id, createdAt, vendor, contactNumber, typeofExpense, vendorPerson, quantity, price, addedBy } = item;
                 const date = new Date(createdAt).toLocaleDateString();
 
-                const table = document.getElementById('expenseTableBody');
                 const row = document.createElement("tr");
-                row.innerHTML = `
+                row.innerHTML += `
                 <td>${date}</td>
                 <td>${vendor}</td>
+                <td>${typeofExpense}</td>
+                <td>${vendorPerson}</td>
                 <td>${contactNumber}</td>
-                <td>${categoryType}</td>
                 <td>${quantity}</td>
                 <td>${price}</td>
                 <td>${addedBy}</td>
-                <td><button onclick="updateExpense(this)" class="btn btn-sm btn-warning">Edit</button></td>
-                <td><button onclick="deleteExpense(this)" class="btn btn-sm btn-danger">Delete</button></td>`;
+                <td><button onclick="updateExpense(this)" 
+                    data-id="${id}" data-vendor="${vendor}" data-typeofexpense = "${typeofExpense}" data-vendorperson = "${vendorPerson}"
+                    data-contactnumber = "${contactNumber}" data-quantity = "${quantity}" data-price = "${price}" data-addedby = "${addedBy}"
+                     class="btn btn-sm btn-warning">Edit</button></td>
+                <td><button onclick="deleteExpense(this)" data-id="${id}" class="btn btn-sm btn-danger">Delete</button></td>`;
 
                 table.appendChild(row);
             });
 
-        } getAllExpense();
+            // DataTable for Expense Page
+            $(document).ready(function () {
+                $('#expenseTable').DataTable({
+                    responsive: true,
+                    language: {
+                        search: "_INPUT_",
+                        searchPlaceholder: "Search..."
+                    }
+                });
+            });
+
+        }
+        getAllExpense();
+        showTypewiseTotal();
 
 
-        async function getDropdown() {
+        function updateExpense(button) {
+            document.getElementById("expense-id").value = button.dataset.id
+            document.getElementById("vendorDropdown").value = button.dataset.vendor
+            document.getElementById("categoryDropdown").value = button.dataset.typeofexpense
+            document.getElementById("vendorPerson").value = button.dataset.vendorperson
+            document.getElementById("contactNumber").value = button.dataset.contactnumber
+            document.getElementById("quantity").value = button.dataset.quantity
+            document.getElementById("expense-price").value = button.dataset.price
+            document.getElementById("addedBy").value = button.dataset.addedby
+
+            const form = document.getElementById("expense-form");
+            form.onsubmit = function (event) {
+                event.preventDefault();
+                updateToDB()
+            };
+            const modal = new bootstrap.Modal(document.getElementById('addExpenseModal'));
+            modal.show()
+
+
+        }
+
+        async function updateToDB() {
+            const id = document.getElementById('expense-id').value;
+
+            const updatedExpense = {
+                typeofExpense: document.getElementById('categoryDropdown').value,
+                vendor: document.getElementById('vendorDropdown').value,
+                vendorPerson: document.getElementById('vendorPerson').value,
+                contactNumber: document.getElementById('contactNumber').value,
+                quantity: document.getElementById('quantity').value,
+                price: document.getElementById('expense-price').value,
+                addedBy: document.getElementById('addedBy').value
+            };
+
             try {
-                const response = await fetch('/api/get-categories-dropdown');
-                const data = await response.json();
-                const vendorDropdown = document.getElementById('vendorDropdown');
-                const categoryDropdown = document.getElementById('categoryDropdown');
-
-                vendorDropdown.innerHTML = `<option value="">Select Vendor</option>`;
-                categoryDropdown.innerHTML = `<option value="">Select Category</option>`;
-
-                const vendorSet = new Set();
-                const categorySet = new Set();
-                data.forEach(item => {
-                    if (!vendorSet.has(item.vendor)) {
-                        vendorSet.add(item.vendor);
-                        const vendorOption = document.createElement('option');
-                        vendorOption.name = item.vendor;
-                        vendorOption.value = item.vendor;
-                        vendorDropdown.appendChild(vendorOption);
-                    }
-
-                    if (!categorySet.has(item.categoryType)) {
-                        categorySet.add(item.categoryType);
-                        const categoryOption = document.createElement("option");
-                        categoryOption.name = item.categoryType;
-                        categoryOption.value = item.categoryType
-                        categoryDropdown.appendChild(categoryOption)
-                    }
+                const res = await fetch(`/api/expenses/${id}`, {
+                    method: 'PATCH',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(updatedExpense)
                 })
+                if (res.ok) {
+                    const modalElement = document.getElementById('addExpenseModal')
+                    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                    modalInstance.hide()
+                    getAllExpense();
+                } else {
+                    alert("Failed to update expense")
+                }
+
             }
             catch (error) {
-                console.error('Error loading dropdowns:', error);
+                console.log(error);
+                alert("Something went wrong")
             }
-        }; getDropdown();
+        }
+
+
+        async function deleteExpense(button) {
+            const id = button.getAttribute('data-id');
+            try {
+                const res = await fetch(`/api/expenses/${id}`, {
+                    method: "DELETE"
+                })
+
+                if (res.ok) {
+                    alert("Expense deleted")
+                    getAllExpense()
+                } else {
+                    alert("Failed to delete expense")
+                }
+            }
+            catch (error) {
+                console.log(error)
+                alert("error while deleting expense")
+            }
+        }
 
 
 
-        document.getElementById('add-expense-btn').addEventListener('click', function () {
-            const form = document.getElementById('expense-form');
-            form.style.display = form.style.display === 'none' ? 'block' : 'none';
-        });
+
+        /*      async function getDropdown() {
+                  try {
+                      const response = await fetch('/api/get-categories-dropdown');
+                      const data = await response.json();
+                      const vendorDropdown = document.getElementById('vendorDropdown');
+                      const categoryDropdown = document.getElementById('categoryDropdown');
+      
+                      vendorDropdown.innerHTML = `<option value="">Select Vendor</option>`;
+                      categoryDropdown.innerHTML = `<option value="">Select Category</option>`;
+      
+                      const vendorSet = new Set();
+                      const categorySet = new Set();
+                      data.forEach(item => {
+                          if (!vendorSet.has(item.vendor)) {
+                              vendorSet.add(item.vendor);
+                              const vendorOption = document.createElement('option');
+                              vendorOption.name = item.vendor;
+                              vendorOption.value = item.vendor;
+                              vendorDropdown.appendChild(vendorOption);
+                          }
+      
+                          if (!categorySet.has(item.categoryType)) {
+                              categorySet.add(item.categoryType);
+                              const categoryOption = document.createElement("option");
+                              categoryOption.name = item.categoryType;
+                              categoryOption.value = item.categoryType
+                              categoryDropdown.appendChild(categoryOption)
+                          }
+                      })
+                  }
+                  catch (error) {
+                      console.error('Error loading dropdowns:', error);
+                  }
+              }; getDropdown();
+      
+      */
+
+        //document.getElementById('add-expense-btn').addEventListener('click', function () {
+        //    const form = document.getElementById('expense-form');
+        //    form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        //});
 
         // document.addEventListener("DOMContentLoaded", getDropdown)
 
+        async function showTypewiseTotal() {
+            try {
+                const res = await fetch('/api/expenses');
+                const data = await res.json()
+
+                const totals = {
+                    Milk: 0,
+                    Water: 0,
+                    Snacks: 0,
+                    EB: 0,
+                    Internet: 0,
+                    Cleaning: 0,
+                    Others: 0
+                }
+
+                data.forEach(exp => {
+                    const type = exp.typeofExpense;
+                    const price = Number(exp.price);
+
+                    if (totals.hasOwnProperty(type)) {
+                        totals[type] += price
+                    }
+                })
+
+                document.getElementById('milk-total-cost').textContent = totals.Milk || 0;
+                document.getElementById('water-total-cost').textContent = totals.Water || 0;
+                document.getElementById('snacks-total-cost').textContent = totals.Snacks || 0
+                document.getElementById('eb-total-cost').textContent = totals.EB || 0;
+                document.getElementById('internet-total-cost').textContent = totals.Internet || 0;
+                document.getElementById('cleaning-total-cost').textContent = totals.Cleaning || 0;
+                document.getElementById('others-total-cost').textContent = totals.Others || 0;
+            }
+            catch (error) {
+                console.error("Failed to fetch expense totals", error);
+            }
+        }
+
+        var originalData = [];
+        var chart;
+
+        async function fetchExpenseData() {
+            const response = await fetch('/api/expenses');
+            return await response.json();
+        }
+
+        function groupAndSum(data) {
+            return Array.from(
+                d3.rollup(data, v => d3.sum(v, d => d.price), d => d.typeofExpense),
+                ([typeofExpense, price]) => ({ typeofExpense, price })
+            );
+        }
+
+        function populateCategoryFilter(data) {
+            const select = document.getElementById('categoryFilter');
+            const categories = Array.from(new Set(data.map(d => d.typeofExpense)));
+            categories.forEach(cat => {
+                const option = document.createElement('option');
+                option.value = cat;
+                option.textContent = cat;
+                select.appendChild(option);
+            });
+        }
+
+        function createExpenseChart(data) {
+            const width = 640;
+            const height = 400;
+            const marginTop = 20;
+            const marginRight = 0;
+            const marginBottom = 30;
+            const marginLeft = 60;
+            const typeofExpense = ["Snacks", "Water", "Milk", "EB", "Internet", "Cleaning", "Others"]
+            const x = d3.scaleBand()
+                .domain(typeofExpense)
+                .range([marginLeft, width - marginRight])
+                .padding(0.1);
+
+            const y = d3.scaleLinear()
+                .domain([0, d3.max(data, d => d.price)]).nice()
+                .range([height - marginBottom, marginTop]);
+
+            const xAxis = d3.axisBottom(x).tickSizeOuter(0);
+
+            const svg = d3.create("svg")
+                .attr("viewBox", [0, 0, width, height])
+                .attr("style", `max-width: ${width}px; height: auto; font: 10px sans-serif; overflow: visible;`);
+
+            const bar = svg.append("g")
+                .attr("fill", "#4CAF50")
+                .selectAll("rect")
+                .data(data)
+                .join("rect")
+                .style("mix-blend-mode", "multiply")
+                .attr("x", d => x(d.typeofExpense))
+                .attr("y", d => y(d.price))
+                .attr("height", d => y(0) - y(d.price))
+                .attr("width", x.bandwidth());
+
+            const gx = svg.append("g")
+                .attr("transform", `translate(0,${height - marginBottom})`)
+                .call(xAxis);
+
+            const gy = svg.append("g")
+                .attr("transform", `translate(${marginLeft},0)`)
+                .call(d3.axisLeft(y).ticks(null, "s"))
+                .call(g => g.select(".domain").remove());
+
+            svg.append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("x", -height / 2)
+                .attr("y", 15)
+                .attr("dy", "-1em")
+                .attr("text-anchor", "middle")
+                .attr("fill", "black")
+                .text("Price (₹)");
+
+            return Object.assign(svg.node(), {
+                update(order) {
+                    data.sort(order);
+                    x.domain(data.map(d => d.typeofExpense));
+
+                    const t = svg.transition().duration(750);
+
+                    bar.data(data, d => d.typeofExpense)
+                        .order()
+                        .transition(t)
+                        .delay((d, i) => i * 20)
+                        .attr("x", d => x(d.typeofExpense));
+
+                    gx.transition(t)
+                        .call(xAxis)
+                        .selectAll(".tick")
+                        .delay((d, i) => i * 20);
+                }
+            });
+        }
+
+        function applyFilters() {
+            const selectedCategory = document.getElementById('categoryFilter').value;
+            const minPrice = parseFloat(document.getElementById('minPrice').value) || 0;
+            const maxPrice = parseFloat(document.getElementById('maxPrice').value) || Infinity;
+
+            let filtered = originalData;
+            if (selectedCategory !== "All") {
+                filtered = filtered.filter(d => d.typeofExpense === selectedCategory);
+            }
+
+            const grouped = groupAndSum(filtered).filter(d => d.price >= minPrice && d.price <= maxPrice);
+
+            document.getElementById('chart-container').innerHTML = '';
+            chart = createExpenseChart(grouped);
+            document.getElementById('chart-container').appendChild(chart);
+        }
+
+        function sortByPrice() {
+            chart.update((a, b) => b.price - a.price);
+        }
+
+        async function init() {
+            const data = await fetchExpenseData();
+            originalData = data;
+            populateCategoryFilter(data);
+
+            const grouped = groupAndSum(data);
+            chart = createExpenseChart(grouped);
+            document.getElementById('chart-container').appendChild(chart);
+        }
+
+        init();
+
+        let fullExpenseData = [];
+
+        async function fetchData() {
+            const response = await fetch('/api/expenses'); // Expecting: [{ date: "2025-04-01", price: 100, ... }, ...]
+            const data = await response.json();
+            fullExpenseData = data.map(d => ({
+                ...d,
+                date: new Date(d.createdAt)
+            }));
+            populateMonthOptions(fullExpenseData);
+            renderLineChart();
+        }
+
+        function populateMonthOptions(data) {
+            const monthSet = new Set(data.map(d => `${d.date.getFullYear()}-${(d.date.getMonth() + 1).toString().padStart(2, '0')}`));
+            const select = document.getElementById("monthFilter");
+            monthSet.forEach(month => {
+                const option = document.createElement("option");
+                option.value = month;
+                option.text = month;
+                select.appendChild(option);
+            });
+        }
+
+        function renderLineChart() {
+            const selectedMonth = document.getElementById("monthFilter").value;
+            const filtered = fullExpenseData.filter(d => {
+                const m = `${d.date.getFullYear()}-${(d.date.getMonth() + 1).toString().padStart(2, '0')}`;
+                return m === selectedMonth;
+            });
+
+            // Aggregate by date
+            const dailyTotals = d3.rollups(
+                filtered,
+                v => d3.sum(v, d => d.price),
+                d => d3.timeDay(d.date)
+            ).map(([date, sum]) => ({ date, sum }));
+
+            // Sort by date
+            dailyTotals.sort((a, b) => a.date - b.date);
+
+            // Setup SVG
+            const margin = { top: 20, right: 30, bottom: 30, left: 60 };
+            const width = 500;
+            const height = 500;
+
+            d3.select("#line-chart-container").selectAll("*").remove(); // Clear previous
+
+            const svg = d3.select("#line-chart-container")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height);
+
+            const x = d3.scaleTime()
+                .domain(d3.extent(dailyTotals, d => d.date))
+                .range([margin.left, width - margin.right]);
+
+            const y = d3.scaleLinear()
+                .domain([0, d3.max(dailyTotals, d => d.sum)]).nice()
+                .range([height - margin.bottom, margin.top]);
+
+            const line = d3.line()
+                .x(d => x(d.date))
+                .y(d => y(d.sum));
+
+            svg.append("g")
+                .attr("transform", `translate(0,${height - margin.bottom})`)
+                .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%d")));
+
+            svg.append("g")
+                .attr("transform", `translate(${margin.left},0)`)
+                .call(d3.axisLeft(y).ticks(5).tickFormat(d => `₹${d}`));
+
+            svg.append("path")
+                .datum(dailyTotals)
+                .attr("fill", "none")
+                .attr("stroke", "#2196F3")
+                .attr("stroke-width", 2)
+                .attr("d", line);
+
+            svg.selectAll("circle")
+                .data(dailyTotals)
+                .enter()
+                .append("circle")
+                .attr("cx", d => x(d.date))
+                .attr("cy", d => y(d.sum))
+                .attr("r", 3)
+                .attr("fill", "#FF5722")
+                .append("title")
+                .text(d => `₹${d.sum} on ${d3.timeFormat("%Y-%m-%d")(d.date)}`);
+        }
+
+        fetchData();
 
     </script>
 
