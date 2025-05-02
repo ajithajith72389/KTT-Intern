@@ -16,7 +16,7 @@
     <div class="container d-flex justify-content-center align-items-center min-vh-100">
         <div class="card shadow p-4" style="width: 100%; max-width: 400px;">
             <h3 class="text-center mb-4">Login</h3>
-            <form>
+            <form onsubmit="moveToDashboard(event)">
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
                     <input type="text" class="form-control" id="name" name="name" required>
@@ -35,6 +35,42 @@
             </form>
         </div>
     </div>
+
+
+    <script>
+        async function moveToDashboard(event) {
+                event.preventDefault(); 
+
+                const name = document.getElementById('name').value;
+                const empID = document.getElementById('empID').value;
+                const password = document.getElementById('password').value;
+
+                try {
+                    const res = await fetch('/api/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ name, empID, password })
+                    });
+
+                    const data = await res.json();
+
+                    if (res.ok) {
+                        console.log("Login Success", data);
+                        localStorage.setItem("token", data.token);
+                        window.location.href = "./expenseTracker.html"; 
+                    } else {
+                       
+                        alert(data.message || "Login failed");
+                    }
+                } catch (error) {
+                    console.error("Login fetch error:", error);
+                    alert("Something went wrong. Please try again.");
+                }
+            }
+
+    </script>
 
 </body>
 </html>
