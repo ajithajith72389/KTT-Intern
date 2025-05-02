@@ -37,16 +37,6 @@ router.get("/categories", async (req, res) => {
     }
 });
 
-// Get vendor and categoryType for dropdown
-router.get('/get-categories-dropdown', async (req, res) => {
-    try {
-        const categoriesDropdown = await categories.findAll({
-            attributes: ["typeofExpense", "vendor"]
-        });
-        res.json(categoriesDropdown);
-    } catch (error) {
-        res.status(500).json({ error: "Failed to fetch categories dropdown" });
-    }
-});
+
 
 module.exports = router;
