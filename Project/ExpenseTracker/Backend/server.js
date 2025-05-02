@@ -25,7 +25,7 @@ app.use("/api", vendorRoutes);
 
 
 app.get("/", (req, res) =>{
-    res.sendFile(path.join(__dirname, "../Frontend", "../Frontend/expenseTracker.html"));
+    res.sendFile(path.join(__dirname, "../Frontend", "../Frontend/Login.html"));
 })
 
 app.listen(PORT, () => {
