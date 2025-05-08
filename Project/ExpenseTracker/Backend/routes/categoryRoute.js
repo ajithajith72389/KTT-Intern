@@ -3,14 +3,14 @@ const router = express.Router();
 const { categories } = require("../models");
 
 // Get all categories
-router.get("/get-category", async (req, res) => {
-    try {
-        const getAllCategory = await categories.findAll();
-        res.status(200).json(getAllCategory);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
+// router.get("/get-category", async (req, res) => {
+//     try {
+//         const getAllCategory = await categories.findAll();
+//         res.status(200).json(getAllCategory);
+//     } catch (error) {
+//         res.status(500).json({ error: error.message });
+//     }
+// });
 
 // Add a new category
 router.post("/categories", async (req, res) => {
