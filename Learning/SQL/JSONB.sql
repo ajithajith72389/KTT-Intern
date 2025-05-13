@@ -339,18 +339,23 @@ WHERE
     );
 
 -- SELECT * FROM persons;
-with cte as ( SELECT lastname from persons )
-SELECT * FROM cte;
+with cte as ( SELECT lastname from persons ) SELECT * FROM cte;
 
-with sec_cte as ( SELECT * FROM orders )
-SELECT * FROM sec_cte;
-
+with sec_cte as ( SELECT * FROM orders ) SELECT * FROM sec_cte;
 
 SELECT * from products;
 
-
-with rec_cte (id, name, age, address) as 
-( SELECT id, name, age, address FROM persons WHERE address = 'Namakkal' 
-UNION ALL
-SELECT id, name, age, address FROM persons WHERE age > 30 )
-SELECT * from rec_cte;
+with
+    rec_cte (id, name, age, address) as (
+        SELECT id, name, age, address
+        FROM persons
+        WHERE
+            address = 'Namakkal'
+        UNION ALL
+        SELECT id, name, age, address
+        FROM persons
+        WHERE
+            age > 30
+    )
+SELECT *
+from rec_cte;
