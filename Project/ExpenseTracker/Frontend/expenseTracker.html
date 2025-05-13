@@ -505,14 +505,14 @@
 
                         <div class="modal-body row g-3">
                             <div class="col-md-6">
-                                <label for="vendorName" class="form-label">Vendor</label>
-                                <select class="form-select" id="vendorName" required>
+                                <label for="vendorProduct" class="form-label">Type of Expense</label>
+                                <select class="form-select" id="vendorProduct" required>
                                 </select>
                             </div>
 
                             <div class="col-md-6">
-                                <label for="vendorProduct" class="form-label">Type of Expense</label>
-                                <select class="form-select" id="vendorProduct" required>
+                                <label for="vendorName" class="form-label">Vendor</label>
+                                <select class="form-select" id="vendorName" required>
                                 </select>
                             </div>
 
@@ -1575,27 +1575,27 @@
         const vendorNameSelect = document.getElementById('vendorName');
         const vendorProductSelect = document.getElementById('vendorProduct');
 
-        vendorNameSelect.addEventListener("change", function () {
-            const selectedVendor = vendorNameSelect.value.trim();
-            if (!selectedVendor) return;
+        vendorProductSelect.addEventListener("change", function () {
+            const selectedVendorProduct = vendorProductSelect.value.trim();
+            if (!selectedVendorProduct) return;
 
             fetch("/api/categories")
                 .then(response => response.json())
                 .then(data => {
                     const filteredCategories = data.filter(
-                        item => item.vendor === selectedVendor
+                        item => item.typeofExpense === selectedVendorProduct
                     );
 
-                    vendorProductSelect.innerHTML = `<option value="">Select</option>`;
+                    vendorNameSelect.innerHTML = `<option value="">Select</option>`;
                  //vendorProductSelect.innerHTML = ``;
 
-                    const uniqueTypes = [...new Set(filteredCategories.map(item => item.typeofExpense))];
+                    const uniqueTypes = [...new Set(filteredCategories.map(item => item.vendor))];
 
                     uniqueTypes.forEach(type => {
                         const option = document.createElement("option");
                         option.value = type;
                         option.textContent = type;
-                        vendorProductSelect.appendChild(option);
+                        vendorNameSelect.appendChild(option);
                     });
                 })
                 .catch(error => console.log("Error while loading typeofExpense options:", error));
