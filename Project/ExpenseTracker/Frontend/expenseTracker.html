@@ -413,7 +413,8 @@
 
                             <div class="col-md-6">
                                 <label for="vendorPerson" class="form-label">Contact Person</label>
-                                <input type="text" class="form-control" name="vendorPerson" id="vendorPerson" required readonly>
+                                <input type="text" class="form-control" name="vendorPerson" id="vendorPerson" required
+                                    readonly>
                             </div>
 
                             <div class="col-md-6">
@@ -441,7 +442,8 @@
 
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-success">Add Expense</button>
-                            <button type="button" class="btn btn-secondary reset" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-secondary reset"
+                                data-bs-dismiss="modal">Cancel</button>
                         </div>
                     </form>
                 </div>
@@ -451,9 +453,9 @@
         <div class="expense-history scrollable-table" id="expenseHistory">
             <!-- Button to trigger modal -->
             <div class="fixed-header">
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addExpenseModal">
-                        <i class="bi bi-plus-circle me-1"></i> Add New
-                    </button>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addExpenseModal">
+                    <i class="bi bi-plus-circle me-1"></i> Add New
+                </button>
 
             </div>
 
@@ -488,9 +490,9 @@
     <div class="inactive content" id="Vendors">
         <!-- Top Heading + Add Button -->
         <div class="fixed-header">
-                <button class="btn btn-primary mt-2 mt-sm-0" data-bs-toggle="modal" data-bs-target="#addVendorModal">
-                    <i class="bi bi-plus-circle me-1"></i>Add New
-                </button>
+            <button class="btn btn-primary mt-2 mt-sm-0" data-bs-toggle="modal" data-bs-target="#addVendorModal">
+                <i class="bi bi-plus-circle me-1"></i>Add New
+            </button>
         </div>
 
         <!-- Modal for Adding Vendor -->
@@ -534,7 +536,8 @@
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-success">Add Vendor</button>
-                            <button type="button" class="btn btn-secondary reset" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-secondary reset"
+                                data-bs-dismiss="modal">Cancel</button>
                         </div>
                     </form>
                 </div>
@@ -567,9 +570,9 @@
     <div class="inactive content" id="Categories">
         <!-- Top Heading + Add Button -->
         <div class="fixed-header">
-                <button class="btn btn-primary mt-2 mt-sm-0" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
-                    <i class="bi bi-plus-circle me-1"></i>Add New
-                </button>
+            <button class="btn btn-primary mt-2 mt-sm-0" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+                <i class="bi bi-plus-circle me-1"></i>Add New
+            </button>
         </div>
 
         <!-- Modal for Adding Category -->
@@ -603,7 +606,8 @@
 
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-success">Add Type of Expense</button>
-                            <button type="button" class="btn btn-secondary reset" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-secondary reset"
+                                data-bs-dismiss="modal">Cancel</button>
                         </div>
                     </form>
                 </div>
@@ -632,41 +636,41 @@
     </div>
 
     <!-- Sidebar -->
-        <div class="sidebar d-flex justify-content-between flex-row" id="sidebar">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <a href="#Dashboard" onclick="showContent('Dashboard')" class="a-inactive a-active"><i
-                    class="bi bi-speedometer2" data-bs-toggle="tab"></i>Dashboard</a>
-            <a href="#Expenses" onclick="showContent('Expenses')" class="a-inactive"><i
-                    class="bi bi-cash-stack"></i>Expenses</a>
-            <a href="#Vendors" onclick="showContent('Vendors')" class="a-inactive"><i
-                    class="bi bi-people-fill"></i>Vendors</a>
-            <a href="#Categories" onclick="showContent('Categories')" class="a-inactive"><i
-                    class="bi bi-tags-fill"></i>Type of Expense</a>
-            <div class="dropdown mt-1 custom-dropdown">
-                <a class="dropdown-toggle settings-toggle" href="#" role="button" id="settingsDropdown"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-gear-fill me-2"></i> Settings
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="settingsDropdown">
-                    <li><span class="dropdown-item-text fw-semibold text-primary" id="empName"></span></li>
-                    <li><span class="dropdown-item-text fw-semibold text-success" id="empID"></span></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a href="./Login.html" class="dropdown-item text-danger fw-semibold logout-btn"><i
-                                class="bi bi-box-arrow-right me-2"></i> Logout</a></li>
-                </ul>
-            </div>
-
+    <div class="sidebar d-flex justify-content-between flex-row" id="sidebar">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <a href="#Dashboard" onclick="showContent('Dashboard')" class="a-inactive a-active"><i
+                class="bi bi-speedometer2" data-bs-toggle="tab"></i>Dashboard</a>
+        <a href="#Expenses" onclick="showContent('Expenses')" class="a-inactive"><i
+                class="bi bi-cash-stack"></i>Expenses</a>
+        <a href="#Vendors" onclick="showContent('Vendors')" class="a-inactive"><i
+                class="bi bi-people-fill"></i>Vendors</a>
+        <a href="#Categories" onclick="showContent('Categories')" class="a-inactive"><i class="bi bi-tags-fill"></i>Type
+            of Expense</a>
+        <div class="dropdown mt-1 custom-dropdown">
+            <a class="dropdown-toggle settings-toggle" href="#" role="button" id="settingsDropdown"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-gear-fill me-2"></i> Settings
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="settingsDropdown">
+                <li><span class="dropdown-item-text fw-semibold text-primary" id="empName"></span></li>
+                <li><span class="dropdown-item-text fw-semibold text-success" id="empID"></span></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a href="./Login.html" class="dropdown-item text-danger fw-semibold logout-btn"><i
+                            class="bi bi-box-arrow-right me-2"></i> Logout</a></li>
+            </ul>
         </div>
+
+    </div>
 
     </div>
 
@@ -947,7 +951,7 @@
             document.getElementById("quantity").value = button.dataset.quantity
             document.getElementById("expense-price").value = button.dataset.price
             document.getElementById("addedBy").value = button.dataset.addedby
-           // document.getElementById('addExpenseLabel').innerHTML = `<h5 class="modal-title" id="addExpenseLabel">Update Expense</h5>`
+            // document.getElementById('addExpenseLabel').innerHTML = `<h5 class="modal-title" id="addExpenseLabel">Update Expense</h5>`
 
             const form = document.getElementById("expense-form");
             form.onsubmit = function (event) {
@@ -956,7 +960,7 @@
             };
             const modal = new bootstrap.Modal(document.getElementById('addExpenseModal'));
             modal.show()
-            
+
 
         }
 
@@ -1394,7 +1398,7 @@
         // Helper functions for populating dropdowns
         function populateExpenseCategoryFilter(data) {
             const select = document.getElementById('categoryDropdown');
-             select.innerHTML = `<option value="">Select</option>`;
+            select.innerHTML = `<option value="">Select</option>`;
             // select.innerHTML = ''; // Clear existing options
             const categories = new Set(data.map(d => d.typeofExpense));
             categories.forEach(cat => {
@@ -1405,7 +1409,7 @@
             });
             const select1 = document.getElementById('vendorDropdown');
             select1.innerHTML = `<option value="">Select</option>`;
-           //select1.innerHTML = ''
+            //select1.innerHTML = ''
             const vendors = new Set(data.map(d => d.vendor));
             vendors.forEach(v => {
                 const option = document.createElement('option');
@@ -1413,13 +1417,13 @@
                 option.textContent = v;
                 select1.appendChild(option);
             });
-            
+
         }
 
         function populateVendorCategoryFilter(data) {
             const select = document.getElementById('vendorProduct');
             select.innerHTML = `<option value="">Select</option>`;
-          //select.innerHTML = '';
+            //select.innerHTML = '';
             const categories = new Set(data.map(d => d.typeofExpense));
             categories.forEach(cat => {
                 const option = document.createElement('option');
@@ -1587,7 +1591,7 @@
                     );
 
                     vendorNameSelect.innerHTML = `<option value="">Select</option>`;
-                 //vendorProductSelect.innerHTML = ``;
+                    //vendorProductSelect.innerHTML = ``;
 
                     const uniqueTypes = [...new Set(filteredCategories.map(item => item.vendor))];
 
