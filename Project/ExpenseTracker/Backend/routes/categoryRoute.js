@@ -39,7 +39,7 @@ router.get("/categories", async (req, res) => {
 });
 
 
-router.patch('/api/categories/:id', async (req, res) => {
+router.patch('/categories/:id', async (req, res) => {
     const { typeofExpense, vendor, price } = req.body;
     try {
         const updatedcategory = await categories.update({ typeofExpense, vendor, price },
@@ -56,9 +56,9 @@ router.patch('/api/categories/:id', async (req, res) => {
 })
 
 
-router.delete("/categories", async (req, res) => {
+router.delete("/categories/:id", async (req, res) => {
     try {
-        const deletedcategory = await categories.delete({ where: { id: req.params.id } });
+        const deletedcategory = await categories.destroy({ where: { id: req.params.id } });
         if (!deletedcategory) {
             return res.status(404).json({ message: "Category not found" });
         }
