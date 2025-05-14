@@ -157,7 +157,9 @@
         #expenseTable td,
         #vendorTable td,
         #productTable td {
-            text-align: left;
+            width: max-content !important;
+            white-space: nowrap;
+
         }
 
         .dropdown-menu {
@@ -499,7 +501,8 @@
         <div class="modal fade" id="addVendorModal" tabindex="-1" aria-labelledby="addVendorLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form onsubmit="addNewVendor(event)">
+                    <form onsubmit="addNewVendor(event)" id="vendor-form">
+                        <input type="hidden" id="vendor-id">
                         <div class="modal-header">
                             <h5 class="modal-title" id="addVendorLabel">Add Vendor</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -557,6 +560,8 @@
                         <th>Contact Person</th>
                         <th>Contact Number</th>
                         <th>Address</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
                     </thead>
                     <tbody id="vendorTableBody">
 
@@ -623,6 +628,8 @@
                         <th>Type of Expense</th>
                         <th>Vendor Name</th>
                         <th>Price</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
                     </thead>
                     <tbody id="productTableBody">
 
@@ -735,6 +742,7 @@
             catch (error) {
                 alert("Fetch error:", error.message)
             }
+            event.target.reset();
         }
 
 
@@ -785,7 +793,7 @@
 
             data.forEach(item => {
                 //const date = item.createdAt.toLocaleDateString()
-                const { typeofExpense, vendor, price, createdAt } = item
+                const {id, typeofExpense, vendor, price, createdAt } = item
                 const date = new Date(createdAt).toLocaleDateString("sv-SE")
                 const row = document.createElement('tr')
                 row.innerHTML = `
@@ -793,6 +801,11 @@
                 <td>${typeofExpense}</td>
                 <td>${vendor}</td>
                 <td>${price}</td>
+                <td><button onclick="updateExpense(this)"
+                    data-id="${id}" data-typeofexpense = "${typeofExpense}" data-vendor = "${vendor}"
+                    data-price = "${price}""
+                     class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></button></td>
+                <td><button onclick="deleteExpense(this)" data-id="${id}" class="btn btn-sm btn-danger"><i class="bi bi-trash3"></i></button></td>
                 `;
 
                 table.appendChild(row);
@@ -847,6 +860,7 @@
             } catch (error) {
                 alert("Fetch error: " + error.message);
             }
+            event.target.reset();
         }
 
         async function getAllVendors() {
@@ -860,7 +874,7 @@
             }
 
             data.forEach(item => {
-                const { vendor, typeofExpense, contactPerson, contactNumber, address, createdAt } = item;
+                const { id, vendor, typeofExpense, contactPerson, contactNumber, address, createdAt } = item;
                 const date = new Date(createdAt).toLocaleDateString("sv-SE");
 
                 const row = document.createElement('tr');
@@ -871,6 +885,11 @@
                 <td>${contactPerson}</td>
                 <td>${contactNumber}</td>
                 <td>${address}</td>
+                <td><button onclick="updateVendor(this)"
+                    data-id="${id}" data-vendor="${vendor}" data-typeofexpense = "${typeofExpense}" data-contactperson = "${contactPerson}"
+                    data-contactnumber = "${contactNumber}" data-address = "${address}" 
+                     class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></button></td>
+                <td><button class="btn btn-sm btn-danger"><i class="bi bi-trash3"></i></button></td>
                 `;
 
                 table.appendChild(row)
@@ -996,6 +1015,58 @@
             catch (error) {
                 console.log(error);
                 alert("Something went wrong")
+            }
+        }
+
+        function updateVendor(button) {
+            document.getElementById('vendor-id').value = button.dataset.id;
+            document.getElementById('vendorName').value = button.dataset.vendor;
+            document.getElementById('vendorProduct').value = button.dataset.typeofexpense;
+            document.getElementById('vendorContactPerson').value = button.dataset.contactperson;
+            document.getElementById('vendorContact').value = button.dataset.contactnumber;
+            document.getElementById('vendorAddress').value = button.dataset.address;
+
+            const form = document.getElementById("vendor-form");
+            form.onsubmit = function (event) {
+                event.preventDefault();
+                updateVendorDB();
+            };
+            const modal = new bootstrap.Modal(document.getElementById('addVendorModal'));
+            modal.show();
+        }
+
+        async function updateVendorDB() {
+            const id = document.getElementById('vendor-id').value;
+
+            const updatedVendor = {
+                typeofExpense: document.getElementById('vendorProduct').value,
+                vendor: document.getElementById('vendorName').value,
+                contactPerson: document.getElementById('vendorContactPerson').value,
+                contactNumber: document.getElementById('vendorContact').value,
+                address: document.getElementById('vendorAddress').value
+            };
+
+            try {
+                const res = await fetch(`/api/vendors/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updatedVendor)
+                })
+
+                if (res.ok) {
+                    const modalElement = document.getElementById('addVendorModal');
+                    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                    modalInstance.hide();
+                    getAllVendors();
+                } else {
+                    alert('Failed to update vendor');
+                }
+
+            }
+
+            catch (error) {
+                console.log(error);
+                alert('Something went wrong')
             }
         }
 
@@ -1313,7 +1384,7 @@
             document.getElementById('empName').innerText = `Name: ${name}`;
             document.getElementById('empID').innerText = `EMP ID: ${empID}`
             const addedByInput = document.getElementById('addedBy');
-            if (addedByInput) addedByInput.value = empID;
+            if (addedByInput) addedByInput.value = name;
 
         };
 
