@@ -159,7 +159,7 @@
         #productTable td {
             width: max-content !important;
             white-space: nowrap;
-
+            text-align: left;
         }
 
         .dropdown-menu {
@@ -733,6 +733,9 @@
                 const data = await response.json();
                 if (response.ok) {
                     alert("Expense added successfully")
+                    const modalElement = document.getElementById('addExpenseModal')
+                    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                    modalInstance.hide()
                     getAllExpense()
                 } else {
                     alert("Error:" + data.error || "Something went wrong")
@@ -742,7 +745,13 @@
             catch (error) {
                 alert("Fetch error:", error.message)
             }
-            event.target.reset();
+            document.getElementById('vendorDropdown').value = "";
+            document.getElementById('categoryDropdown').value ="";
+            document.getElementById('vendorPerson').value="";
+            document.getElementById('contactNumber').value="";
+            document.getElementById('quantity').value="";
+            document.getElementById('expense-price').value="";
+            
         }
 
 
@@ -778,7 +787,7 @@
                 alert("Fetch error:", error.message)
             }
 
-            event.target.reset()
+            //event.target.reset()
         }
 
         async function getAllcategory(event) {
@@ -793,7 +802,7 @@
 
             data.forEach(item => {
                 //const date = item.createdAt.toLocaleDateString()
-                const {id, typeofExpense, vendor, price, createdAt } = item
+                const { id, typeofExpense, vendor, price, createdAt } = item
                 const date = new Date(createdAt).toLocaleDateString("sv-SE")
                 const row = document.createElement('tr')
                 row.innerHTML = `
@@ -801,11 +810,11 @@
                 <td>${typeofExpense}</td>
                 <td>${vendor}</td>
                 <td>${price}</td>
-                <td><button onclick="updateExpense(this)"
+                <td><button onclick="updatetypeofExpense(this)"
                     data-id="${id}" data-typeofexpense = "${typeofExpense}" data-vendor = "${vendor}"
-                    data-price = "${price}""
+                    data-price = "${price}"
                      class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></button></td>
-                <td><button onclick="deleteExpense(this)" data-id="${id}" class="btn btn-sm btn-danger"><i class="bi bi-trash3"></i></button></td>
+                <td><button onclick="deletetypeofExpense(this)" data-id="${id}" class="btn btn-sm btn-danger"><i class="bi bi-trash3"></i></button></td>
                 `;
 
                 table.appendChild(row);
@@ -860,7 +869,7 @@
             } catch (error) {
                 alert("Fetch error: " + error.message);
             }
-            event.target.reset();
+            //event.target.reset();
         }
 
         async function getAllVendors() {
@@ -889,7 +898,7 @@
                     data-id="${id}" data-vendor="${vendor}" data-typeofexpense = "${typeofExpense}" data-contactperson = "${contactPerson}"
                     data-contactnumber = "${contactNumber}" data-address = "${address}" 
                      class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></button></td>
-                <td><button class="btn btn-sm btn-danger"><i class="bi bi-trash3"></i></button></td>
+                <td><button onclick="deleteVendor(this)" data-id= "${id}" class="btn btn-sm btn-danger" ><i class="bi bi-trash3"></i></button></td>
                 `;
 
                 table.appendChild(row)
@@ -1093,7 +1102,47 @@
             }
         }
 
+        async function deleteVendor(button) {
+            const id = button.getAttribute('data-id');
+            const confirmDelete = confirm("Are you want to delete this vendor");
+            if (!confirmDelete) return;
+            try {
+                const res = await fetch(`/api/vendors/${id}`, {
+                    method: "DELETE"
+                })
 
+                if (res.ok) {
+                    alert("Vendor deleted");
+                    getAllVendors();
+                } else {
+                    alert("Failed to delete vendor");
+                }
+
+            }
+            catch (error) {
+                console.log(error);
+                alert("error while deleting vendor")
+            }
+        }
+
+        async function deletetypeofExpense(button) {
+            const id = button.getAttribute('data-id');
+            const confirmDelete = confirm("Are you want to delete this type of expense");
+            if (!confirmDelete) return;
+            try {
+                const res = await fetch(`/api/categories/${id}`, {
+                    method: "DELETE"
+                })
+                if (res.ok) {
+                    alert("Type of expense deleted");
+                    getAllcategory()
+                }
+            }
+            catch (error) {
+                console.log(error);
+                alert("error while deleting type of expense")
+            }
+        }
 
 
         /*      async function getDropdown() {
