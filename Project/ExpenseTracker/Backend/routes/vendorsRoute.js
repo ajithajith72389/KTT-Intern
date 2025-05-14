@@ -53,7 +53,7 @@ router.patch('/vendors/:id', async (req, res) => {
 })
 
 
-router.delete("/vendor/:id", async (req, res) => {
+router.delete("/vendors/:id", async (req, res) => {
     try {
         const deleteVendor = await vendors.destroy({ where: { id: req.params.id } });
         if (!deleteVendor) {
