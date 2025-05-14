@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     expenses.associate = (models) => {
         expenses.belongsTo(models.userDetails, {
             foreignKey: 'addedBy',
-            targetKey: 'empID',
+            targetKey: 'name',
         });
 
         expenses.belongsTo(models.categories, {
