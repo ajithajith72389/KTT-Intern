@@ -1,10 +1,14 @@
 module.exports = (sequelize, DataTypes) => {
     const userDetails = sequelize.define("userDetails", {
-        name: DataTypes.STRING,
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            primaryKey: true
+        },
         empID: {
             type: DataTypes.STRING,
             allowNull: false,
-            primaryKey: true,
+            unique : true
         },
         password: DataTypes.STRING,
     });
@@ -12,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     userDetails.associate = (models) => {
         userDetails.hasMany(models.expenses, {
             foreignKey: 'addedBy',
-            sourceKey: 'empID',
+            sourceKey: 'name',
         });
     };
 
