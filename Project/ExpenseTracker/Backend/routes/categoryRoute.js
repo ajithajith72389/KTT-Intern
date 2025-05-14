@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { categories } = require("../models");
+const { where } = require("sequelize");
 
 // Get all categories
 // router.get("/get-category", async (req, res) => {
@@ -38,5 +39,34 @@ router.get("/categories", async (req, res) => {
 });
 
 
+router.patch('/api/categories/:id', async (req, res) => {
+    const { typeofExpense, vendor, price } = req.body;
+    try {
+        const updatedcategory = await categories.update({ typeofExpense, vendor, price },
+            { where: { id: req.params.id } });
+
+        if (updatedcategory[0] === 0) {
+            return res.status(500).json({ message: "TypeofExpense not found" })
+        }
+        return res.status(201).json({ message: "Type of expense updated successfully" });
+
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch Expenses" });
+    }
+})
+
+
+router.delete("/categories", async (req, res) => {
+    try {
+        const deletedcategory = await categories.delete({ where: { id: req.params.id } });
+        if (!deletedcategory) {
+            return res.status(404).json({ message: "Category not found" });
+        }
+
+        res.json({ message: "TypeofExpense deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Failed to delete typeofExpense" });
+    }
+})
 
 module.exports = router;
