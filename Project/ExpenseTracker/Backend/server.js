@@ -14,7 +14,7 @@ app.use(express.static(path.join(__dirname, "../Frontend")));
 
 const PORT = 3000;
 
-db.sequelize.sync( {alter : true}).then(() => {
+db.sequelize.sync({ alter: true }).then(() => {
     console.log("DB Synced Successfully");
 });
 
@@ -24,7 +24,7 @@ app.use("/api", expenseRoutes);
 app.use("/api", vendorRoutes);
 
 
-app.get("/", (req, res) =>{
+app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "../Frontend", "../Frontend/Login.html"));
 })
 
