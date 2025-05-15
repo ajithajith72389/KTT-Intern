@@ -40,9 +40,9 @@ router.get("/categories", async (req, res) => {
 
 
 router.patch('/categories/:id', async (req, res) => {
-    const { typeofExpense, vendor, price } = req.body;
+    const { id, typeofExpense, vendor, price } = req.body;
     try {
-        const updatedcategory = await categories.update({ typeofExpense, vendor, price },
+        const updatedcategory = await categories.update({ id, typeofExpense, vendor, price },
             { where: { id: req.params.id } });
 
         if (updatedcategory[0] === 0) {
