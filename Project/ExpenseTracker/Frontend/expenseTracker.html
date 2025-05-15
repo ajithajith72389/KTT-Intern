@@ -40,7 +40,7 @@
             position: fixed;
             top: 0;
             left: 0;
-            background-color: #212529;
+            background-color: #17203D;
             color: white;
         }
 
@@ -52,10 +52,6 @@
             text-decoration: none;
             color: white;
             transition: background-color 0.2s;
-        }
-
-        .sidebar a:hover {
-            background-color: #343a40;
         }
 
         .sidebar i {
@@ -136,6 +132,15 @@
             display: block;
         }
 
+        .a-inactive:hover {
+            background-color: #6552D0;
+        }
+
+        .a-active {
+            background-color: #6552D0;
+            font-weight: bolder;
+        }
+
         #filters {
             margin-bottom: 20px;
         }
@@ -213,9 +218,9 @@
         .welcome-text {
             font-size: 1.75rem;
             font-weight: 700;
-            color: #212529;
+            color: #6552D0;
             /* Bootstrap dark */
-            background-color: #f0f4ff;
+            background-color: #17203D;
             /* Light blue highlight */
             padding: 8px 16px;
             border-radius: 8px;
@@ -311,7 +316,7 @@
             </div> -->
 
 
-            <h4 class="sub-head mb-4 fw-bold text-primary">Total Expense History</h4>
+            <!-- <h4 class="sub-head mb-4 fw-bold text-primary">Total Expense History</h4> -->
             <div class="card p-4 shadow-sm mb-4">
                 <div class="row g-3 align-items-end">
                     <div class="col-md-4">
@@ -653,8 +658,8 @@
         <div></div>
         <div></div>
         <div></div>
-        <a href="#Dashboard" onclick="showContent('Dashboard')" class="a-inactive a-active"><i
-                class="bi bi-speedometer2" data-bs-toggle="tab"></i>Dashboard</a>
+        <a href="#Dashboard" onclick="showContent('Dashboard')" class="a-inactive"><i class="bi bi-speedometer2"
+                data-bs-toggle="tab"></i>Dashboard</a>
         <a href="#Expenses" onclick="showContent('Expenses')" class="a-inactive"><i
                 class="bi bi-cash-stack"></i>Expenses</a>
         <a href="#Vendors" onclick="showContent('Vendors')" class="a-inactive"><i
@@ -693,6 +698,21 @@
                 target.classList.add('active');
             }
         }
+
+        document.addEventListener('DOMContentLoaded',
+            function () {
+                const navItems = document
+                    .querySelectorAll('.a-inactive');
+
+                navItems.forEach(item => {
+                    item.addEventListener('click',
+                        function () {
+                            navItems.forEach(navItem => navItem
+                                .classList.remove('a-active'));
+                            this.classList.add('a-active');
+                        });
+                });
+            });
 
         /* var header = document.getElementById("sidebar");
          var btns = header.getElementsByClassName("a-inactive");
@@ -746,12 +766,12 @@
                 alert("Fetch error:", error.message)
             }
             document.getElementById('vendorDropdown').value = "";
-            document.getElementById('categoryDropdown').value ="";
-            document.getElementById('vendorPerson').value="";
-            document.getElementById('contactNumber').value="";
-            document.getElementById('quantity').value="";
-            document.getElementById('expense-price').value="";
-            
+            document.getElementById('categoryDropdown').value = "";
+            document.getElementById('vendorPerson').value = "";
+            document.getElementById('contactNumber').value = "";
+            document.getElementById('quantity').value = "";
+            document.getElementById('expense-price').value = "";
+
         }
 
 
@@ -776,6 +796,9 @@
 
                 if (response.ok) {
                     alert("Category added successfully", data);
+                    const modalElement = document.getElementById('addCategoryModal')
+                    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                    modalInstance.hide()
                     getAllcategory()
                     getDropDown()
                 } else {
@@ -786,6 +809,10 @@
             catch (error) {
                 alert("Fetch error:", error.message)
             }
+
+            document.getElementById('productCategory').value = "";
+            document.getElementById('vendorProductCategory').value = "";
+            document.getElementById("productPrice").value = "";
 
             //event.target.reset()
         }
@@ -861,6 +888,9 @@
 
                 if (response.ok) {
                     alert("Vendor added successfully");
+                    const modalElement = document.getElementById('addVendorModal')
+                    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                    modalInstance.hide()
                     getAllVendors()
                     getDropDown()
                 } else {
@@ -869,6 +899,12 @@
             } catch (error) {
                 alert("Fetch error: " + error.message);
             }
+
+            document.getElementById('vendorName').value = "";
+            document.getElementById('vendorProduct').value = "";
+            document.getElementById('vendorContactPerson').value = "";
+            document.getElementById('vendorContact').value = "";
+            document.getElementById('vendorAddress').value = "";
             //event.target.reset();
         }
 
