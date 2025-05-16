@@ -414,7 +414,7 @@
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addExpenseModal">
                     <i class="bi bi-plus-circle me-1"></i>Add New
                 </button>
-                
+
 
             </div>
 
@@ -1058,6 +1058,14 @@
                     const modalElement = document.getElementById('addExpenseModal')
                     const modalInstance = bootstrap.Modal.getInstance(modalElement);
                     modalInstance.hide()
+
+                    document.getElementById('vendorDropdown').value = "";
+                    document.getElementById('categoryDropdown').value = "";
+                    document.getElementById('vendorPerson').value = "";
+                    document.getElementById('contactNumber').value = "";
+                    document.getElementById('quantity').value = "";
+                    document.getElementById('expense-price').value = "";
+
                     getAllExpense();
                 } else {
                     alert("Failed to update expense")
@@ -1109,6 +1117,13 @@
                     const modalElement = document.getElementById('addVendorModal');
                     const modalInstance = bootstrap.Modal.getInstance(modalElement);
                     modalInstance.hide();
+
+                    document.getElementById('vendorName').value = "";
+                    document.getElementById('vendorProduct').value = "";
+                    document.getElementById('vendorContactPerson').value = "";
+                    document.getElementById('vendorContact').value = "";
+                    document.getElementById('vendorAddress').value = "";
+
                     getAllVendors();
                 } else {
                     alert('Failed to update vendor');
@@ -1158,6 +1173,11 @@
                     const modalElement = document.getElementById('addCategoryModal');
                     const modalInstance = bootstrap.Modal.getInstance(modalElement);
                     modalInstance.hide();
+
+                    document.getElementById('productCategory').value = "";
+                    document.getElementById('vendorProductCategory').value = "";
+                    document.getElementById("productPrice").value = "";
+
                     getAllcategory();
                 } else {
                     alert('Failed to update vendor');
@@ -1883,6 +1903,10 @@
             const startDate = document.getElementById("startDate").value;
             const endDate = document.getElementById("endDate").value;
 
+            if (startDate > endDate) {
+                return alert("Start Date is greater than End Date");
+            }
+
             if (!startDate || !endDate) {
                 alert("Please select both start and end dates.");
                 return;
@@ -2016,97 +2040,97 @@
 
 
         async function expenseToCSV() {
-                const response = await fetch('/api/expenses'); // your actual API endpoint
-                const data = await response.json(); // assuming it's JSON format
+            const response = await fetch('/api/expenses'); // your actual API endpoint
+            const data = await response.json(); // assuming it's JSON format
 
-                if (!Array.isArray(data) || data.length === 0) {
-                    alert("No data to download");
-                    return;
-                }
-
-                // Extract CSV header from keys
-                const headers = Object.keys(data[0]).join(',');
-
-                // Map rows
-                const rows = data.map(row =>
-                    Object.values(row).map(val => `"${val}"`).join(',')
-                );
-
-                // Combine
-                const csvContent = [headers, ...rows].join('\n');
-
-                // Trigger download
-                const blob = new Blob([csvContent], { type: 'text/csv' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'expenses.csv';
-                a.click();
-                URL.revokeObjectURL(url);
+            if (!Array.isArray(data) || data.length === 0) {
+                alert("No data to download");
+                return;
             }
 
-            async function vendorToCSV() {
-                    const response = await fetch('/api/vendors'); // your actual API endpoint
-                    const data = await response.json(); // assuming it's JSON format
+            // Extract CSV header from keys
+            const headers = Object.keys(data[0]).join(',');
 
-                    if (!Array.isArray(data) || data.length === 0) {
-                        alert("No data to download");
-                        return;
-                    }
+            // Map rows
+            const rows = data.map(row =>
+                Object.values(row).map(val => `"${val}"`).join(',')
+            );
 
-                    // Extract CSV header from keys
-                    const headers = Object.keys(data[0]).join(',');
+            // Combine
+            const csvContent = [headers, ...rows].join('\n');
 
-                    // Map rows
-                    const rows = data.map(row =>
-                        Object.values(row).map(val => `"${val}"`).join(',')
-                    );
+            // Trigger download
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'expenses.csv';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
 
-                    // Combine
-                    const csvContent = [headers, ...rows].join('\n');
+        async function vendorToCSV() {
+            const response = await fetch('/api/vendors'); // your actual API endpoint
+            const data = await response.json(); // assuming it's JSON format
 
-                    // Trigger download
-                    const blob = new Blob([csvContent], { type: 'text/csv' });
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = 'vendors.csv';
-                    a.click();
-                    URL.revokeObjectURL(url);
-                }
+            if (!Array.isArray(data) || data.length === 0) {
+                alert("No data to download");
+                return;
+            }
 
-                async function typeofExpenseToCSV() {
-                        const response = await fetch('/api/categories'); // your actual API endpoint
-                        const data = await response.json(); // assuming it's JSON format
+            // Extract CSV header from keys
+            const headers = Object.keys(data[0]).join(',');
 
-                        if (!Array.isArray(data) || data.length === 0) {
-                            alert("No data to download");
-                            return;
-                        }
+            // Map rows
+            const rows = data.map(row =>
+                Object.values(row).map(val => `"${val}"`).join(',')
+            );
 
-                        // Extract CSV header from keys
-                        const headers = Object.keys(data[0]).join(',');
+            // Combine
+            const csvContent = [headers, ...rows].join('\n');
 
-                        // Map rows
-                        const rows = data.map(row =>
-                            Object.values(row).map(val => `"${val}"`).join(',')
-                        );
+            // Trigger download
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'vendors.csv';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
 
-                        // Combine
-                        const csvContent = [headers, ...rows].join('\n');
+        async function typeofExpenseToCSV() {
+            const response = await fetch('/api/categories'); // your actual API endpoint
+            const data = await response.json(); // assuming it's JSON format
 
-                        // Trigger download
-                        const blob = new Blob([csvContent], { type: 'text/csv' });
-                        const url = URL.createObjectURL(blob);
-                        const a = document.createElement('a');
-                        a.href = url;
-                        a.download = 'typeofExpense.csv';
-                        a.click();
-                        URL.revokeObjectURL(url);
-                    }
-                  
-              
-          
+            if (!Array.isArray(data) || data.length === 0) {
+                alert("No data to download");
+                return;
+            }
+
+            // Extract CSV header from keys
+            const headers = Object.keys(data[0]).join(',');
+
+            // Map rows
+            const rows = data.map(row =>
+                Object.values(row).map(val => `"${val}"`).join(',')
+            );
+
+            // Combine
+            const csvContent = [headers, ...rows].join('\n');
+
+            // Trigger download
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'typeofExpense.csv';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+
+
 
 
     </script>
