@@ -2038,6 +2038,100 @@
         });
 
 
+        async function expenseToCSV() {
+                const response = await fetch('/api/expenses'); // your actual API endpoint
+                const data = await response.json(); // assuming it's JSON format
+
+                if (!Array.isArray(data) || data.length === 0) {
+                    alert("No data to download");
+                    return;
+                }
+
+                // Extract CSV header from keys
+                const headers = Object.keys(data[0]).join(',');
+
+                // Map rows
+                const rows = data.map(row =>
+                    Object.values(row).map(val => `"${val}"`).join(',')
+                );
+
+                // Combine
+                const csvContent = [headers, ...rows].join('\n');
+
+                // Trigger download
+                const blob = new Blob([csvContent], { type: 'text/csv' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'expenses.csv';
+                a.click();
+                URL.revokeObjectURL(url);
+            }
+
+            async function vendorToCSV() {
+                    const response = await fetch('/api/vendors'); // your actual API endpoint
+                    const data = await response.json(); // assuming it's JSON format
+
+                    if (!Array.isArray(data) || data.length === 0) {
+                        alert("No data to download");
+                        return;
+                    }
+
+                    // Extract CSV header from keys
+                    const headers = Object.keys(data[0]).join(',');
+
+                    // Map rows
+                    const rows = data.map(row =>
+                        Object.values(row).map(val => `"${val}"`).join(',')
+                    );
+
+                    // Combine
+                    const csvContent = [headers, ...rows].join('\n');
+
+                    // Trigger download
+                    const blob = new Blob([csvContent], { type: 'text/csv' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'vendors.csv';
+                    a.click();
+                    URL.revokeObjectURL(url);
+                }
+
+                async function typeofExpenseToCSV() {
+                        const response = await fetch('/api/categories'); // your actual API endpoint
+                        const data = await response.json(); // assuming it's JSON format
+
+                        if (!Array.isArray(data) || data.length === 0) {
+                            alert("No data to download");
+                            return;
+                        }
+
+                        // Extract CSV header from keys
+                        const headers = Object.keys(data[0]).join(',');
+
+                        // Map rows
+                        const rows = data.map(row =>
+                            Object.values(row).map(val => `"${val}"`).join(',')
+                        );
+
+                        // Combine
+                        const csvContent = [headers, ...rows].join('\n');
+
+                        // Trigger download
+                        const blob = new Blob([csvContent], { type: 'text/csv' });
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'typeofExpense.csv';
+                        a.click();
+                        URL.revokeObjectURL(url);
+                    }
+                  
+              
+          
+
+
     </script>
 
 </body>
