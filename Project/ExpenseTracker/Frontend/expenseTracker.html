@@ -471,14 +471,15 @@
                 <table class="table table-bordered table-hover text-center display" id="expenseTable">
                     <thead class="table-dark">
                         <tr>
-                            <th>Date</th>
                             <th>Vendor</th>
                             <th>Type of Expense</th>
                             <th>Contact Person</th>
                             <th>Contact Number</th>
                             <th>Quantity</th>
                             <th>Price</th>
-                            <th>Added By</th>
+                            <th>Created By</th>
+                            <th>CreatedAt</th>
+                            <th>UpdatedAt</th>
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>
@@ -559,12 +560,14 @@
             <div class="table-responsive">
                 <table class="table table-bordered table-hover text-center display" id="vendorTable">
                     <thead class="table-dark">
-                        <th>Date</th>
+
                         <th>Vendor</th>
                         <th>Type of Expense</th>
                         <th>Contact Person</th>
                         <th>Contact Number</th>
                         <th>Address</th>
+                        <th>CreatedAt</th>
+                        <th>UpdatedAt</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </thead>
@@ -590,7 +593,8 @@
             aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form onsubmit="addNewCategory(event)">
+                    <form onsubmit="addNewCategory(event)" id="category-form">
+                        <input type="hidden" id="category-id">
                         <div class="modal-header">
                             <h5 class="modal-title" id="addCategoryLabel">Add Type of Expense</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -629,10 +633,11 @@
             <div class="table-responsive">
                 <table class="table table-bordered table-hover text-center display" id="productTable">
                     <thead class="table-dark">
-                        <th>Date</th>
                         <th>Type of Expense</th>
                         <th>Vendor Name</th>
                         <th>Price</th>
+                        <th>CreatedAt</th>
+                        <th>UpdatedAt</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </thead>
@@ -671,9 +676,10 @@
                 data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="bi bi-gear-fill me-2"></i> Settings
             </a>
-            <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="settingsDropdown">
-                <li><span class="dropdown-item-text fw-semibold text-primary" id="empName"></span></li>
-                <li><span class="dropdown-item-text fw-semibold text-success" id="empID"></span></li>
+            <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="settingsDropdown"
+                style="background-color: #17203D;">
+                <li><span class="dropdown-item-text fw-bold text-primary" id="empName"></span></li>
+                <li><span class="dropdown-item-text fw-bold text-success" id="empID"></span></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
@@ -829,15 +835,24 @@
 
             data.forEach(item => {
                 //const date = item.createdAt.toLocaleDateString()
-                const { id, typeofExpense, vendor, price, createdAt } = item
-                const date = new Date(createdAt).toLocaleDateString("sv-SE")
+                const { id, typeofExpense, vendor, price, createdAt, updatedAt } = item;
+                const create = new Date(createdAt);
+                const update = new Date(updatedAt);
+                const formattedCreate = formatDate(create);
+                const formattedUpdate = formatDate(update);
+
+                function formatDate(date) {
+                    return `${date.getDate()}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+                }
                 const row = document.createElement('tr')
                 row.innerHTML = `
-                <td>${date}</td>
                 <td>${typeofExpense}</td>
                 <td>${vendor}</td>
                 <td>${price}</td>
-                <td><button onclick="updatetypeofExpense(this)"
+                <td>${formattedCreate}</td>
+                <td>${formattedUpdate}</td>
+                <td><button onclick="updateTypeofExpense(this)"
+                    data-type = "typeofexpense"
                     data-id="${id}" data-typeofexpense = "${typeofExpense}" data-vendor = "${vendor}"
                     data-price = "${price}"
                      class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></button></td>
@@ -919,17 +934,25 @@
             }
 
             data.forEach(item => {
-                const { id, vendor, typeofExpense, contactPerson, contactNumber, address, createdAt } = item;
-                const date = new Date(createdAt).toLocaleDateString("sv-SE");
+                const { id, vendor, typeofExpense, contactPerson, contactNumber, address, createdAt, updatedAt } = item;
+                const create = new Date(createdAt);
+                const update = new Date(updatedAt);
+                const formattedCreate = formatDate(create);
+                const formattedUpdate = formatDate(update);
+
+                function formatDate(date) {
+                    return `${date.getDate()}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+                }
 
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                <td>${date}</td>
                 <td>${vendor}</td>
                 <td>${typeofExpense}</td>
                 <td>${contactPerson}</td>
                 <td>${contactNumber}</td>
                 <td>${address}</td>
+                <td>${formattedCreate}</td>
+                <td>${formattedUpdate}</td>
                 <td><button onclick="updateVendor(this)"
                     data-id="${id}" data-vendor="${vendor}" data-typeofexpense = "${typeofExpense}" data-contactperson = "${contactPerson}"
                     data-contactnumber = "${contactNumber}" data-address = "${address}" 
@@ -967,12 +990,17 @@
             }
 
             data.forEach(item => {
-                const { id, createdAt, vendor, contactNumber, typeofExpense, vendorPerson, quantity, price, addedBy } = item;
-                const date = new Date(createdAt).toLocaleDateString("sv-SE");
+                const { id, createdAt, updatedAt, vendor, contactNumber, typeofExpense, vendorPerson, quantity, price, addedBy } = item;
+                const create = new Date(createdAt);
+                const update = new Date(updatedAt);
+                const formattedCreate = formatDate(create);
+                const formattedUpdate = formatDate(update);
 
+                function formatDate(date) {
+                    return `${date.getDate()}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+                }
                 const row = document.createElement("tr");
                 row.innerHTML += `
-                <td>${date}</td>
                 <td>${vendor}</td>
                 <td>${typeofExpense}</td>
                 <td>${vendorPerson}</td>
@@ -980,7 +1008,9 @@
                 <td>${quantity}</td>
                 <td>${price}</td>
                 <td>${addedBy}</td>
-                <td><button onclick="updateExpense(this)" 
+                <td>${formattedCreate}</td>
+                <td>${formattedUpdate}</td>
+                <td><button onclick="updateExpense(this)"
                     data-id="${id}" data-vendor="${vendor}" data-typeofexpense = "${typeofExpense}" data-vendorperson = "${vendorPerson}"
                     data-contactnumber = "${contactNumber}" data-quantity = "${quantity}" data-price = "${price}" data-addedby = "${addedBy}"
                      class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></button></td>
@@ -1114,6 +1144,252 @@
                 alert('Something went wrong')
             }
         }
+
+        function updateTypeofExpense(button) {
+            document.getElementById('category-id').value = button.dataset.id;
+            document.getElementById('productCategory').value = button.dataset.typeofexpense;
+            document.getElementById('vendorProductCategory').value = button.dataset.vendor;
+            document.getElementById('productPrice').value = button.dataset.price;
+
+            const form = document.getElementById("category-form");
+            form.onsubmit = function (event) {
+                event.preventDefault();
+                updateTypeofExpenseDB();
+            };
+            const modal = new bootstrap.Modal(document.getElementById('addCategoryModal'));
+            modal.show();
+        }
+
+        async function updateTypeofExpenseDB() {
+            const id = document.getElementById('category-id').value;
+
+            const updatedCategory = {
+                typeofExpense: document.getElementById('productCategory').value,
+                vendor: document.getElementById('vendorProductCategory').value,
+                price: document.getElementById('productPrice').value,
+
+            };
+
+            try {
+                const res = await fetch(`/api/categories/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updatedCategory)
+                })
+
+                if (res.ok) {
+                    const modalElement = document.getElementById('addCategoryModal');
+                    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                    modalInstance.hide();
+                    getAllcategory();
+                } else {
+                    alert('Failed to update vendor');
+                }
+
+            }
+
+            catch (error) {
+                console.log(error);
+                alert('Something went wrong')
+            }
+        }
+
+
+        /*    document.getElementById('vendor-form').onsubmit = async function (e) {
+                e.preventDefault();
+    
+                const vendorId = document.getElementById('vendor-id').value;
+                const expenseId = document.getElementById('expense-id')?.value; // optional if not always present
+                const contactPerson = document.getElementById('vendorContactPerson').value;
+                const contactNumber = document.getElementById('vendorContact').value;
+                const vendor = document.getElementById('vendorName').value;
+                const typeofExpense = document.getElementById('vendorProduct').value;
+                const address = document.getElementById('vendorAddress').value;
+    
+                try {
+                    // 1. Update vendor
+                    const vendorRes = await fetch(`/api/vendors/${vendorId}`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ vendor, typeofExpense, contactPerson, contactNumber, address })
+                    });
+    
+                    // 2. Also update contactPerson in expense (optional)
+                    let expenseRes = { ok: true };
+                    if (expenseId) {
+                        expenseRes = await fetch(`/api/expenses/${expenseId}`, {
+                            method: 'PATCH',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ contactPerson })
+                        });
+                    }
+    
+                    if (vendorRes.ok && expenseRes.ok) {
+                        getAllVendors();
+                        getAllExpense();
+    
+                        const modal = bootstrap.Modal.getInstance(document.getElementById('addVendorModal'));
+                        modal.hide();
+                        alert("Vendor and expense updated successfully.");
+                    } else {
+                        alert("Update failed.");
+                    }
+    
+                } catch (error) {
+                    console.error("Update error:", error);
+                    alert("Something went wrong.");
+                }
+            };
+    
+            */
+        /*    function openUpdateForm(button) {
+                const type = button.dataset.type;
+                const config = {
+                    expense: {
+                        modalId: 'addExpenseModal',
+                        formId: 'expense-form',
+                        idField: 'expense-id',
+                        fields: [
+                            { id: 'categoryDropdown', dataset: 'typeofexpense' },
+                            { id: 'vendorDropdown', dataset: 'vendor' },
+                            { id: 'vendorPerson', dataset: 'vendorperson' },
+                            { id: 'contactNumber', dataset: 'contactnumber' },
+                            { id: 'quantity', dataset: 'quantity' },
+                            { id: 'expense-price', dataset: 'price' },
+                            { id: 'addedBy', dataset: 'addedby' }
+                        ],
+                        updateFunc: () => updateDB('expense')
+                    },
+                    vendor: {
+                        modalId: 'addVendorModal',
+                        formId: 'vendor-form',
+                        idField: 'vendor-id',
+                        fields: [
+                            { id: 'vendorName', dataset: 'vendor' },
+                            { id: 'vendorProduct', dataset: 'typeofexpense' },
+                            { id: 'vendorContactPerson', dataset: 'contactperson' },
+                            { id: 'vendorContact', dataset: 'contactnumber' },
+                            { id: 'vendorAddress', dataset: 'address' }
+                        ],
+                        updateFunc: () => updateDB('vendor')
+                    },
+                    typeofexpense: {
+                        modalId: 'addCategoryModal',
+                        formId: 'category-form',
+                        idField: 'category-id',
+                        fields: [
+                            { id: 'productCategory', dataset: 'typeofexpense' },
+                            { id: 'vendorProductCategory', dataset: 'vendor' },
+                            { id: 'productPrice', dataset: 'price' }
+                        ],
+                        updateFunc: () => updateDB('typeofexpense')
+                    }
+                };
+    
+                const c = config[type];
+                if (!c) {
+                    console.warn("Invalid type:", type);
+                    return;
+                }
+    
+                document.getElementById(c.idField).value = button.dataset.id;
+    
+                c.fields.forEach(field => {
+                    const element = document.getElementById(field.id);
+                    if (element && button.dataset[field.dataset] !== undefined) {
+                        element.value = button.dataset[field.dataset];
+                    }
+                });
+    
+                const form = document.getElementById(c.formId);
+                form.onsubmit = function (event) {
+                    event.preventDefault();
+                    c.updateFunc();
+                };
+    
+                const modal = new bootstrap.Modal(document.getElementById(c.modalId));
+                modal.show();
+            }
+    
+            async function updateDB(type) {
+                const config = {
+                    expense: {
+                        id: document.getElementById('expense-id').value,
+                        modalId: 'addExpenseModal',
+                        api: '/api/expenses/',
+                        data: {
+                            typeofExpense: document.getElementById('categoryDropdown').value,
+                            vendor: document.getElementById('vendorDropdown').value,
+                            contactPerson: document.getElementById('vendorPerson').value,
+                            contactNumber: document.getElementById('contactNumber').value,
+                            quantity: document.getElementById('quantity').value,
+                            price: document.getElementById('expense-price').value,
+                            addedBy: document.getElementById('addedBy').value
+                        },
+                        reload: getAllExpense
+                    },
+                    vendor: {
+                        id: document.getElementById('vendor-id').value,
+                        modalId: 'addVendorModal',
+                        api: '/api/vendors/',
+                        data: {
+                            vendor: document.getElementById('vendorName').value,
+                            typeofExpense: document.getElementById('vendorProduct').value,
+                            contactPerson: document.getElementById('vendorContactPerson').value,
+                            contactNumber: document.getElementById('vendorContact').value,
+                            address: document.getElementById('vendorAddress').value
+                        },
+                        reload: getAllVendors
+                    },
+                    typeofexpense: {
+                        id: document.getElementById('category-id').value,
+                        modalId: 'addCategoryModal',
+                        api: '/api/categories/',
+                        data: {
+                            typeofExpense: document.getElementById('productCategory').value,
+                            vendor: document.getElementById('vendorProductCategory').value,
+                            price: document.getElementById('productPrice').value
+                        },
+                        reload: getAllcategory
+                    }
+                };
+    
+                const c = config[type];
+                if (!c) {
+                    console.error("Invalid type passed to updateDB:", type);
+                    return;
+                }
+    
+                console.log(`Updating ${type} with ID: ${c.id}`);
+                console.log("Payload:", c.data);
+    
+                try {
+                    const res = await fetch(`${c.api}${c.id}`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(c.data)
+                    });
+    
+                    if (res.ok) {
+                        console.log(`${type} updated successfully`);
+                        const modalElement = document.getElementById(c.modalId);
+                        const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                        modalInstance.hide();
+                        c.reload();  // Reload the updated table
+    
+    
+                    } else {
+                        const errorText = await res.text();
+                        alert(`Failed to update ${type}. Server response: ${errorText}`);
+                    }
+    
+                } catch (error) {
+                    console.error(`Error updating ${type}:`, error);
+                    alert('Something went wrong while updating.');
+                }
+            }
+    
+            */
 
 
         async function deleteExpense(button) {
