@@ -198,12 +198,13 @@
                         <input type="date" id="endDate" class="form-control border-primary shadow-sm">
                     </div>
                     <div class="col-md-4 d-flex justify-content-md-start justify-content-center">
-                        <button class="btn btn-outline-primary w-100 fw-semibold" onclick="filterByDateRange()"><i
-                                class="bi bi-funnel"></i> Apply
-                            Filter</button>
+                        <button class="btn btn-outline-primary w-100 fw-semibold" onclick="filterByDateRange()">
+                            <i class="bi bi-funnel"></i> Apply Filter
+                        </button>
                     </div>
                 </div>
             </div>
+            <h3 style="color: #6552D0; text-decoration:underline; margin-bottom: 2rem;" id="defaultData"><i>Last 3 month Data <i class="bi bi-bar-chart-fill"></i></i></h3>
 
             <!-- Monthly Report Cards -->
             <div class="row g-4" id="dashboard-container"></div>
@@ -283,10 +284,10 @@
             <div class="fixed-header">
                 <button type="button" onclick="expenseToCSV()" class="btn"
                     style="background-color: #17203D; color: #fff; border:none; font-weight: bold; padding : 10px">
-                    Download Expenses
+                    <i class="bi bi-download"></i> Download Expenses
                 </button>
 
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addExpenseModal">
+                <button class="btn btn-primary fw-bold" data-bs-toggle="modal" data-bs-target="#addExpenseModal">
                     <i class="bi bi-plus-circle me-1"></i>Add New
                 </button>
 
@@ -294,7 +295,7 @@
             </div>
 
             <!-- <h4 class="text-center mb-4">Expenses History</h4> -->
-            <div style="margin-top: 150px;">
+            <div style="margin-top: 150px; position: relative">
                 <table class="display nowrap cell-border hover" id="expenseTable">
                     <thead style="background-color: #17203D; color: #fff">
                         <tr>
@@ -319,8 +320,9 @@
                 </table>
 
                 <button type="button" onclick="expenseToCSV()" class="btn"
-                    style="background-color: #17203D; color: #fff; border:none; font-weight: bold; padding : 10px">
-                    Download Expenses
+                    style="background-color: #17203D; color: #fff; border:none; font-weight: bold; padding : 10px; position:absolute;
+                    right:0">
+                    <i class="bi bi-download"></i> Download Expenses
                 </button>
             </div>
         </div>
@@ -332,9 +334,9 @@
         <div class="fixed-header">
             <button type="button" onclick="vendorToCSV()" class="btn"
                 style="background-color: #17203D; color: #fff; border:none; font-weight: bold; padding : 10px">
-                Download Vendors
+                <i class="bi bi-download"></i> Download Vendors
             </button>
-            <button class="btn btn-primary mt-2 mt-sm-0" data-bs-toggle="modal" data-bs-target="#addVendorModal">
+            <button class="btn btn-primary fw-bold" data-bs-toggle="modal" data-bs-target="#addVendorModal">
                 <i class="bi bi-plus-circle me-1"></i>Add New
             </button>
         </div>
@@ -412,7 +414,7 @@
                 </table>
                 <button type="button" onclick="vendorToCSV()" class="btn"
                     style="background-color: #17203D; color: #fff; border:none; font-weight: bold; padding : 10px">
-                    Download Vendors
+                    <i class="bi bi-download"></i> Download Vendors
                 </button>
             </div>
         </div>
@@ -424,10 +426,10 @@
         <div class="fixed-header">
             <button type="button" onclick="typeofExpenseToCSV()" class="btn"
                 style="background-color: #17203D; color: #fff; border:none; font-weight: bold; padding : 10px">
-                Download typeofExpense
+                <i class="bi bi-download"></i> Download typeofExpense
             </button>
 
-            <button class="btn btn-primary mt-2 mt-sm-0" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+            <button class="btn btn-primary fw-bold" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
                 <i class="bi bi-plus-circle me-1"></i>Add New
             </button>
         </div>
@@ -492,7 +494,7 @@
                 <!-- Cards here -->
                 <button type="button" onclick="typeofExpenseToCSV()" class="btn"
                     style="background-color: #17203D; color: #fff; border:none; font-weight: bold; padding : 10px">
-                    Download typeofExpense
+                    <i class="bi bi-download"></i> Download typeofExpense
                 </button>
             </div>
         </div>
@@ -600,6 +602,7 @@
                     const modalInstance = bootstrap.Modal.getInstance(modalElement);
                     modalInstance.hide()
                     getAllExpense()
+                    getDropDown()
                 } else {
                     alert("Error:" + data.error || "Something went wrong")
                 }
@@ -875,7 +878,6 @@
 
         }
         getAllExpense();
-        showTypewiseTotal();
 
 
         function updateExpense(button) {
@@ -1339,6 +1341,7 @@
 
             // Update the UI with filtered data
             addDashboardDiv(filteredData);
+            document.getElementById('defaultData').innerHTML = "";
             setTimeout(() => {
                 showTypewiseTotal(filteredData);
             }, 300); // Slight delay to ensure DOM is updated
