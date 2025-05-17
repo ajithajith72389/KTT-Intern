@@ -33,6 +33,10 @@
             margin: 0 auto;
         }
 
+        table.inputs td {
+            padding: 5px;
+        }
+
         .sidebar {
             width: 100vw;
             height: 50px;
@@ -63,7 +67,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            width: 83%;
+            width: 90%;
             top: 60px;
             padding: 10px;
 
@@ -183,11 +187,37 @@
     <div class="main-container">
         <!-- Content div-->
         <div class="dashboard content inactive active mt-5 p-5" id="Dashboard">
-            <h4 class="main-header mb-5 welcome-text" mb-4" id="username"></h4>
+            <div style="display: flex; justify-content:space-between; position:sticky;align-items:flex-start">
+                <div>
+                    <h4 class="main-header mb-5 welcome-text" mb-4" id="username"></h4>
+                </div>
+                <div></div>
+                <div>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><label for="startDate" class="form-label fw-semibold"><i
+                                            class="bi bi-calendar-date"></i> Start Date</label></td>
+                                <td><label for="endDate" class="form-label fw-semibold"><i
+                                            class="bi bi-calendar-date"></i> End Date</label></td>
+                            </tr>
+                            <tr>
+                                <td><input type="date" id="startDate" class="form-control border-primary shadow-sm">
+                                </td>
+                                <td><input type="date" id="endDate" class="form-control border-primary shadow-sm"></td>
+                                <td><button class="btn btn-outline-primary w-100 fw-semibold"
+                                        onclick="filterByDateRange()">
+                                        <i class="bi bi-funnel"></i> Apply Filter
+                                    </button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
 
             <!-- <h4 class="sub-head mb-4 fw-bold text-primary">Total Expense History</h4> -->
-            <div class="card p-4 shadow-sm mb-4">
+            <!-- <div class="card p-4 shadow-sm mb-4">
                 <div class="row g-3 align-items-end">
                     <div class="col-md-4">
                         <label for="startDate" class="form-label fw-semibold">Start Date:</label>
@@ -203,8 +233,9 @@
                         </button>
                     </div>
                 </div>
-            </div>
-            <h3 style="color: #6552D0; text-decoration:underline; margin-bottom: 2rem;" id="defaultData"><i>Last 3 month Data <i class="bi bi-bar-chart-fill"></i></i></h3>
+            </div> -->
+            <h3 style="color: #6552D0; text-decoration:underline; margin-bottom: 2rem;" id="defaultData"><i>Last 3 month
+                    Data <i class="bi bi-bar-chart-fill"></i></i></h3>
 
             <!-- Monthly Report Cards -->
             <div class="row g-4" id="dashboard-container"></div>
@@ -282,15 +313,33 @@
         <div class="expense-history scrollable-table" id="expenseHistory">
             <!-- Button to trigger modal -->
             <div class="fixed-header">
-                <button type="button" onclick="expenseToCSV()" class="btn"
-                    style="background-color: #17203D; color: #fff; border:none; font-weight: bold; padding : 10px">
-                    <i class="bi bi-download"></i> Download Expenses
-                </button>
+                <div>
+                    <table class="inputs">
+                        <tbody>
+                            <tr>
+                                <td style="font-weight: bold;">Start Date:</td>
+                                <td><input type="date" id="min" name="min"
+                                        class="form-control border-primary shadow-sm"></td>
 
-                <button class="btn btn-primary fw-bold" data-bs-toggle="modal" data-bs-target="#addExpenseModal">
-                    <i class="bi bi-plus-circle me-1"></i>Add New
-                </button>
+                                <td style="font-weight: bold;">End Date:</td>
+                                <td><input type="date" id="max" name="max"
+                                        class="form-control border-primary shadow-sm"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
+                <div>
+                    <button class="btn btn-primary fw-bold" style="padding: 10px;" data-bs-toggle="modal"
+                        data-bs-target="#addExpenseModal">
+                        <i class="bi bi-plus-circle me-1"></i>Add New
+                    </button>
+
+                    <button type="button" onclick="expenseToCSV()" class="btn"
+                        style="background-color: #17203D; color: #fff; border:none; font-weight: bold; padding : 10px">
+                        <i class="bi bi-download"></i> Download Expenses
+                    </button>
+                </div>
 
             </div>
 
@@ -318,12 +367,6 @@
                         <!-- Additional rows will be appended here -->
                     </tbody>
                 </table>
-
-                <button type="button" onclick="expenseToCSV()" class="btn"
-                    style="background-color: #17203D; color: #fff; border:none; font-weight: bold; padding : 10px; position:absolute;
-                    right:0">
-                    <i class="bi bi-download"></i> Download Expenses
-                </button>
             </div>
         </div>
     </div>
@@ -865,7 +908,15 @@
 
             // DataTable for Expense Page
             $(document).ready(function () {
-                $('#expenseTable').DataTable({
+                var startDateEl = $('#min');
+                var endDateEl = $('#max');
+                const today = new Date();
+                const threeMonthsAgo = new Date(today.getFullYear(), today.getMonth() - 3, today.getMonth());
+                document.getElementById('min').valueAsDate = threeMonthsAgo;
+                document.getElementById('max').valueAsDate = today;
+
+                // Initialize DataTable and store the instance
+                var dataTableInstance = $('#expenseTable').DataTable({
                     responsive: true,
                     language: {
                         search: "_INPUT_",
@@ -873,8 +924,44 @@
                     },
                     scrollX: true,
                     scrollY: 200
-                })
+                });
+
+                // Custom date filter
+                $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+                    const startVal = startDateEl.val();
+                    const endVal = endDateEl.val();
+
+                    if (!startVal && !endVal) return true;
+
+                    const parseDateString = (str) => {
+                        const [datePart, timePart] = str.split(' ');
+                        const [day, month, year] = datePart.split('/');
+                        const [hours, minutes, seconds] = timePart.split(':');
+                        return new Date(year, month - 1, day, hours, minutes, seconds);
+                    };
+
+                    const rowDate = parseDateString(data[7]); // createdAt column
+
+                    const startDate = startVal ? new Date(startVal) : null;
+                    const endDate = endVal ? new Date(endVal) : null;
+
+                    if (startDate) startDate.setHours(0, 0, 0, 0);
+                    if (endDate) endDate.setHours(23, 59, 59, 999);
+
+                    return (!startDate || rowDate >= startDate) &&
+                        (!endDate || rowDate <= endDate);
+                });
+
+                // Attach listeners to trigger filtering
+                startDateEl.on('change', function () {
+                    dataTableInstance.draw();  // use the correct variable
+                });
+
+                endDateEl.on('change', function () {
+                    dataTableInstance.draw();
+                });
             });
+
 
         }
         getAllExpense();
@@ -1294,27 +1381,31 @@
         document.addEventListener('DOMContentLoaded', getDropDown);
 
         async function fetchAndShowDefaultData() {
-                const response = await fetch('/api/expenses'); // your API
-                const data = await response.json();
-                fullExpenseData = data;
+            const response = await fetch('/api/expenses'); // your API
+            const data = await response.json();
+            fullExpenseData = data;
 
-                // Get today's date and 3 months ago
-                const today = new Date();
-                const threeMonthsAgo = new Date();
-                threeMonthsAgo.setMonth(today.getMonth() - 3);
+            // Get today's date and 3 months ago
+            const today = new Date();
+            const threeMonthsAgo = new Date(today.getFullYear(), today.getMonth() - 3, today.getMonth());
+            console.log('startdate', threeMonthsAgo);
+            console.log('enddate', today);
 
-                const defaultFiltered = fullExpenseData.filter(item => {
-                    const itemDate = new Date(item.createdAt);
-                    return itemDate >= threeMonthsAgo && itemDate <= today;
-                });
+            document.getElementById('startDate').valueAsDate = threeMonthsAgo;
+            document.getElementById('endDate').valueAsDate = today;
 
-                filteredExpenseData = defaultFiltered; 
-                addDashboardDiv(defaultFiltered);
-                setTimeout(() => {
-                    showTypewiseTotal(defaultFiltered);
-                }, 300);
-            }
-        
+            const defaultFiltered = fullExpenseData.filter(item => {
+                const itemDate = new Date(item.createdAt);
+                return itemDate >= threeMonthsAgo && itemDate <= today;
+            });
+
+            filteredExpenseData = defaultFiltered;
+            addDashboardDiv(defaultFiltered);
+            setTimeout(() => {
+                showTypewiseTotal(defaultFiltered);
+            }, 300);
+        }
+
 
         function filterByDateRange() {
             const startDate = document.getElementById("startDate").value;
