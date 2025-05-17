@@ -370,14 +370,16 @@
         </div>
 
         <!-- Modal for Adding Vendor -->
-        <div class="modal fade" id="addVendorModal" tabindex="-1" aria-labelledby="addVendorLabel" aria-hidden="true" onclick="resetVendorForm()">
+        <div class="modal fade" id="addVendorModal" tabindex="-1" aria-labelledby="addVendorLabel" aria-hidden="true"
+            onclick="resetVendorForm()">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form onsubmit="addNewVendor(event)" id="vendor-form">
                         <input type="hidden" id="vendor-id">
                         <div class="modal-header">
                             <h5 class="modal-title" id="addVendorLabel">Add Vendor</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="resetVendorForm()"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                onclick="resetVendorForm()"></button>
                         </div>
 
                         <div class="modal-body row g-3">
@@ -471,7 +473,8 @@
                         <input type="hidden" id="category-id">
                         <div class="modal-header">
                             <h5 class="modal-title" id="addCategoryLabel">Add Type of Expense</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="resetCategoryForm()"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                onclick="resetCategoryForm()"></button>
                         </div>
 
                         <div class="modal-body">
@@ -494,8 +497,8 @@
 
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-success">Add Type of Expense</button>
-                            <button type="button" class="btn btn-secondary reset"
-                                data-bs-dismiss="modal" onclick="resetCategoryForm()">Cancel</button>
+                            <button type="button" class="btn btn-secondary reset" data-bs-dismiss="modal"
+                                onclick="resetCategoryForm()">Cancel</button>
                         </div>
                     </form>
                 </div>
@@ -865,92 +868,92 @@
                 const { id, createdAt, updatedAt, vendor, contactNumber, typeofExpense, vendorPerson, quantity, price, addedBy } = item;
                 const create = new Date(createdAt);
                 const update = new Date(updatedAt);
+
+                const formatDate = (date) =>
+                    `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()} ` +
+                    `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+
                 const formattedCreate = formatDate(create);
                 const formattedUpdate = formatDate(update);
 
-                function formatDate(date) {
-                    return `${date.getDate()}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
-                }
                 const row = document.createElement("tr");
-                row.innerHTML += `
-                <td>${vendor}</td>
-                <td>${typeofExpense}</td>
-                <td>${vendorPerson}</td>
-                <td>${contactNumber}</td>
-                <td>${quantity}</td>
-                <td>${price}</td>
-                <td>${addedBy}</td>
-                <td>${formattedCreate}</td>
-                <td>${formattedUpdate}</td>
-                <td><button onclick="updateExpense(this)"
-                    data-id="${id}" data-vendor="${vendor}" data-typeofexpense = "${typeofExpense}" data-vendorperson = "${vendorPerson}"
-                    data-contactnumber = "${contactNumber}" data-quantity = "${quantity}" data-price = "${price}" data-addedby = "${addedBy}"
-                     class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></button></td>
-                <td><button onclick="deleteExpense(this)" data-id="${id}" class="btn btn-sm btn-danger"><i class="bi bi-trash3"></i></button></td>`;
-
+                row.innerHTML = `
+                    <td>${vendor}</td>
+                    <td>${typeofExpense}</td>
+                    <td>${vendorPerson}</td>
+                    <td>${contactNumber}</td>
+                    <td>${quantity}</td>
+                    <td>${price}</td>
+                    <td>${addedBy}</td>
+                    <td>${formattedCreate}</td>
+                    <td>${formattedUpdate}</td>
+                    <td><button onclick="updateExpense(this)"
+                        data-id="${id}" data-vendor="${vendor}" data-typeofexpense="${typeofExpense}" data-vendorperson="${vendorPerson}"
+                        data-contactnumber="${contactNumber}" data-quantity="${quantity}" data-price="${price}" data-addedby="${addedBy}"
+                        class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></button></td>
+                    <td><button onclick="deleteExpense(this)" data-id="${id}" class="btn btn-sm btn-danger"><i class="bi bi-trash3"></i></button></td>
+                `;
                 table.appendChild(row);
             });
 
-            // DataTable for Expense Page
-            $(document).ready(function () {
-                var startDateEl = $('#min');
-                var endDateEl = $('#max');
-                const today = new Date();
-                const threeMonthsAgo = new Date(today.getFullYear(), today.getMonth() - 3, today.getMonth());
-                document.getElementById('min').valueAsDate = threeMonthsAgo;
-                document.getElementById('max').valueAsDate = today;
+            // Set default date values (last 3 months)
+            const today = new Date();
+            const threeMonthsAgo = new Date(today.getFullYear(), today.getMonth() - 3, today.getDate());
+            document.getElementById('min').valueAsDate = threeMonthsAgo;
+            document.getElementById('max').valueAsDate = today;
 
-                // Initialize DataTable and store the instance
-                var dataTableInstance = $('#expenseTable').DataTable({
-                    responsive: true,
-                    language: {
-                        search: "_INPUT_",
-                        searchPlaceholder: "Search..."
-                    },
-                    scrollX: true,
-                    scrollY: 200
-                });
+            const startDateEl = $('#min');
+            const endDateEl = $('#max');
 
-                // Custom date filter
-                $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
-                    const startVal = startDateEl.val();
-                    const endVal = endDateEl.val();
+            // Setup custom filter once
+            $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+                const startVal = startDateEl.val();
+                const endVal = endDateEl.val();
 
-                    if (!startVal && !endVal) return true;
+                if (!startVal && !endVal) return true;
 
-                    const parseDateString = (str) => {
-                        const [datePart, timePart] = str.split(' ');
-                        const [day, month, year] = datePart.split('/');
-                        const [hours, minutes, seconds] = timePart.split(':');
-                        return new Date(year, month - 1, day, hours, minutes, seconds);
-                    };
+                const parseDateString = (str) => {
+                    const [datePart, timePart] = str.split(' ');
+                    const [day, month, year] = datePart.split('/');
+                    const [hours, minutes, seconds] = timePart.split(':');
+                    return new Date(year, month - 1, day, hours, minutes, seconds);
+                };
 
-                    const rowDate = parseDateString(data[7]); // createdAt column
+                const rowDate = parseDateString(data[7]); // createdAt is column index 7
 
-                    const startDate = startVal ? new Date(startVal) : null;
-                    const endDate = endVal ? new Date(endVal) : null;
+                const startDate = startVal ? new Date(startVal) : null;
+                const endDate = endVal ? new Date(endVal) : null;
 
-                    if (startDate) startDate.setHours(0, 0, 0, 0);
-                    if (endDate) endDate.setHours(23, 59, 59, 999);
+                if (startDate) startDate.setHours(0, 0, 0, 0);
+                if (endDate) endDate.setHours(23, 59, 59, 999);
 
-                    return (!startDate || rowDate >= startDate) &&
-                        (!endDate || rowDate <= endDate);
-                });
-
-                // Attach listeners to trigger filtering
-                startDateEl.on('change', function () {
-                    dataTableInstance.draw();  // use the correct variable
-                });
-
-                endDateEl.on('change', function () {
-                    dataTableInstance.draw();
-                });
-
+                return (!startDate || rowDate >= startDate) &&
+                    (!endDate || rowDate <= endDate);
             });
 
+            // Initialize DataTable
+            const dataTableInstance = $('#expenseTable').DataTable({
+                responsive: true,
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search..."
+                },
+                scrollX: true,
+                scrollY: 200
+            });
 
+            // Trigger draw on date change
+            startDateEl.on('change', function () {
+                dataTableInstance.draw();
+            });
+
+            endDateEl.on('change', function () {
+                dataTableInstance.draw();
+            });
         }
+
         getAllExpense();
+
 
         function resetExpenseForm() {
             document.getElementById('vendorDropdown').value = "";
@@ -1095,7 +1098,7 @@
             }
         }
 
-        function resetCategoryForm(){
+        function resetCategoryForm() {
             document.getElementById('productCategory').value = "";
             document.getElementById('vendorProductCategory').value = "";
             document.getElementById('productPrice').value = "";
