@@ -189,7 +189,7 @@
     <div class="main-container">
         <!-- Content div-->
         <div class="dashboard content inactive active mt-5 p-5" id="Dashboard">
-            <div style="display: flex; justify-content:space-between; position:sticky;align-items:flex-start">
+            <div style="display: flex; justify-content:space-between;align-items:flex-start">
                 <div>
                     <h4 class="main-header mb-5 welcome-text" mb-4" id="username"></h4>
                 </div>
@@ -198,10 +198,10 @@
                     <table>
                         <tbody>
                             <tr>
-                                <td><label for="startDate" class="form-label fw-semibold"><i
-                                            class="bi bi-calendar-date"></i> Start Date</label></td>
-                                <td><label for="endDate" class="form-label fw-semibold"><i
-                                            class="bi bi-calendar-date"></i> End Date</label></td>
+                                <td><label for="startDate" class="form-label fw-semibold"><i 
+                                    class="bi bi-calendar4-range"></i> Start Date</label></td>
+                                <td><label for="endDate" class="form-label fw-semibold"><i 
+                                    class="bi bi-calendar4-range"></i> End Date</label></td>
                             </tr>
                             <tr>
                                 <td><input type="date" id="startDate" class="form-control border-primary shadow-sm">
@@ -230,8 +230,7 @@
     <div class="inactive content" id="Expenses">
 
         <!-- Modal -->
-        <div class="modal fade" id="addExpenseModal" tabindex="-1" aria-labelledby="addExpenseLabel" aria-hidden="true"
-            onclick="resetExpenseForm()">
+        <div class="modal fade" id="addExpenseModal" tabindex="-1" aria-labelledby="addExpenseLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <form onsubmit="addNewExpense(event)" id="expense-form">
@@ -302,11 +301,11 @@
                     <table class="inputs">
                         <tbody>
                             <tr>
-                                <td style="font-weight: bold;">Start Date </td>
+                                <td style="font-weight: bold;"><i class="bi bi-calendar4-range"></i> Start Date </td>
                                 <td><input type="date" id="min" name="min"
                                         class="form-control border-primary shadow-sm"></td>
 
-                                <td style="font-weight: bold;">End Date </td>
+                                <td style="font-weight: bold;"><i class="bi bi-calendar4-range"></i> End Date </td>
                                 <td><input type="date" id="max" name="max"
                                         class="form-control border-primary shadow-sm"></td>
                             </tr>
@@ -365,12 +364,14 @@
                 <table class="inputs">
                     <tbody>
                         <tr>
-                            <td style="font-weight: bold;">Start Date</td>
-                            <td><input type="date" id="vendor-startDate" name="vendor-startDate" class="form-control border-primary shadow-sm">
+                            <td style="font-weight: bold;"><i class="bi bi-calendar4-range"></i> Start Date</td>
+                            <td><input type="date" id="vendor-startDate" name="vendor-startDate"
+                                    class="form-control border-primary shadow-sm">
                             </td>
 
-                            <td style="font-weight: bold;">End Date</td>
-                            <td><input type="date" id="vendor-endDate" name="vendor-endDate" class="form-control border-primary shadow-sm">
+                            <td style="font-weight: bold;"><i class="bi bi-calendar4-range"></i> End Date</td>
+                            <td><input type="date" id="vendor-endDate" name="vendor-endDate"
+                                    class="form-control border-primary shadow-sm">
                             </td>
                         </tr>
                     </tbody>
@@ -378,7 +379,8 @@
             </div>
 
             <div>
-                <button class="btn btn-primary fw-bold" data-bs-toggle="modal" data-bs-target="#addVendorModal" style="padding: 10px;">
+                <button class="btn btn-primary fw-bold" data-bs-toggle="modal" data-bs-target="#addVendorModal"
+                    style="padding: 10px;">
                     <i class="bi bi-plus-circle me-1"></i>Add New
                 </button>
 
@@ -391,8 +393,7 @@
         </div>
 
         <!-- Modal for Adding Vendor -->
-        <div class="modal fade" id="addVendorModal" tabindex="-1" aria-labelledby="addVendorLabel" aria-hidden="true"
-            onclick="resetVendorForm()">
+        <div class="modal fade" id="addVendorModal" tabindex="-1" aria-labelledby="addVendorLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form onsubmit="addNewVendor(event)" id="vendor-form">
@@ -477,32 +478,35 @@
                 <table class="inputs">
                     <tbody>
                         <tr>
-                            <td style="font-weight: bold;">Start Date </td>
-                            <td><input type="date" id="type-startDate" name="type-startDate" class="form-control border-primary shadow-sm"></td>
-            
-                            <td style="font-weight: bold;">End Date </td>
-                            <td><input type="date" id="type-endDate" name="type-endDate" class="form-control border-primary shadow-sm"></td>
+                            <td style="font-weight: bold;"><i class="bi bi-calendar4-range"></i> Start Date </td>
+                            <td><input type="date" id="type-startDate" name="type-startDate"
+                                    class="form-control border-primary shadow-sm"></td>
+
+                            <td style="font-weight: bold;"><i class="bi bi-calendar4-range"></i> End Date </td>
+                            <td><input type="date" id="type-endDate" name="type-endDate"
+                                    class="form-control border-primary shadow-sm"></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
             <div>
-                <button class="btn btn-primary fw-bold" data-bs-toggle="modal" data-bs-target="#addCategoryModal" style="padding: 10px;">
+                <button class="btn btn-primary fw-bold" data-bs-toggle="modal" data-bs-target="#addCategoryModal"
+                    style="padding: 10px;">
                     <i class="bi bi-plus-circle me-1"></i>Add New
                 </button>
 
                 <button type="button" onclick="typeofExpenseToCSV()" class="btn"
                     style="background-color: #17203D; color: #fff; border:none; font-weight: bold; padding : 10px">
                     <i class="bi bi-download"></i> Download typeofExpense
-                    </button>
+                </button>
             </div>
 
         </div>
 
         <!-- Modal for Adding Category -->
         <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryLabel"
-            aria-hidden="true" onclick="resetCategoryForm()">
+        aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form onsubmit="addNewCategory(event)" id="category-form">
