@@ -302,11 +302,11 @@
                     <table class="inputs">
                         <tbody>
                             <tr>
-                                <td style="font-weight: bold;">Start Date:</td>
+                                <td style="font-weight: bold;">Start Date </td>
                                 <td><input type="date" id="min" name="min"
                                         class="form-control border-primary shadow-sm"></td>
 
-                                <td style="font-weight: bold;">End Date:</td>
+                                <td style="font-weight: bold;">End Date </td>
                                 <td><input type="date" id="max" name="max"
                                         class="form-control border-primary shadow-sm"></td>
                             </tr>
@@ -360,13 +360,34 @@
     <div class="inactive content" id="Vendors">
         <!-- Top Heading + Add Button -->
         <div class="fixed-header">
-            <button type="button" onclick="vendorToCSV()" class="btn"
-                style="background-color: #17203D; color: #fff; border:none; font-weight: bold; padding : 10px">
-                <i class="bi bi-download"></i> Download Vendors
-            </button>
-            <button class="btn btn-primary fw-bold" data-bs-toggle="modal" data-bs-target="#addVendorModal">
-                <i class="bi bi-plus-circle me-1"></i>Add New
-            </button>
+
+            <div>
+                <table class="inputs">
+                    <tbody>
+                        <tr>
+                            <td style="font-weight: bold;">Start Date</td>
+                            <td><input type="date" id="vendor-startDate" name="vendor-startDate" class="form-control border-primary shadow-sm">
+                            </td>
+
+                            <td style="font-weight: bold;">End Date</td>
+                            <td><input type="date" id="vendor-endDate" name="vendor-endDate" class="form-control border-primary shadow-sm">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div>
+                <button class="btn btn-primary fw-bold" data-bs-toggle="modal" data-bs-target="#addVendorModal" style="padding: 10px;">
+                    <i class="bi bi-plus-circle me-1"></i>Add New
+                </button>
+
+                <button type="button" onclick="vendorToCSV()" class="btn"
+                    style="background-color: #17203D; color: #fff; border:none; font-weight: bold; padding : 10px">
+                    <i class="bi bi-download"></i> Download Vendors
+                </button>
+
+            </div>
         </div>
 
         <!-- Modal for Adding Vendor -->
@@ -428,24 +449,22 @@
             <div style="margin-top: 150px;">
                 <table class="display nowrap cell-border hover" id="vendorTable">
                     <thead style="background-color: #17203D; color: #fff">
-                        <th>Vendor</th>
-                        <th>Type of Expense</th>
-                        <th>Contact Person</th>
-                        <th>Contact Number</th>
-                        <th>Address</th>
-                        <th>CreatedAt</th>
-                        <th>UpdatedAt</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
+                        <tr>
+                            <th>Vendor</th>
+                            <th>Type of Expense</th>
+                            <th>Contact Person</th>
+                            <th>Contact Number</th>
+                            <th>Address</th>
+                            <th>CreatedAt</th>
+                            <th>UpdatedAt</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
                     </thead>
                     <tbody id="vendorTableBody">
 
                     </tbody>
                 </table>
-                <button type="button" onclick="vendorToCSV()" class="btn"
-                    style="background-color: #17203D; color: #fff; border:none; font-weight: bold; padding : 10px">
-                    <i class="bi bi-download"></i> Download Vendors
-                </button>
             </div>
         </div>
     </div>
@@ -454,14 +473,31 @@
     <div class="inactive content" id="Categories">
         <!-- Top Heading + Add Button -->
         <div class="fixed-header">
-            <button type="button" onclick="typeofExpenseToCSV()" class="btn"
-                style="background-color: #17203D; color: #fff; border:none; font-weight: bold; padding : 10px">
-                <i class="bi bi-download"></i> Download typeofExpense
-            </button>
+            <div>
+                <table class="inputs">
+                    <tbody>
+                        <tr>
+                            <td style="font-weight: bold;">Start Date </td>
+                            <td><input type="date" id="type-startDate" name="type-startDate" class="form-control border-primary shadow-sm"></td>
+            
+                            <td style="font-weight: bold;">End Date </td>
+                            <td><input type="date" id="type-endDate" name="type-endDate" class="form-control border-primary shadow-sm"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-            <button class="btn btn-primary fw-bold" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
-                <i class="bi bi-plus-circle me-1"></i>Add New
-            </button>
+            <div>
+                <button class="btn btn-primary fw-bold" data-bs-toggle="modal" data-bs-target="#addCategoryModal" style="padding: 10px;">
+                    <i class="bi bi-plus-circle me-1"></i>Add New
+                </button>
+
+                <button type="button" onclick="typeofExpenseToCSV()" class="btn"
+                    style="background-color: #17203D; color: #fff; border:none; font-weight: bold; padding : 10px">
+                    <i class="bi bi-download"></i> Download typeofExpense
+                    </button>
+            </div>
+
         </div>
 
         <!-- Modal for Adding Category -->
@@ -510,23 +546,20 @@
             <div style="margin-top: 150px;">
                 <table class="display nowrap cell-border hover" id="productTable">
                     <thead style="background-color: #17203D; color: #fff">
-                        <th>Type of Expense</th>
-                        <th>Vendor Name</th>
-                        <th>Price</th>
-                        <th>CreatedAt</th>
-                        <th>UpdatedAt</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
+                        <tr>
+                            <th>Type of Expense</th>
+                            <th>Vendor Name</th>
+                            <th>Price</th>
+                            <th>CreatedAt</th>
+                            <th>UpdatedAt</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
                     </thead>
                     <tbody id="productTableBody">
 
                     </tbody>
                 </table>
-                <!-- Cards here -->
-                <button type="button" onclick="typeofExpenseToCSV()" class="btn"
-                    style="background-color: #17203D; color: #fff; border:none; font-weight: bold; padding : 10px">
-                    <i class="bi bi-download"></i> Download typeofExpense
-                </button>
             </div>
         </div>
 
@@ -733,18 +766,61 @@
                 table.appendChild(row);
             });
 
-            // DataTable for Product/Category Page
-            $(document).ready(function () {
-                $("#productTable").DataTable({
-                    responsive: true,
-                    language: {
-                        search: "_INPUT_",
-                        searchPlaceholder: "Search..."
-                    },
-                    scrollX: true,
-                    scrollY: 200
-                })
-            })
+
+            const today = new Date();
+            const threeMonthsAgo = new Date(today.getFullYear(), today.getMonth() - 3, today.getDate());
+            document.getElementById('type-startDate').valueAsDate = threeMonthsAgo;
+            document.getElementById('type-endDate').valueAsDate = today;
+
+            const startDateEl = $('#type-startDate');
+            const endDateEl = $('#type-endDate');
+
+            // Setup custom filter once
+            $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+                if (settings.nTable.id !== 'productTable') return true;
+                const startVal = startDateEl.val();
+                const endVal = endDateEl.val();
+
+                if (!startVal && !endVal) return true;
+
+                const parseDateString = (str) => {
+                    const [datePart, timePart] = str.split(' ');
+                    const [day, month, year] = datePart.split('/');
+                    const [hours, minutes, seconds] = timePart.split(':');
+                    return new Date(year, month - 1, day, hours, minutes, seconds);
+                };
+
+                const rowDate = parseDateString(data[3]); // createdAt is column index 3
+
+                const startDate = startVal ? new Date(startVal) : null;
+                const endDate = endVal ? new Date(endVal) : null;
+
+                if (startDate) startDate.setHours(0, 0, 0, 0);
+                if (endDate) endDate.setHours(23, 59, 59, 999);
+
+                return (!startDate || rowDate >= startDate) &&
+                    (!endDate || rowDate <= endDate);
+            });
+
+            // Initialize DataTable
+            const dataTableInstance = $('#productTable').DataTable({
+                responsive: true,
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search..."
+                },
+                scrollX: true,
+                scrollY: 200
+            });
+
+            // Trigger draw on date change
+            startDateEl.on('change', function () {
+                dataTableInstance.draw();
+            });
+
+            endDateEl.on('change', function () {
+                dataTableInstance.draw();
+            });
 
 
         } getAllcategory();
@@ -799,56 +875,93 @@
         async function getAllVendors() {
             const response = await fetch('/api/vendors');
             const data = await response.json();
-            const table = document.getElementById('vendorTableBody');
-            table.innerHTML = "";
+            const tableBody = document.getElementById('vendorTableBody');
+            tableBody.innerHTML = "";
 
+            // Destroy if exists
             if ($.fn.DataTable.isDataTable('#vendorTable')) {
                 $('#vendorTable').DataTable().clear().destroy();
             }
 
             data.forEach(item => {
                 const { id, vendor, typeofExpense, contactPerson, contactNumber, address, createdAt, updatedAt } = item;
-                const create = new Date(createdAt);
-                const update = new Date(updatedAt);
-                const formattedCreate = formatDate(create);
-                const formattedUpdate = formatDate(update);
 
-                function formatDate(date) {
+                const formatDate = (date) => {
                     return `${date.getDate()}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
-                }
+                };
 
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                <td>${vendor}</td>
-                <td>${typeofExpense}</td>
-                <td>${contactPerson}</td>
-                <td>${contactNumber}</td>
-                <td>${address}</td>
-                <td>${formattedCreate}</td>
-                <td>${formattedUpdate}</td>
-                <td><button onclick="updateVendor(this)"
-                    data-id="${id}" data-vendor="${vendor}" data-typeofexpense = "${typeofExpense}" data-contactperson = "${contactPerson}"
-                    data-contactnumber = "${contactNumber}" data-address = "${address}" 
-                     class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></button></td>
-                <td><button onclick="deleteVendor(this)" data-id= "${id}" class="btn btn-sm btn-danger" ><i class="bi bi-trash3"></i></button></td>
+                    <td>${vendor}</td>
+                    <td>${typeofExpense}</td>
+                    <td>${contactPerson}</td>
+                    <td>${contactNumber}</td>
+                    <td>${address}</td>
+                    <td>${formatDate(new Date(createdAt))}</td>
+                    <td>${formatDate(new Date(updatedAt))}</td>
+                    <td><button onclick="updateVendor(this)"
+                        data-id="${id}" data-vendor="${vendor}" data-typeofexpense="${typeofExpense}"
+                        data-contactperson="${contactPerson}" data-contactnumber="${contactNumber}"
+                        data-address="${address}" class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></button></td>
+                    <td><button onclick="deleteVendor(this)" data-id="${id}" class="btn btn-sm btn-danger"><i class="bi bi-trash3"></i></button></td>
                 `;
-
-                table.appendChild(row)
+                tableBody.appendChild(row);
             });
 
-            // DataTable for Vendors Page
-            $(document).ready(function () {
-                $("#vendorTable").DataTable({
-                    responsive: true,
-                    language: {
-                        search: "_INPUT_",
-                        searchPlaceholder: "Search..."
-                    },
-                    scrollX: true,
-                    scrollY: 200
-                })
-            })
+            const today = new Date();
+            const threeMonthsAgo = new Date(today.getFullYear(), today.getMonth() - 3, today.getDate());
+            document.getElementById('vendor-startDate').valueAsDate = threeMonthsAgo;
+            document.getElementById('vendor-endDate').valueAsDate = today;
 
+            const startDateEl = $('#vendor-startDate');
+            const endDateEl = $('#vendor-endDate');
+
+            // Setup custom filter once
+            $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+                if (settings.nTable.id !== 'vendorTable') return true;
+                const startVal = startDateEl.val();
+                const endVal = endDateEl.val();
+
+                if (!startVal && !endVal) return true;
+
+                const parseDateString = (str) => {
+                    const [datePart, timePart] = str.split(' ');
+                    const [day, month, year] = datePart.split('/');
+                    const [hours, minutes, seconds] = timePart.split(':');
+                    return new Date(year, month - 1, day, hours, minutes, seconds);
+                };
+
+                const rowDate = parseDateString(data[5]); // createdAt is column index 7
+
+                const startDate = startVal ? new Date(startVal) : null;
+                const endDate = endVal ? new Date(endVal) : null;
+
+                if (startDate) startDate.setHours(0, 0, 0, 0);
+                if (endDate) endDate.setHours(23, 59, 59, 999);
+
+                return (!startDate || rowDate >= startDate) &&
+                    (!endDate || rowDate <= endDate);
+            });
+
+            // Initialize DataTable
+            const dataTableInstance = $('#vendorTable').DataTable({
+                responsive: true,
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search..."
+                },
+                scrollX: true,
+                scrollY: 200
+            });
+
+            // Trigger draw on date change
+            startDateEl.on('change', function () {
+                dataTableInstance.draw();
+            });
+
+            endDateEl.on('change', function () {
+                dataTableInstance.draw();
+            });
 
         } getAllVendors();
 
@@ -907,6 +1020,7 @@
 
             // Setup custom filter once
             $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+                if (settings.nTable.id !== 'expenseTable') return true;
                 const startVal = startDateEl.val();
                 const endVal = endDateEl.val();
 
@@ -1400,7 +1514,7 @@
 
             // Get today's date and 3 months ago
             const today = new Date();
-            const threeMonthsAgo = new Date(today.getFullYear(), today.getMonth() - 3, today.getMonth());
+            const threeMonthsAgo = new Date(today.getFullYear(), today.getMonth() - 3, today.getDate());
             console.log('startdate', threeMonthsAgo);
             console.log('enddate', today);
 
