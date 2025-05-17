@@ -670,10 +670,10 @@ console.log(ag);
 // Login system
 
 let user = {
-    name : "Ajith",
-    age : 21,
+    name: "Ajith",
+    age: 21,
     email: "ajithajith72389@gmail.com",
-    login : function (){
+    login: function () {
         console.log(`${this.name} has logged in`);
     }
 }
@@ -685,18 +685,17 @@ user.login();
 
 let product = {
     id: 101,
-    name : "Bag",
-    price : 500,
+    name: "Bag",
+    price: 500,
     discount: 10,
     // get finalPrice()
-    finalPrice: function ()
-    {
+    finalPrice: function () {
         return this.price - (this.price * this.discount) / 100;
     }
 }
 product.finalPriceValue = product.finalPrice()
 delete product.finalPrice
-console.log("Product: ",product); // 450
+console.log("Product: ", product); // 450
 // let productDetails = {
 //     ...product,
 //     finalPrice:product.finalPrice
@@ -772,13 +771,13 @@ console.log("Projects:", employee.projects.map(project => project.name).join(", 
 let emp_skill = employee.skills.map(skill => skill)
 console.log(emp_skill);
 
-let emp_contact = Object.entries(employee.contact).map( item => item );
+let emp_contact = Object.entries(employee.contact).map(item => item);
 console.log(emp_contact);
 
 let user1 = {
-    id : 101,
-    name : "John",
-    age : 25
+    id: 101,
+    name: "John",
+    age: 25
 }
 
 console.log(Object.values(user1).map(item => item));

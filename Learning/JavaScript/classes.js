@@ -92,7 +92,7 @@ class team {
 const team1 = new team("RCB", "Rajat")
 try {
     if (!team1.captain) throw new Error("Private key is not accessible");
-    
+
 
 } catch (err) {
     console.log("Error message", err.message);
@@ -126,7 +126,7 @@ try {
     const b = 10;
 } catch (error) {
     console.log("Error message:", error);
-    
+
 }
 
 // json
@@ -137,7 +137,7 @@ try {
     console.log(user);
 } catch (err) {
     console.log("Error Message:", err.message);
-    
+
 }
 
 let getUserProfile = async () => {
@@ -148,7 +148,7 @@ let getUserProfile = async () => {
         console.log(data);
     } catch (err) {
         console.log(err.message);
-        
+
     }
 }
 getUserProfile()

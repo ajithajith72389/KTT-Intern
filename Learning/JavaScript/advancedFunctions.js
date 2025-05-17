@@ -173,10 +173,10 @@ function originalFunction(a, b) {
 
 }
 
-function wrapper(... args){
+function wrapper(...args) {
     console.log("Wrapped");
     originalFunction(...args);
-    
+
 }
 
 wrapper(10, 8);
@@ -184,15 +184,15 @@ wrapper(10, 8);
 
 // 
 
-function multiply(a, b){
-    return a*b;
+function multiply(a, b) {
+    return a * b;
 }
 
-function wrapperFunction(... args){
+function wrapperFunction(...args) {
     console.log("Inputs:", args);
-    const multiple = multiply(... args);
-    console.log("Multiply:" , multiple);
-    
+    const multiple = multiply(...args);
+    console.log("Multiply:", multiple);
+
 }
 
 wrapperFunction(5, 10);
@@ -200,11 +200,11 @@ wrapperFunction(5, 10);
 
 // Modify args;
 
-function sendMessage(to, message){
+function sendMessage(to, message) {
     console.log(`Sending "${message}" to ${to}`);
 }
 
-function wrapperFunc(... args){
+function wrapperFunc(...args) {
     args[1] = `***${args[1]}***`;
     sendMessage(...args);
 }
@@ -215,18 +215,18 @@ wrapperFunc("Ajith", "Your OTP is 1234");
 // Function Binding;
 console.log("***Function Binding***");
 
-function show(){
+function show() {
     console.log(this.name);
 }
 
-const obj  = {name : "Ajith"};
+const obj = { name: "Ajith" };
 
 const boundShow = show.bind(obj);
 boundShow(); // Ajith
 
 const user11 = {
-    name : "Ajith",
-    greet(){
+    name: "Ajith",
+    greet() {
         console.log(`Hi, I am ${this.name}`);
     }
 }
@@ -239,10 +239,10 @@ const user11 = {
 console.log("***Arrow Function***");
 
 const ajith1 = {
-    peru : "Ajith",
-    greet111: function(){
+    peru: "Ajith",
+    greet111: function () {
         console.log(this.peru);
-        
+
     }
 }
 ajith1.greet111()

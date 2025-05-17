@@ -62,14 +62,14 @@ console.log(obj.lang);
 console.log("***Prototypal Inheritance***");
 
 let animal = {
-    eat : true,
-    walk(){
+    eat: true,
+    walk() {
         console.log("Animal walk");
     }
 }
 
-let dog ={
-    run : true,
+let dog = {
+    run: true,
     __proto__: animal
 }
 
@@ -77,11 +77,11 @@ console.log(dog.eat);
 dog.walk();
 
 
-let team ={
-    name : "Team A",
-    celebrate(){
+let team = {
+    name: "Team A",
+    celebrate() {
         console.log("Ee Saala cup Namdhe!!");
-        
+
     }
 }
 
@@ -93,12 +93,12 @@ rcb.celebrate()
 
 console.log("***F.prototype***");
 
-function person1(name){
+function person1(name) {
     this.name = name;
 }
 
-person1.prototype.display = function(){
-    console.log("Hi",this.name);
+person1.prototype.display = function () {
+    console.log("Hi", this.name);
 }
 
 let p1 = new person1("Rahul");
