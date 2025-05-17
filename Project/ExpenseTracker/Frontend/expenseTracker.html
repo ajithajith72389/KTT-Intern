@@ -216,7 +216,7 @@
                     </table>
                 </div>
             </div>
-            
+
             <h3 style="color: #6552D0; text-decoration:underline; margin-bottom: 2rem;" id="defaultData"><i>Last 3 month
                     Data <i class="bi bi-bar-chart-fill"></i></i></h3>
 
@@ -230,14 +230,16 @@
     <div class="inactive content" id="Expenses">
 
         <!-- Modal -->
-        <div class="modal fade" id="addExpenseModal" tabindex="-1" aria-labelledby="addExpenseLabel" aria-hidden="true" onclick="resetExpenseForm()">
+        <div class="modal fade" id="addExpenseModal" tabindex="-1" aria-labelledby="addExpenseLabel" aria-hidden="true"
+            onclick="resetExpenseForm()">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <form onsubmit="addNewExpense(event)" id="expense-form">
                         <input type="hidden" id="expense-id">
                         <div class="modal-header">
                             <h5 class="modal-title" id="addExpenseLabel">Add Expense</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="resetExpenseForm()"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                onclick="resetExpenseForm()"></button>
                         </div>
 
                         <div class="modal-body row g-3">
@@ -368,14 +370,14 @@
         </div>
 
         <!-- Modal for Adding Vendor -->
-        <div class="modal fade" id="addVendorModal" tabindex="-1" aria-labelledby="addVendorLabel" aria-hidden="true">
+        <div class="modal fade" id="addVendorModal" tabindex="-1" aria-labelledby="addVendorLabel" aria-hidden="true" onclick="resetVendorForm()">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form onsubmit="addNewVendor(event)" id="vendor-form">
                         <input type="hidden" id="vendor-id">
                         <div class="modal-header">
                             <h5 class="modal-title" id="addVendorLabel">Add Vendor</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="resetVendorForm()"></button>
                         </div>
 
                         <div class="modal-body row g-3">
@@ -409,7 +411,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-success">Add Vendor</button>
-                            <button type="button" class="btn btn-secondary reset"
+                            <button type="button" class="btn btn-secondary reset" onclick="resetVendorForm()"
                                 data-bs-dismiss="modal">Cancel</button>
                         </div>
                     </form>
@@ -462,14 +464,14 @@
 
         <!-- Modal for Adding Category -->
         <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryLabel"
-            aria-hidden="true">
+            aria-hidden="true" onclick="resetCategoryForm()">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form onsubmit="addNewCategory(event)" id="category-form">
                         <input type="hidden" id="category-id">
                         <div class="modal-header">
                             <h5 class="modal-title" id="addCategoryLabel">Add Type of Expense</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="resetCategoryForm()"></button>
                         </div>
 
                         <div class="modal-body">
@@ -493,7 +495,7 @@
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-success">Add Type of Expense</button>
                             <button type="button" class="btn btn-secondary reset"
-                                data-bs-dismiss="modal">Cancel</button>
+                                data-bs-dismiss="modal" onclick="resetCategoryForm()">Cancel</button>
                         </div>
                     </form>
                 </div>
@@ -951,13 +953,13 @@
         getAllExpense();
 
         function resetExpenseForm() {
-                document.getElementById('vendorDropdown').value = "";
-                document.getElementById('categoryDropdown').value = "";
-                document.getElementById('vendorPerson').value = "";
-                document.getElementById('contactNumber').value = "";
-                document.getElementById('quantity').value = "";
-                document.getElementById('expense-price').value = "";
-            }        
+            document.getElementById('vendorDropdown').value = "";
+            document.getElementById('categoryDropdown').value = "";
+            document.getElementById('vendorPerson').value = "";
+            document.getElementById('contactNumber').value = "";
+            document.getElementById('quantity').value = "";
+            document.getElementById('expense-price').value = "";
+        }
 
 
         function updateExpense(button) {
@@ -976,11 +978,11 @@
                 event.preventDefault();
                 updateToDB()
             };
-            
+
             const modal = new bootstrap.Modal(document.getElementById('addExpenseModal'));
             modal.show()
 
-            
+
         }
 
         async function updateToDB() {
@@ -1024,6 +1026,14 @@
                 console.log(error);
                 alert("Something went wrong")
             }
+        }
+
+        function resetVendorForm() {
+            document.getElementById('vendorName').value = "";
+            document.getElementById('vendorProduct').value = "";
+            document.getElementById('vendorContactPerson').value = "";
+            document.getElementById('vendorContact').value = "";
+            document.getElementById('vendorAddress').value = "";
         }
 
         function updateVendor(button) {
@@ -1083,6 +1093,12 @@
                 console.log(error);
                 alert('Something went wrong')
             }
+        }
+
+        function resetCategoryForm(){
+            document.getElementById('productCategory').value = "";
+            document.getElementById('vendorProductCategory').value = "";
+            document.getElementById('productPrice').value = "";
         }
 
         function updateTypeofExpense(button) {
