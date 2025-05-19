@@ -221,6 +221,7 @@
                                         class="form-select border-primary shadow-sm">
                                         <option value="today" hidden>Select</option>
                                         <option value="today">Today</option>
+                                        <option value="yesterday">Yesterday</option>
                                         <option value="thisMonth">This Month</option>
                                         <option value="lastMonth">Last Month</option>
                                     </select>
@@ -336,8 +337,9 @@
                                 <td>
                                     <select name="expenseDateRange" id="expenseDateRange"
                                         class="form-select border-primary shadow-sm">
-                                        <option value="today" hidden>Select</option>
+                                        <option value="" hidden>Select</option>
                                         <option value="today">Today</option>
+                                        <option value="yesterday">Yesterday</option>
                                         <option value="thisMonth">This Month</option>
                                         <option value="lastMonth">Last Month</option>
                                     </select>
@@ -409,9 +411,11 @@
                             </td>
 
                             <td>
-                                <select name="vendorDateRange" id="vendorDateRange" class="form-select border-primary shadow-sm">
-                                    <option value="today" hidden>Select</option>
+                                <select name="vendorDateRange" id="vendorDateRange"
+                                    class="form-select border-primary shadow-sm">
+                                    <option value="" hidden>Select</option>
                                     <option value="today">Today</option>
+                                    <option value="yesterday">Yesterday</option>
                                     <option value="thisMonth">This Month</option>
                                     <option value="lastMonth">Last Month</option>
                                 </select>
@@ -531,9 +535,11 @@
                             </td>
 
                             <td>
-                                <select name="TypeDateRange" id="TypeDateRange" class="form-select border-primary shadow-sm">
-                                    <option value="today" hidden>Select</option>
+                                <select name="TypeDateRange" id="TypeDateRange"
+                                    class="form-select border-primary shadow-sm">
+                                    <option value="" hidden>Select</option>
                                     <option value="today">Today</option>
+                                    <option value="yesterday">Yesterday</option>
                                     <option value="thisMonth">This Month</option>
                                     <option value="lastMonth">Last Month</option>
                                 </select>
@@ -844,6 +850,10 @@
                         startDate = new Date(today);
                         endDate = new Date(today);
                         break;
+                    case 'yesterday':
+                        startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                        endDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                        break;
                     case 'thisMonth':
                         startDate = new Date(today.getFullYear(), today.getMonth(), 2);
                         endDate = new Date(today.getFullYear(), today.getMonth() + 1, 1);
@@ -1027,6 +1037,10 @@
                         startDate = new Date(today);
                         endDate = new Date(today);
                         break;
+                    case 'yesterday':
+                        startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                        endDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                        break;
                     case 'thisMonth':
                         startDate = new Date(today.getFullYear(), today.getMonth(), 2);
                         endDate = new Date(today.getFullYear(), today.getMonth() + 1, 1);
@@ -1174,6 +1188,10 @@
                         startDate = new Date(today);
                         endDate = new Date(today);
                         break;
+                    case 'yesterday':
+                        startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                        endDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                        break;
                     case 'thisMonth':
                         startDate = new Date(today.getFullYear(), today.getMonth(), 2);
                         endDate = new Date(today.getFullYear(), today.getMonth() + 1, 1);
@@ -1195,7 +1213,7 @@
                     $('#max').val('');
                 }
 
-                dataTableInstance.draw(); 
+                dataTableInstance.draw();
 
             });
 
@@ -1737,6 +1755,10 @@
                     startDate = new Date(today);
                     endDate = new Date(today);
                     break;
+                    case 'yesterday':
+                    startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                    endDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                    break;
                 case 'thisMonth':
                     startDate = new Date(today.getFullYear(), today.getMonth(), 2);
                     endDate = new Date(today.getFullYear(), today.getMonth() + 1, 1);
@@ -1759,43 +1781,6 @@
             }
         });
 
-
-        // Expense
-        const expenseDateRange = document.getElementById('expenseDateRange');
-        const expenseStartDateInput = document.getElementById('min');
-        const expenseEndDateInput = document.getElementById('max');
-
-        expenseDateRange.addEventListener('change', () => {
-                const today = new Date();
-                let startDate, endDate;
-
-                switch (expenseDateRange.value) {
-                    case 'today':
-                        startDate = new Date(today);
-                        endDate = new Date(today);
-                        break;
-                    case 'thisMonth':
-                        startDate = new Date(today.getFullYear(), today.getMonth(), 2);
-                        endDate = new Date(today.getFullYear(), today.getMonth() + 1, 1);
-                        break;
-                    case 'lastMonth':
-                        startDate = new Date(today.getFullYear(), today.getMonth() - 1, 2);
-                        endDate = new Date(today.getFullYear(), today.getMonth(), 1);
-                        break;
-                    default:
-                        startDate = '';
-                        endDate = '';
-                }
-
-                if (startDate && endDate) {
-                    expenseStartDateInput.valueAsDate = startDate;
-                    expenseEndDateInput.valueAsDate = endDate;
-                } else {
-                    expenseStartDateInput.value = '';
-                    expenseEndDateInput.value = '';
-                }
-                
-            });
 
         function filterByDateRange() {
             const startDate = document.getElementById("startDate").value;
