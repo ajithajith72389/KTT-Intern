@@ -4,7 +4,8 @@ const getExpenses = (async (req, res) => {
     try {
         const getAllExpenses = await expenses.findAll();
         res.status(200).json({
-            status: 'success',
+            //status: 'success',
+            success: true,
             results: getAllExpenses.length,
             data: {
                 result: getAllExpenses,
@@ -13,7 +14,8 @@ const getExpenses = (async (req, res) => {
 
     } catch (error) {
         res.status(500).json({
-            status: "error",
+            // status: "error",
+            success: false,
             message: error.message
         });
     }
@@ -33,13 +35,15 @@ const createExpenses = (async (req, res) => {
             addedBy
         });
         res.status(201).json({
-            status: 'success',
+            //status: 'success',
+            success: true,
             result: data
         });
     } catch (err) {
         //console.error("🔥 Expense creation failed:", err);
         res.status(400).json({
-            status: 'error',
+            // status: 'error',
+            success: false,
             message: err.message
         });
     }
@@ -63,18 +67,21 @@ const updateExpenses = (async (req, res) => {
 
         if (updated[0] === 0) {
             return res.status(404).json({
-                status: 'fail',
+                // status: 'fail',
+                success: false,
                 message: 'Expense not found'
             })
         }
         res.json({
-            status: 'success',
+            // status: 'success',
+            success: true,
             result: updated
         })
 
     } catch (error) {
         res.status(500).json({
-            status: "error",
+            // status: "error",
+            success: false,
             message: error.message
         });
     }
@@ -87,18 +94,21 @@ const deleteExpenses = (async (req, res) => {
 
         if (!deleted) {
             return res.status(404).json({
-                status: "fail",
+                // status: "fail",
+                success: false,
                 message: "Expense not found"
             });
         }
         res.json({
-            status: "success",
+            // status: "success",
+            success: true,
             message: "Expense deleted successfully"
         });
 
     } catch (error) {
         res.status(500).jsonp({
-            status: "error",
+            // status: "error",
+            success: false,
             message: error.message
         });
     }

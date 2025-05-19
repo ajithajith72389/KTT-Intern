@@ -13,13 +13,15 @@ const createVendor = (async (req, res,) => {
             address
         })
         res.status(201).json({
-            status: "success",
+            // status: "success",
+            success: true,
             result: newVendor
         });
 
     } catch (error) {
         res.status(500).json({
-            status: "error",
+            // status: "error",
+            success: false,
             message: error.message
         });
     }
@@ -30,7 +32,8 @@ const getVendor = (async (req, res) => {
     try {
         const getVendors = await vendors.findAll({})
         res.status(200).json({
-            status: "success",
+            // status: "success",
+            success: true,
             results: getVendors.length,
             data: {
                 result: getVendors
@@ -39,7 +42,8 @@ const getVendor = (async (req, res) => {
 
     } catch (error) {
         res.status(500).json({
-            status: "error",
+            // status: "error",
+            success: false,
             message: error.message
         });
     }
@@ -58,18 +62,21 @@ const updateVendor = (async (req, res) => {
         }, { where: { id: req.params.id } })
         if (updateVendor[0] === 0) {
             return res.status(404).json({
-                status: "fail",
+                // status: "fail",
+                success: false,
                 message: "Vendor not found"
             })
         }
         return res.json({
-            status: "success",
+            // status: "success",
+            success: true,
             result: updateVendor
         })
     }
     catch (error) {
         res.status(500).json({
-            status: "error",
+            // status: "error",
+            success: false,
             message: error.message
         });
 
@@ -82,14 +89,16 @@ const deleteVendor = (async (req, res) => {
         const deleteVendor = await vendors.destroy({ where: { id: req.params.id } });
         if (!deleteVendor) {
             return res.status(404).json({
-                status: "fail",
+                // status: "fail",
+                success: false,
                 message: "Vendor not found"
             })
         }
         res.json({ message: "Vendor deleted successfully" })
     } catch (error) {
         res.status(500).json({
-            status: "error",
+            // status: "error",
+            success: false,
             message: error.message
         });
     }

@@ -13,12 +13,13 @@ const createUser = (async (req, res) => {
         })
 
         res.status(201).json({
-            status: "success",
+            //status: "success",
+            success: true,
             result: newUser
         });
     } catch (error) {
         res.status(500).json({
-            status: "error",
+            success: false,
             message: error.message
         });
     }
@@ -32,7 +33,7 @@ const getUser = (async (req, res) => {
 
         if (!user) {
             return res.status(404).json({
-                status: "fail",
+                success: false,
                 message: "User not found"
             });
         }
@@ -41,7 +42,7 @@ const getUser = (async (req, res) => {
 
         if (!isMatched) {
             return res.status(404).json({
-                status: "fail",
+                success: false,
                 message: "Invalid password"
             });
         }
@@ -56,7 +57,7 @@ const getUser = (async (req, res) => {
             });
 
         return res.status(202).json({
-            status: "success",
+            success: true,
             message: "Login Successful",
             token
         })
