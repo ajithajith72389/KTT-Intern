@@ -11,8 +11,8 @@ const createUser = ( async (req, res ) => {
                 empID,
                 password: hashedPassword
             })
-            const result = newUser;
-            res.status(201).json({status: "success", result});
+    
+            res.status(201).json({ message: "User Registered Successfully" });
         } catch (error) {
             res.status(500).json({ error: error.message });
         }

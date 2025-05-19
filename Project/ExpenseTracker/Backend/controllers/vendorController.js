@@ -12,9 +12,7 @@ const createVendor = ( async (req, res,) => {
             contactNumber,
             address
         })
-
-        const result = newVendor;
-        res.status(201).json({ status: "success", result });
+        res.status(201).json({ message: "Vendor added successfully", newVendor });
 
     } catch (error) {
         res.status(500).json({ error: error.message, details: error.error });
@@ -25,9 +23,7 @@ const createVendor = ( async (req, res,) => {
 const getVendor = ( async (req, res) => {
     try {
         const getVendors = await vendors.findAll({})
-
-        const result = getVendors;
-        res.status(200).json({status: "success", result });
+        res.status(200).json(getVendors)
 
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -48,9 +44,7 @@ const updateVendor = ( async (req, res) => {
         if (updateVendor[0] === 0) {
             return res.status(404).json({ message: 'Vendor not found' })
         }
-
-        const result = updateVendor;
-        return res.json({ status: "success", result });
+        return res.json({ message: 'Vendor updated' })
     }
     catch (error) {
         res.status(500).json({ error: "Failed to fetch Expenses" });
@@ -65,9 +59,7 @@ const deleteVendor = ( async (req, res) =>{
         if (!deleteVendor) {
             return res.status(404).json({ message: 'Vendor not found' })
         }
-
-        const result = deleteVendor;
-        res.json({ status: "success", result });
+        res.json({ message: "Vendor deleted successfully" })
     } catch (error) {
         res.status(500).json({ message: "Failed to delete vendor" });
     }
