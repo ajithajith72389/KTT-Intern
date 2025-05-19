@@ -6,19 +6,34 @@ const createTypeofExpense = ( async(req, res) => {
 
     try {
         const newCategory = await categories.create({ typeofExpense, vendor, price });
-        res.status(201).json({ message: "Category added successfully" });
+        res.status(201).json({ 
+            status: "success",
+            result : newCategory
+         });
     } catch (error) {
-        console.error("Error while adding category:", error);
-        res.status(500).json({ error: error.message });
+        //console.error("Error while adding category:", error);
+        res.status(500).json({ 
+            status: "error",
+            message : error.message
+         });
     }
 });
 
 const getTypeofExpense = ( async (req, res) => {
     try {
         const allCategories = await categories.findAll();
-        res.json(allCategories);
+        res.status(200).json({
+            status: "success",
+            results: allCategories.length,
+            data : {
+                result : allCategories
+            }
+        });
     } catch (err) {
-        res.status(500).json({ error: "Failed to fetch categories" });
+        res.status(500).json({ 
+            status: "error",
+            message : err.message
+         });
     }
 });
 
@@ -30,12 +45,20 @@ const updateTypeofExpense = ( async (req, res) => {
             { where: { id: req.params.id } });
 
         if (updatedcategory[0] === 0) {
-            return res.status(500).json({ message: "TypeofExpense not found" })
+            return res.status(500).json({ 
+                status: "fail",
+                message: "Type of Expense not found" })
         }
-        return res.status(201).json({ message: "Type of expense updated successfully" });
+        return res.status(201).json({ 
+            status : "success",
+            result : updatedcategory
+         });
 
     } catch (error) {
-        res.status(500).json({ error: "Failed to fetch Expenses" });
+        res.status(500).json({ 
+            status: "error",
+            message : error.message
+         });
     }
 });
 
@@ -44,12 +67,20 @@ const deleteTypeofExpense = ( async (req, res) => {
     try {
         const deletedcategory = await categories.destroy({ where: { id: req.params.id } });
         if (!deletedcategory) {
-            return res.status(404).json({ message: "Category not found" });
+            return res.status(404).json({ 
+                status: "fail",
+                message: "Type of Expense not found" });
         }
 
-        res.json({ message: "TypeofExpense deleted successfully" });
+        res.json({ 
+            status: "success",
+            message: "Type of Expense deleted successfully"
+         });
     } catch (error) {
-        res.status(500).json({ message: "Failed to delete typeofExpense" });
+        res.status(500).json({ 
+            status: "error",
+            message : error.message
+         });
     }
 });
 

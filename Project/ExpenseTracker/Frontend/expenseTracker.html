@@ -20,7 +20,21 @@
 
     <link rel="stylesheet" href="https://cdn.datatables.net/2.3.0/css/dataTables.dataTables.css">
 
+    <!-- File Export -->
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.1/css/dataTables.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.2.3/css/buttons.dataTables.css">
 
+    <!-- JS -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/2.3.1/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.3/js/dataTables.buttons.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.3/js/buttons.dataTables.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.3/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.3/js/buttons.print.min.js"></script>
 
     <style>
         body {
@@ -198,10 +212,19 @@
                     <table>
                         <tbody>
                             <tr>
-                                <td><label for="startDate" class="form-label fw-semibold"><i 
-                                    class="bi bi-calendar4-range"></i> Start Date</label></td>
-                                <td><label for="endDate" class="form-label fw-semibold"><i 
-                                    class="bi bi-calendar4-range"></i> End Date</label></td>
+                                <td><label for="startDate" class="form-label fw-semibold"><i
+                                            class="bi bi-calendar4-range"></i> Start Date</label></td>
+                                <td><label for="endDate" class="form-label fw-semibold"><i
+                                            class="bi bi-calendar4-range"></i> End Date</label></td>
+                                <td>
+                                    <select name="dateRange" id="dateRange"
+                                        class="form-select border-primary shadow-sm">
+                                        <option value="today" hidden>Select</option>
+                                        <option value="today">Today</option>
+                                        <option value="thisMonth">This Month</option>
+                                        <option value="lastMonth">Last Month</option>
+                                    </select>
+                                </td>
                             </tr>
                             <tr>
                                 <td><input type="date" id="startDate" class="form-control border-primary shadow-sm">
@@ -319,10 +342,10 @@
                         <i class="bi bi-plus-circle me-1"></i>Add New
                     </button>
 
-                    <button type="button" onclick="expenseToCSV()" class="btn"
+                    <!-- <button type="button" onclick="expenseToCSV()" class="btn"
                         style="background-color: #17203D; color: #fff; border:none; font-weight: bold; padding : 10px">
                         <i class="bi bi-download"></i> Download Expenses
-                    </button>
+                    </button> -->
                 </div>
 
             </div>
@@ -384,10 +407,10 @@
                     <i class="bi bi-plus-circle me-1"></i>Add New
                 </button>
 
-                <button type="button" onclick="vendorToCSV()" class="btn"
+                <!-- <button type="button" onclick="vendorToCSV()" class="btn"
                     style="background-color: #17203D; color: #fff; border:none; font-weight: bold; padding : 10px">
                     <i class="bi bi-download"></i> Download Vendors
-                </button>
+                </button> -->
 
             </div>
         </div>
@@ -496,17 +519,17 @@
                     <i class="bi bi-plus-circle me-1"></i>Add New
                 </button>
 
-                <button type="button" onclick="typeofExpenseToCSV()" class="btn"
+                <!-- <button type="button" onclick="typeofExpenseToCSV()" class="btn"
                     style="background-color: #17203D; color: #fff; border:none; font-weight: bold; padding : 10px">
                     <i class="bi bi-download"></i> Download typeofExpense
-                </button>
+                </button> -->
             </div>
 
         </div>
 
         <!-- Modal for Adding Category -->
         <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryLabel"
-        aria-hidden="true">
+            aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form onsubmit="addNewCategory(event)" id="category-form">
@@ -649,7 +672,7 @@
             const addedBy = document.getElementById('addedBy').value;
 
             try {
-                const response = await fetch('api/addExpense', {
+                const response = await fetch('api/expenses', {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
@@ -672,7 +695,7 @@
                     getAllExpense()
                     getDropDown()
                 } else {
-                    alert("Error:" + data.error || "Something went wrong")
+                    alert("Error:" + data.data.result.error || "Something went wrong")
                 }
 
             }
@@ -716,7 +739,7 @@
                     getAllcategory()
                     getDropDown()
                 } else {
-                    alert("Error" + data.error || "Something went wrong")
+                    alert("Error" + data.data.result.error || "Something went wrong")
                 }
 
             }
@@ -741,7 +764,7 @@
                 $('#productTable').DataTable().clear().destroy();
             }
 
-            data.forEach(item => {
+            data.data.result.forEach(item => {
                 //const date = item.createdAt.toLocaleDateString()
                 const { id, typeofExpense, vendor, price, createdAt, updatedAt } = item;
                 const create = new Date(createdAt);
@@ -814,7 +837,12 @@
                     searchPlaceholder: "Search..."
                 },
                 scrollX: true,
-                scrollY: 200
+                scrollY: 200,
+                layout: {
+                    topStart: {
+                        buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+                    }
+                }
             });
 
             // Trigger draw on date change
@@ -862,7 +890,7 @@
                     getAllVendors()
                     getDropDown()
                 } else {
-                    alert("Error: " + (data.message || "Something went wrong"));
+                    alert("Error: " + (data.data.result.error || "Something went wrong"));
                 }
             } catch (error) {
                 alert("Fetch error: " + error.message);
@@ -887,7 +915,7 @@
                 $('#vendorTable').DataTable().clear().destroy();
             }
 
-            data.forEach(item => {
+            data.data.result.forEach(item => {
                 const { id, vendor, typeofExpense, contactPerson, contactNumber, address, createdAt, updatedAt } = item;
 
                 const formatDate = (date) => {
@@ -955,7 +983,12 @@
                     searchPlaceholder: "Search..."
                 },
                 scrollX: true,
-                scrollY: 200
+                scrollY: 200,
+                layout: {
+                    topStart: {
+                        buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+                    }
+                }
             });
 
             // Trigger draw on date change
@@ -980,21 +1013,21 @@
             if ($.fn.DataTable.isDataTable('#expenseTable')) {
                 $('#expenseTable').DataTable().clear().destroy();
             }
+            if (Array.isArray(data.data.result)) {
+                data.data.result.forEach(item => {
+                    const { id, createdAt, updatedAt, vendor, contactNumber, typeofExpense, vendorPerson, quantity, price, addedBy } = item;
+                    const create = new Date(createdAt);
+                    const update = new Date(updatedAt);
 
-            data.forEach(item => {
-                const { id, createdAt, updatedAt, vendor, contactNumber, typeofExpense, vendorPerson, quantity, price, addedBy } = item;
-                const create = new Date(createdAt);
-                const update = new Date(updatedAt);
+                    const formatDate = (date) =>
+                        `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()} ` +
+                        `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
 
-                const formatDate = (date) =>
-                    `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()} ` +
-                    `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+                    const formattedCreate = formatDate(create);
+                    const formattedUpdate = formatDate(update);
 
-                const formattedCreate = formatDate(create);
-                const formattedUpdate = formatDate(update);
-
-                const row = document.createElement("tr");
-                row.innerHTML = `
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
                     <td>${vendor}</td>
                     <td>${typeofExpense}</td>
                     <td>${vendorPerson}</td>
@@ -1010,8 +1043,9 @@
                         class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></button></td>
                     <td><button onclick="deleteExpense(this)" data-id="${id}" class="btn btn-sm btn-danger"><i class="bi bi-trash3"></i></button></td>
                 `;
-                table.appendChild(row);
-            });
+                    table.appendChild(row);
+                });
+            }
 
             // Set default date values (last 3 months)
             const today = new Date();
@@ -1057,7 +1091,12 @@
                     searchPlaceholder: "Search..."
                 },
                 scrollX: true,
-                scrollY: 200
+                scrollY: 200,
+                layout: {
+                    topStart: {
+                        buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+                    }
+                }
             });
 
             // Trigger draw on date change
@@ -1355,6 +1394,7 @@
             document.getElementById('empID').innerText = `EMP ID: ${empID}`
             const addedByInput = document.getElementById('addedBy');
             if (addedByInput) addedByInput.value = name;
+            //if (addedByInput) addedByInput.value = `${name} - ${empID}`;
 
         };
 
@@ -1366,16 +1406,18 @@
         async function getDropDown() {
             const res = await fetch('/api/categories');
             const data = await res.json();
-            dropdownData = data.map(d => ({
+            dropdownData = data.data.result.map(d => ({
                 ...d
             }));
 
             const response = await fetch('/api/expenses');
             const expenseData = await response.json();
+            if (Array.isArray(expenseData.data.result)) {
 
-            fullExpenseData = expenseData.map(d => ({
-                ...d
-            }))
+                fullExpenseData = expenseData.data.result.map(d => ({
+                    ...d
+                }))
+            }
 
             console.log('Full Expense Data:', fullExpenseData);
 
@@ -1524,18 +1566,55 @@
 
             document.getElementById('startDate').valueAsDate = threeMonthsAgo;
             document.getElementById('endDate').valueAsDate = today;
+            if (Array.isArray(fullExpenseData.data.result)) {
+                const defaultFiltered = fullExpenseData.data.result.filter(item => {
+                    const itemDate = new Date(item.createdAt);
+                    return itemDate >= threeMonthsAgo && itemDate <= today;
+                });
+                //filteredExpenseData = defaultFiltered;
+                addDashboardDiv(defaultFiltered);
+                setTimeout(() => {
+                    showTypewiseTotal(defaultFiltered);
+                }, 300);
+            }
 
-            const defaultFiltered = fullExpenseData.filter(item => {
-                const itemDate = new Date(item.createdAt);
-                return itemDate >= threeMonthsAgo && itemDate <= today;
-            });
-
-            filteredExpenseData = defaultFiltered;
-            addDashboardDiv(defaultFiltered);
-            setTimeout(() => {
-                showTypewiseTotal(defaultFiltered);
-            }, 300);
         }
+
+        // JavaScript
+        const dateRange = document.getElementById('dateRange');
+        const startDateInput = document.getElementById('startDate');
+        const endDateInput = document.getElementById('endDate');
+
+        dateRange.addEventListener('change', () => {
+            const today = new Date();
+            let startDate, endDate;
+
+            switch (dateRange.value) {
+                case 'today':
+                    startDate = new Date(today);
+                    endDate = new Date(today);
+                    break;
+                case 'thisMonth':
+                    startDate = new Date(today.getFullYear(), today.getMonth(), 2);
+                    endDate = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+                    break;
+                case 'lastMonth':
+                    startDate = new Date(today.getFullYear(), today.getMonth() - 1, 2);
+                    endDate = new Date(today.getFullYear(), today.getMonth(), 1);
+                    break;
+                default:
+                    startDate = '';
+                    endDate = '';
+            }
+
+            if (startDate && endDate) {
+                startDateInput.valueAsDate = startDate;
+                endDateInput.valueAsDate = endDate;
+            } else {
+                startDateInput.value = '';
+                endDateInput.value = '';
+            }
+        });
 
 
         function filterByDateRange() {
@@ -1584,7 +1663,7 @@
             fetch(`/api/vendors?vendor=${vendor}&typeofExpense=${typeofExpense}`)
                 .then(response => response.json())
                 .then(data => {
-                    const matchedVendor = data.find(
+                    const matchedVendor = data.data.result.find(
                         item => item.vendor === vendor && item.typeofExpense === typeofExpense
                     );
 
@@ -1596,7 +1675,7 @@
                         fetch(`/api/categories?vendor=${vendor}&typeofExpense=${typeofExpense}`)
                             .then(resp => resp.json())
                             .then(priceData => {
-                                const matchedPriceItem = priceData.find(
+                                const matchedPriceItem = priceData.data.result.find(
                                     item => item.vendor === vendor && item.typeofExpense === typeofExpense
                                 );
 
@@ -1628,7 +1707,7 @@
                 .then(response => response.json())
                 .then(data => {
                     // Filter vendors matching the selected type
-                    const filteredVendors = data.filter(
+                    const filteredVendors = data.data.result.filter(
                         item => item.typeofExpense === selectedType
                     );
 
@@ -1659,7 +1738,7 @@
             fetch("/api/categories")
                 .then(response => response.json())
                 .then(data => {
-                    const filteredCategories = data.filter(
+                    const filteredCategories = data.data.result.filter(
                         item => item.typeofExpense === selectedVendorProduct
                     );
 
@@ -1678,96 +1757,96 @@
                 .catch(error => console.log("Error while loading typeofExpense options:", error));
         });
 
-
-        async function expenseToCSV() {
-            const response = await fetch('/api/expenses'); // your actual API endpoint
-            const data = await response.json(); // assuming it's JSON format
-
-            if (!Array.isArray(data) || data.length === 0) {
-                alert("No data to download");
-                return;
-            }
-
-            // Extract CSV header from keys
-            const headers = Object.keys(data[0]).join(',');
-
-            // Map rows
-            const rows = data.map(row =>
-                Object.values(row).map(val => `"${val}"`).join(',')
-            );
-
-            // Combine
-            const csvContent = [headers, ...rows].join('\n');
-
-            // Trigger download
-            const blob = new Blob([csvContent], { type: 'text/csv' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'expenses.csv';
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-
-        async function vendorToCSV() {
-            const response = await fetch('/api/vendors'); // your actual API endpoint
-            const data = await response.json(); // assuming it's JSON format
-
-            if (!Array.isArray(data) || data.length === 0) {
-                alert("No data to download");
-                return;
-            }
-
-            // Extract CSV header from keys
-            const headers = Object.keys(data[0]).join(',');
-
-            // Map rows
-            const rows = data.map(row =>
-                Object.values(row).map(val => `"${val}"`).join(',')
-            );
-
-            // Combine
-            const csvContent = [headers, ...rows].join('\n');
-
-            // Trigger download
-            const blob = new Blob([csvContent], { type: 'text/csv' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'vendors.csv';
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-
-        async function typeofExpenseToCSV() {
-            const response = await fetch('/api/categories'); // your actual API endpoint
-            const data = await response.json(); // assuming it's JSON format
-
-            if (!Array.isArray(data) || data.length === 0) {
-                alert("No data to download");
-                return;
-            }
-
-            // Extract CSV header from keys
-            const headers = Object.keys(data[0]).join(',');
-
-            // Map rows
-            const rows = data.map(row =>
-                Object.values(row).map(val => `"${val}"`).join(',')
-            );
-
-            // Combine
-            const csvContent = [headers, ...rows].join('\n');
-
-            // Trigger download
-            const blob = new Blob([csvContent], { type: 'text/csv' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'typeofExpense.csv';
-            a.click();
-            URL.revokeObjectURL(url);
-        }
+        /*
+                async function expenseToCSV() {
+                    const response = await fetch('/api/expenses'); // your actual API endpoint
+                    const data = await response.json(); // assuming it's JSON format
+        
+                    if (!Array.isArray(data) || data.length === 0) {
+                        alert("No data to download");
+                        return;
+                    }
+        
+                    // Extract CSV header from keys
+                    const headers = Object.keys(data[0]).join(',');
+        
+                    // Map rows
+                    const rows = data.map(row =>
+                        Object.values(row).map(val => `"${val}"`).join(',')
+                    );
+        
+                    // Combine
+                    const csvContent = [headers, ...rows].join('\n');
+        
+                    // Trigger download
+                    const blob = new Blob([csvContent], { type: 'text/csv' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'expenses.csv';
+                    a.click();
+                    URL.revokeObjectURL(url);
+                }
+        
+                async function vendorToCSV() {
+                    const response = await fetch('/api/vendors'); // your actual API endpoint
+                    const data = await response.json(); // assuming it's JSON format
+        
+                    if (!Array.isArray(data) || data.length === 0) {
+                        alert("No data to download");
+                        return;
+                    }
+        
+                    // Extract CSV header from keys
+                    const headers = Object.keys(data[0]).join(',');
+        
+                    // Map rows
+                    const rows = data.map(row =>
+                        Object.values(row).map(val => `"${val}"`).join(',')
+                    );
+        
+                    // Combine
+                    const csvContent = [headers, ...rows].join('\n');
+        
+                    // Trigger download
+                    const blob = new Blob([csvContent], { type: 'text/csv' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'vendors.csv';
+                    a.click();
+                    URL.revokeObjectURL(url);
+                }
+        
+                async function typeofExpenseToCSV() {
+                    const response = await fetch('/api/categories'); // your actual API endpoint
+                    const data = await response.json(); // assuming it's JSON format
+        
+                    if (!Array.isArray(data) || data.length === 0) {
+                        alert("No data to download");
+                        return;
+                    }
+        
+                    // Extract CSV header from keys
+                    const headers = Object.keys(data[0]).join(',');
+        
+                    // Map rows
+                    const rows = data.map(row =>
+                        Object.values(row).map(val => `"${val}"`).join(',')
+                    );
+        
+                    // Combine
+                    const csvContent = [headers, ...rows].join('\n');
+        
+                    // Trigger download
+                    const blob = new Blob([csvContent], { type: 'text/csv' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'typeofExpense.csv';
+                    a.click();
+                    URL.revokeObjectURL(url);
+                }   */
 
 
 
