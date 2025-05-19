@@ -330,7 +330,18 @@
 
                                 <td style="font-weight: bold;"><i class="bi bi-calendar4-range"></i> End Date </td>
                                 <td><input type="date" id="max" name="max"
-                                        class="form-control border-primary shadow-sm"></td>
+                                        class="form-control border-primary shadow-sm">
+                                </td>
+
+                                <td>
+                                    <select name="expenseDateRange" id="expenseDateRange"
+                                        class="form-select border-primary shadow-sm">
+                                        <option value="today" hidden>Select</option>
+                                        <option value="today">Today</option>
+                                        <option value="thisMonth">This Month</option>
+                                        <option value="lastMonth">Last Month</option>
+                                    </select>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -395,6 +406,15 @@
                             <td style="font-weight: bold;"><i class="bi bi-calendar4-range"></i> End Date</td>
                             <td><input type="date" id="vendor-endDate" name="vendor-endDate"
                                     class="form-control border-primary shadow-sm">
+                            </td>
+
+                            <td>
+                                <select name="vendorDateRange" id="vendorDateRange" class="form-select border-primary shadow-sm">
+                                    <option value="today" hidden>Select</option>
+                                    <option value="today">Today</option>
+                                    <option value="thisMonth">This Month</option>
+                                    <option value="lastMonth">Last Month</option>
+                                </select>
                             </td>
                         </tr>
                     </tbody>
@@ -507,7 +527,17 @@
 
                             <td style="font-weight: bold;"><i class="bi bi-calendar4-range"></i> End Date </td>
                             <td><input type="date" id="type-endDate" name="type-endDate"
-                                    class="form-control border-primary shadow-sm"></td>
+                                    class="form-control border-primary shadow-sm">
+                            </td>
+
+                            <td>
+                                <select name="TypeDateRange" id="TypeDateRange" class="form-select border-primary shadow-sm">
+                                    <option value="today" hidden>Select</option>
+                                    <option value="today">Today</option>
+                                    <option value="thisMonth">This Month</option>
+                                    <option value="lastMonth">Last Month</option>
+                                </select>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -802,6 +832,43 @@
             const startDateEl = $('#type-startDate');
             const endDateEl = $('#type-endDate');
 
+            // Type of Expense
+            const TypeDateRange = document.getElementById('TypeDateRange');
+
+            TypeDateRange.addEventListener('change', () => {
+                const today = new Date();
+                let startDate, endDate;
+
+                switch (TypeDateRange.value) {
+                    case 'today':
+                        startDate = new Date(today);
+                        endDate = new Date(today);
+                        break;
+                    case 'thisMonth':
+                        startDate = new Date(today.getFullYear(), today.getMonth(), 2);
+                        endDate = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+                        break;
+                    case 'lastMonth':
+                        startDate = new Date(today.getFullYear(), today.getMonth() - 1, 2);
+                        endDate = new Date(today.getFullYear(), today.getMonth(), 1);
+                        break;
+                    default:
+                        startDate = '';
+                        endDate = '';
+                }
+
+                if (startDate && endDate) {
+                    $('#type-startDate').val(startDate.toISOString().split('T')[0]);
+                    $('#type-endDate').val(endDate.toISOString().split('T')[0]);
+                } else {
+                    $('#type-startDate').val('');
+                    $('#type-endDate').val('');
+                }
+
+                dataTableInstance.draw();
+
+            });
+
             // Setup custom filter once
             $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
                 if (settings.nTable.id !== 'productTable') return true;
@@ -948,6 +1015,43 @@
             const startDateEl = $('#vendor-startDate');
             const endDateEl = $('#vendor-endDate');
 
+            // vendor
+            const vendorDateRange = document.getElementById('vendorDateRange');
+
+            vendorDateRange.addEventListener('change', () => {
+                const today = new Date();
+                let startDate, endDate;
+
+                switch (vendorDateRange.value) {
+                    case 'today':
+                        startDate = new Date(today);
+                        endDate = new Date(today);
+                        break;
+                    case 'thisMonth':
+                        startDate = new Date(today.getFullYear(), today.getMonth(), 2);
+                        endDate = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+                        break;
+                    case 'lastMonth':
+                        startDate = new Date(today.getFullYear(), today.getMonth() - 1, 2);
+                        endDate = new Date(today.getFullYear(), today.getMonth(), 1);
+                        break;
+                    default:
+                        startDate = '';
+                        endDate = '';
+                }
+
+                if (startDate && endDate) {
+                    $('#vendor-startDate').val(startDate.toISOString().split('T')[0]);
+                    $('#vendor-endDate').val(endDate.toISOString().split('T')[0]);
+                } else {
+                    $('#vendor-startDate').val('');
+                    $('#vendor-endDate').val('');
+                }
+
+                dataTableInstance.draw();
+
+            });
+
             // Setup custom filter once
             $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
                 if (settings.nTable.id !== 'vendorTable') return true;
@@ -1055,6 +1159,45 @@
 
             const startDateEl = $('#min');
             const endDateEl = $('#max');
+
+            // Expense
+            const expenseDateRange = document.getElementById('expenseDateRange');
+            const expenseStartDateInput = document.getElementById('min');
+            const expenseEndDateInput = document.getElementById('max');
+
+            expenseDateRange.addEventListener('change', () => {
+                const today = new Date();
+                let startDate, endDate;
+
+                switch (expenseDateRange.value) {
+                    case 'today':
+                        startDate = new Date(today);
+                        endDate = new Date(today);
+                        break;
+                    case 'thisMonth':
+                        startDate = new Date(today.getFullYear(), today.getMonth(), 2);
+                        endDate = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+                        break;
+                    case 'lastMonth':
+                        startDate = new Date(today.getFullYear(), today.getMonth() - 1, 2);
+                        endDate = new Date(today.getFullYear(), today.getMonth(), 1);
+                        break;
+                    default:
+                        startDate = '';
+                        endDate = '';
+                }
+
+                if (startDate && endDate) {
+                    $('#min').val(startDate.toISOString().split('T')[0]);
+                    $('#max').val(endDate.toISOString().split('T')[0]);
+                } else {
+                    $('#min').val('');
+                    $('#max').val('');
+                }
+
+                dataTableInstance.draw(); 
+
+            });
 
             // Setup custom filter once
             $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
@@ -1580,7 +1723,7 @@
 
         }
 
-        // JavaScript
+        // Dashboard
         const dateRange = document.getElementById('dateRange');
         const startDateInput = document.getElementById('startDate');
         const endDateInput = document.getElementById('endDate');
@@ -1616,6 +1759,43 @@
             }
         });
 
+
+        // Expense
+        const expenseDateRange = document.getElementById('expenseDateRange');
+        const expenseStartDateInput = document.getElementById('min');
+        const expenseEndDateInput = document.getElementById('max');
+
+        expenseDateRange.addEventListener('change', () => {
+                const today = new Date();
+                let startDate, endDate;
+
+                switch (expenseDateRange.value) {
+                    case 'today':
+                        startDate = new Date(today);
+                        endDate = new Date(today);
+                        break;
+                    case 'thisMonth':
+                        startDate = new Date(today.getFullYear(), today.getMonth(), 2);
+                        endDate = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+                        break;
+                    case 'lastMonth':
+                        startDate = new Date(today.getFullYear(), today.getMonth() - 1, 2);
+                        endDate = new Date(today.getFullYear(), today.getMonth(), 1);
+                        break;
+                    default:
+                        startDate = '';
+                        endDate = '';
+                }
+
+                if (startDate && endDate) {
+                    expenseStartDateInput.valueAsDate = startDate;
+                    expenseEndDateInput.valueAsDate = endDate;
+                } else {
+                    expenseStartDateInput.value = '';
+                    expenseEndDateInput.value = '';
+                }
+                
+            });
 
         function filterByDateRange() {
             const startDate = document.getElementById("startDate").value;
