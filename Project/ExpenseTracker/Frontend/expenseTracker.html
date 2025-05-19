@@ -203,22 +203,23 @@
     <div class="main-container">
         <!-- Content div-->
         <div class="dashboard content inactive active mt-5 p-5" id="Dashboard">
-            <div style="display: flex; justify-content:space-between;align-items:flex-start">
-                <div>
-                    <h4 class="main-header mb-5 welcome-text" mb-4" id="username"></h4>
-                </div>
-                <div></div>
+            <div style="display: flex; justify-content:space-between;align-items:flex-start; margin:20px">
                 <div>
                     <table>
                         <tbody>
                             <tr>
-                                <td><label for="startDate" class="form-label fw-semibold"><i
+                                <td style="padding: 0 20px;"><label for="startDate" class="form-label fw-semibold"><i
                                             class="bi bi-calendar4-range"></i> Start Date</label></td>
-                                <td><label for="endDate" class="form-label fw-semibold"><i
+                                <td style="padding: 0 20px;"><label for="endDate" class="form-label fw-semibold"><i
                                             class="bi bi-calendar4-range"></i> End Date</label></td>
-                                <td>
-                                    <select name="dateRange" id="dateRange"
-                                        class="form-select border-primary shadow-sm">
+                                
+                            </tr>
+                            <tr>
+                                <td style="padding: 0 20px 0 0;"><input type="date" id="startDate" class="form-control border-primary shadow-sm">
+                                </td>
+                                <td style="padding: 0 20px 0 0;"><input type="date" id="endDate" class="form-control border-primary shadow-sm"></td>
+                                <td style="padding: 0 20px;">
+                                    <select name="dateRange" id="dateRange" class="form-select border-primary shadow-sm">
                                         <option value="today" hidden>Select</option>
                                         <option value="today">Today</option>
                                         <option value="yesterday">Yesterday</option>
@@ -226,12 +227,7 @@
                                         <option value="lastMonth">Last Month</option>
                                     </select>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td><input type="date" id="startDate" class="form-control border-primary shadow-sm">
-                                </td>
-                                <td><input type="date" id="endDate" class="form-control border-primary shadow-sm"></td>
-                                <td><button class="btn btn-outline-primary w-100 fw-semibold"
+                                <td style="padding: 0 20px;"><button class="btn btn-outline-primary w-100 fw-semibold"
                                         onclick="filterByDateRange()">
                                         <i class="bi bi-funnel"></i> Apply Filter
                                     </button></td>
@@ -241,8 +237,6 @@
                 </div>
             </div>
 
-            <h3 style="color: #6552D0; text-decoration:underline; margin-bottom: 2rem;" id="defaultData"><i>Last 3 month
-                    Data <i class="bi bi-bar-chart-fill"></i></i></h3>
 
             <!-- Monthly Report Cards -->
             <div class="row g-4" id="dashboard-container"></div>
@@ -1549,8 +1543,6 @@
 
             const payload = JSON.parse(atob(token.split('.')[1])); // decode JWT payload
             const { name, empID } = payload;
-
-            document.getElementById('username').innerHTML = `👋 Welcome <strong>${name}</strong>!`;
             document.getElementById('empName').innerText = `Name: ${name}`;
             document.getElementById('empID').innerText = `EMP ID: ${empID}`
             const addedByInput = document.getElementById('addedBy');
@@ -1755,7 +1747,7 @@
                     startDate = new Date(today);
                     endDate = new Date(today);
                     break;
-                    case 'yesterday':
+                case 'yesterday':
                     startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
                     endDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
                     break;
@@ -1807,7 +1799,7 @@
 
             // Update the UI with filtered data
             addDashboardDiv(filteredData);
-            document.getElementById('defaultData').innerHTML = "";
+            
             setTimeout(() => {
                 showTypewiseTotal(filteredData);
             }, 300); // Slight delay to ensure DOM is updated
