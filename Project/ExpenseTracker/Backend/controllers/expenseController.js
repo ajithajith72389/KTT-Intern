@@ -3,7 +3,8 @@ const { expenses } = require("../models");
 const getExpenses = (async (req, res) => {
     try {
         const getAllExpenses = await expenses.findAll();
-        res.json(getAllExpenses)
+        const result = getAllExpenses;
+        res.json({status: "success", result})
 
     } catch (error) {
         res.status(500).json({ error: "Failed to fetch Expenses" });
@@ -23,7 +24,9 @@ const createExpenses = (async (req, res) => {
             price,
             addedBy
         });
-        res.status(201).json(data);
+
+        const result = data;
+        res.status(201).json({status: "success", result});
     } catch (err) {
         console.error("🔥 Expense creation failed:", err);
         res.status(400).json({ message: "Failed to create expense", error: err });
@@ -49,7 +52,8 @@ const updateExpenses = (async (req, res) => {
         if (updated[0] === 0) {
             return res.status(404).json({ message: "Expense not found" })
         }
-        res.json({ message: "Expense updated" })
+        const result = updated;
+        res.json({ status: "success", result });
 
     } catch (error) {
         res.status(500).json({ error: "Failed to fetch Expenses" });
@@ -64,7 +68,9 @@ const deleteExpenses = (async (req, res) => {
         if (!deleted) {
             return res.status(404).json({ message: "Expense not found" })
         }
-        res.json({ message: "Expense deleted Successfully" })
+
+        const result = deleted;
+        res.json({ statusbar: "success", result });
 
     } catch (error) {
         res.status(500).jsonp({ error: "Failed to fetch Expenses" })

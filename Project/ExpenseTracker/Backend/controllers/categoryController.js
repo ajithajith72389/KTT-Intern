@@ -6,7 +6,8 @@ const createTypeofExpense = ( async(req, res) => {
 
     try {
         const newCategory = await categories.create({ typeofExpense, vendor, price });
-        res.status(201).json({ message: "Category added successfully" });
+        const result = newCategory;
+        res.status(201).json({ status: "success", result });
     } catch (error) {
         console.error("Error while adding category:", error);
         res.status(500).json({ error: error.message });
@@ -16,7 +17,8 @@ const createTypeofExpense = ( async(req, res) => {
 const getTypeofExpense = ( async (req, res) => {
     try {
         const allCategories = await categories.findAll();
-        res.json(allCategories);
+        const result = allCategories;
+        res.json({status: "success", result });
     } catch (err) {
         res.status(500).json({ error: "Failed to fetch categories" });
     }
@@ -32,7 +34,8 @@ const updateTypeofExpense = ( async (req, res) => {
         if (updatedcategory[0] === 0) {
             return res.status(500).json({ message: "TypeofExpense not found" })
         }
-        return res.status(201).json({ message: "Type of expense updated successfully" });
+        const result = updatedcategory;
+        return res.status(201).json({ status: "success", result });
 
     } catch (error) {
         res.status(500).json({ error: "Failed to fetch Expenses" });
@@ -46,8 +49,9 @@ const deleteTypeofExpense = ( async (req, res) => {
         if (!deletedcategory) {
             return res.status(404).json({ message: "Category not found" });
         }
+        const result = deletedcategory;
 
-        res.json({ message: "TypeofExpense deleted successfully" });
+        res.json({ status: "success", result });
     } catch (error) {
         res.status(500).json({ message: "Failed to delete typeofExpense" });
     }
