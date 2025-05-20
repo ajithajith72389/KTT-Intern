@@ -203,7 +203,8 @@
     <div class="main-container">
         <!-- Content div-->
         <div class="dashboard content inactive active mt-5 p-5" id="Dashboard">
-            <div style="display: flex; justify-content:space-between;align-items:flex-start; margin:20px">
+            <div
+                style="display: flex; justify-content:space-between;align-items:flex-start; margin:20px; position:fixed">
                 <div>
                     <table>
                         <tbody>
@@ -212,14 +213,17 @@
                                             class="bi bi-calendar4-range"></i> Start Date</label></td>
                                 <td style="padding: 0 20px;"><label for="endDate" class="form-label fw-semibold"><i
                                             class="bi bi-calendar4-range"></i> End Date</label></td>
-                                
+
                             </tr>
                             <tr>
-                                <td style="padding: 0 20px 0 0;"><input type="date" id="startDate" class="form-control border-primary shadow-sm">
+                                <td style="padding: 0 20px 0 0;"><input type="date" id="startDate"
+                                        class="form-control border-primary shadow-sm">
                                 </td>
-                                <td style="padding: 0 20px 0 0;"><input type="date" id="endDate" class="form-control border-primary shadow-sm"></td>
+                                <td style="padding: 0 20px 0 0;"><input type="date" id="endDate"
+                                        class="form-control border-primary shadow-sm"></td>
                                 <td style="padding: 0 20px;">
-                                    <select name="dateRange" id="dateRange" class="form-select border-primary shadow-sm">
+                                    <select name="dateRange" id="dateRange"
+                                        class="form-select border-primary shadow-sm">
                                         <option value="today" hidden>Select</option>
                                         <option value="today">Today</option>
                                         <option value="yesterday">Yesterday</option>
@@ -234,10 +238,15 @@
                             </tr>
                         </tbody>
                     </table>
+                    <br>
+                    <br>
                 </div>
             </div>
 
-
+            <br>
+            <br><br>
+            <br>
+            <br>
             <!-- Monthly Report Cards -->
             <div class="row g-4" id="dashboard-container"></div>
 
@@ -358,7 +367,7 @@
             </div>
 
             <!-- <h4 class="text-center mb-4">Expenses History</h4> -->
-            <div style="margin-top: 150px; position: relative">
+            <div style="margin-top: 150px; position: relative; height: 100%;">
                 <table class="display nowrap cell-border hover" id="expenseTable">
                     <thead style="background-color: #17203D; color: #fff">
                         <tr>
@@ -1799,7 +1808,7 @@
 
             // Update the UI with filtered data
             addDashboardDiv(filteredData);
-            
+
             setTimeout(() => {
                 showTypewiseTotal(filteredData);
             }, 300); // Slight delay to ensure DOM is updated
