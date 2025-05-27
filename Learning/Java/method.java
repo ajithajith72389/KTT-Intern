@@ -10,8 +10,9 @@ public class method {
 }
 
 class Student {
-    private String name;
+    String name;
     private int id;
+    public String age;
 
     public Student(String name, int id) {
         this.name = name;
@@ -30,6 +31,11 @@ class Student {
 
     public String getName() {
         return name;
+    }
+
+    public void display() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'display'");
     }
 }
 
