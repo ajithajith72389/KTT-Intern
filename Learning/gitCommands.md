@@ -55,3 +55,36 @@ git checkout filename
 git reset HEAD filename
 git reset HEAD -p
     Revert staged changes in git
+
+git branch branch_name
+    create a new branch in your repository.
+
+git checkout branch_name
+    check out a branch in your repository.
+
+git branch
+    to view all branches in your repository.
+
+git checkout -b branch_name
+    create a new branch and switch to it immediately in your repository.
+
+git checkout -d branch_name
+    delete a branch in your repository.
+
+git merge branch_name
+    To merge the history of the branch you are currently in with the branch_name.
+
+git add remote origin_url
+    add a remote repository to your local repository.
+
+git remote -v
+    see all remote repositories for your local repository.
+
+git remote show origin
+    to get more info about a remote repo in Git.
+
+git push
+    push changes to a remote repo
+
+git pull
+    If other team members are working on your repository, you can retrieve the latest changes made to the remote repository
