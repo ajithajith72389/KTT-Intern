@@ -139,3 +139,44 @@ fun main(){
     println(s3.id)
     println(s3.age)
 }
+
+
+// class function
+
+class Student(var name: String, var id: String, var age: Int){
+    fun greet(){
+        print("Welcome... ")
+    }
+    
+    fun display(name: String){
+        print(name)
+    } 
+}
+
+fun main(){
+    val s1 = Student("Sesanth Kaarthik", "212AD192", 22)
+    
+    val s2 = Student("Sudharshan K T", "212AD210", 22)
+    val s3 = Student("Abishek", "212AD101", 22)
+    
+    s1.greet()
+    s1.display(s1.name)
+}
+
+
+// inheritance
+
+open class ParentClass{
+    var x: Int = 10
+}
+
+class ChildClass : ParentClass(){
+    fun displayX(){
+        print("x is "+x)
+    }
+}
+
+fun main(){
+    var c = ChildClass()
+    c.displayX()
+}
