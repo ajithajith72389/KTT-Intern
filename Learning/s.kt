@@ -180,3 +180,34 @@ fun main(){
     var c = ChildClass()
     c.displayX()
 }
+
+
+// for loop
+
+fun main(){
+    val items = listOf('a', 'b', 'c')
+
+    for(char in items){
+        println(char)
+    }
+}
+
+
+fun main(){
+    val items = listOf('a', 'b', 'c')
+
+    for(i in 0..10){
+        println(i)
+    }
+}
+
+
+// Range
+
+fun main(){
+	val items = listOf('a', 'b', 'c')
+
+	if(-1 !in 0..items.lastIndex){
+    	println("-1 is out of range")
+	}
+}
