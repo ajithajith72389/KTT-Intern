@@ -319,3 +319,185 @@ fun main(){
     mutableMap.remove("One")
     println(mutableMap)
 }
+
+
+// if else
+
+fun main(){
+    var x: Int = 10
+    if ( x % 2 == 0){
+        print("$x is even")
+    } else{
+        print("$x is odd")
+    }
+}
+
+
+// when 
+// use when keyword instead of if else
+// use when keyword when you have a conditional expression with multiple branches
+
+fun main(){
+    var x: Int = 1
+    var result = when(x){
+        1 -> "one"
+        2 -> "two"
+        3 -> "three"
+        else -> "Invalid"
+    }
+    print(result)
+}
+
+// when expression without a subject
+fun main(){
+    val x = "1"
+    val result = when{
+        x == "1" -> "one"
+        x == "2" -> "two"
+        x == "3" -> "three"
+        else -> "Invalid"
+    }
+    print(result)
+}
+
+
+// guessing game with when
+
+import kotlin.random.Random
+
+fun main() {
+    val firstResult = Random.nextInt(2)
+    val secondResult = Random.nextInt(2)
+    val result = when{
+        firstResult == secondResult -> "You win"
+        firstResult != secondResult -> "You lose"
+        else -> "Invalid"
+    }
+    print(result)
+}
+
+
+// guessing game with if else
+
+import kotlin.random.Random
+
+fun main() {
+    val firstResult = Random.nextInt(2)
+    val secondResult = Random.nextInt(2)
+        if(firstResult == secondResult) print("You win")
+        else print("You lose")
+    
+}
+
+
+//Using a when expression, update the following program so that it prints the corresponding actions 
+//when you input the names of game console buttons.
+
+// when
+
+fun main(){
+    val Button: String = "A"
+    
+    val result = when(Button){
+        "A" -> "Yes"
+        "B" -> "No"
+        "X" -> "Menu"
+        "Y" -> "Nothing"
+        else -> "There is not such button"
+    }
+    println("You clicked $result button")
+}
+
+
+
+//loop
+//You have a program that counts pizza slices until there’s a whole pizza with 8 slices.
+
+
+// while loop
+fun main(){
+	var pizzaSlices = 0
+    while (pizzaSlices <= 8){
+        println("There's only $pizzaSlices slice/s of pizza :(")
+    	pizzaSlices++
+        
+    }
+    println("There are $pizzaSlices slices of pizza. Hooray! We have a whole pizza! :D")
+}
+
+
+// do while loop
+
+fun main(){
+	var pizzaSlices = 0
+    do{
+        println("There's only $pizzaSlices slice/s of pizza :(")
+    	pizzaSlices++
+        
+    }	while (pizzaSlices <= 8)
+    println("There are $pizzaSlices slices of pizza. Hooray! We have a whole pizza! :D")
+}
+
+
+/*
+Write a program that simulates the Fizz buzz game. 
+Your task is to print numbers from 1 to 100 incrementally, 
+replacing any number divisible by three with the word "fizz", and any number divisible by five with the word "buzz". 
+Any number divisible by both 3 and 5 must be replaced with the word "fizzbuzz".
+*/
+
+fun main(){
+	for( number in 1..100){
+        var result = when{
+            number % 3 == 0 && number % 5 == 0 -> "fizzbuzz"
+            number % 3 == 0 -> "fizz"
+            number % 5 == 0 -> "buzz"
+            else -> number
+        }
+        println(result)
+    }
+}
+
+
+//You have a list of words. Use for and if to print only the words that start with the letter l.
+
+fun main() {
+    val words = listOf("dinosaur", "limousine", "magazine", "language")
+    for( word in words){
+        if ( word[0] == 'l'){
+            println(word)
+        }
+    }
+}
+
+
+// Write a function called circleArea that takes the radius of a circle in integer format 
+// as a parameter and outputs the area of that circle.
+
+import kotlin.math.PI
+
+fun circleArea(r: Int): Double{
+    return PI * r * r
+}
+
+fun main() {
+    println(circleArea(2))
+}
+
+
+// null
+
+fun main(){
+    var s: String? = "AK"
+    s = null
+    print(s)
+}
+
+
+// throws error
+// By default, a type is not allowed to accept null values
+fun main(){
+    var s: String = "AK" // cannot be null
+    s = null
+    print(s)
+}
