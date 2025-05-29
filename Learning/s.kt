@@ -211,3 +211,111 @@ fun main(){
     	println("-1 is out of range")
 	}
 }
+
+// List
+// Stores items in they order they stored
+// 2 types of list here -> List and MutableList
+// List is immutable and MutableList is mutable
+
+
+// Immutable List
+fun main(){
+	var list: List<String> = listOf("One", "Two", "Three", "Four", "Five")
+   //list[0] = "Zero"
+   //list.add("Six") // we cannot add and modify this list because it is immutable
+   print(list)
+}
+
+
+// MutableList
+fun main(){
+	var list: MutableList<String> = mutableListOf("One", "Two", "Three", "Four", "Five")
+   list[0] = "Zero"
+   list.add("Six")
+   println(list)
+   println("This list has ${list.count()} elements")
+   print("Two" in list)
+}
+
+
+// Set
+// unordered and doesnot allow duplicates, we cannot access by index
+// 2 types of set here -> Set and MutableSet
+// Set is immutable and MutableSet is mutable
+
+
+// Immutable Set
+
+fun main(){
+	var readOnlySet = setOf("One", "Two", "Three", "Four", "Five", "Two", "Three")
+   	println(readOnlySet)
+   	println("This list has ${readOnlySet.count()} elements")
+   	print("Two" in readOnlySet)
+}
+
+
+// Mutable Set
+
+fun main(){
+	var mutableSet = mutableSetOf("One", "Two", "Three", "Four", "Five", "Two", "Three")
+   	println(mutableSet)
+   	println("This list has ${mutableSet.count()} elements")
+   	print("Two" in mutableSet)
+}
+
+fun main(){
+	var mutableSet: MutableSet<String> = mutableSetOf("One", "Two", "Three", "Four", "Five", "Two", "Three")
+   	println(mutableSet)
+    mutableSet.add("Six")
+    println(mutableSet)
+   	println("This list has ${mutableSet.count()} elements")
+   	print("Two" in mutableSet)
+    mutableSet.remove("One")
+    println(mutableSet)
+}
+
+
+// Map
+// Map is a collection of key-value pairs and accessed by key default
+// 2 types of map here -> Map and MutableMap
+// Map is immutable and MutableMap is mutable
+
+Immutable Map
+
+fun main(){
+	var readOnlyMap: Map<String, Int> = mapOf("One" to 1, "Two" to 2, "Three" to 3, "Four" to 4, "Five" to 5)
+   	println(readOnlyMap)
+   	println("This list has ${readOnlyMap.count()} elements")
+   	print("Two" in readOnlyMap)
+}
+
+
+// Mutable Map
+
+fun main(){
+	var mutableMap: MutableMap<String, Int> = mutableMapOf("One" to 1, "Two" to 2, "Three" to 3, "Four" to 4, "Five" to 5)
+   	println(mutableMap)
+    println("value of One key ${mutableMap["One"]}")
+    mutableMap["Six"] =  6
+    println(mutableMap)
+   	println("This list has ${mutableMap.count()} elements")
+   	println("Two" in mutableMap)
+    mutableMap.remove("One")
+    println(mutableMap)
+}
+
+
+// accessing items with keys and values
+fun main(){
+	var mutableMap: MutableMap<String, Int> = mutableMapOf("One" to 1, "Two" to 2, "Three" to 3, "Four" to 4, "Five" to 5)
+   	println(mutableMap)
+    println("value of One key ${mutableMap["One"]}")
+    mutableMap["Six"] =  6
+    println(mutableMap)
+   	println("This list has ${mutableMap.count()} elements")
+   	println("Two" in mutableMap)
+    println("Two" in mutableMap.keys)
+    println(3 in mutableMap.values)
+    mutableMap.remove("One")
+    println(mutableMap)
+}
