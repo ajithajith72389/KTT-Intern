@@ -485,6 +485,18 @@ fun main() {
 }
 
 
+fun intervalInSeconds(hours: Int = 0, minutes: Int = 0, seconds: Int = 0) =
+    ((hours * 60) + minutes) * 60 + seconds
+
+fun main() {
+    println(intervalInSeconds(1, 20, 15))
+    println(intervalInSeconds(minutes = 1, seconds = 25))
+    println(intervalInSeconds( hours = 2))
+    println(intervalInSeconds(minutes = 10))
+    println(intervalInSeconds(hours = 1, seconds = 1))
+}
+
+
 // null
 
 fun main(){
@@ -500,4 +512,104 @@ fun main(){
     var s: String = "AK" // cannot be null
     s = null
     print(s)
+}
+
+
+// lambda expression
+
+val square = { num: Int -> num * num}
+fun main(){
+    var num = 6
+    print(square(num))
+}
+
+
+val square = { num: Int -> 
+    var sq = num * num
+    
+}
+fun main(){
+    var num = 6
+    print(square(num))
+}
+
+val numbers = listOf(1, -2, 3, -4, 5, -6)
+
+val positives = numbers.filter ({ x -> x > 0 })
+
+//val isNegative = { x: Int -> x < 0 }
+val negatives = numbers.filter({x -> x < 0})
+
+println(positives)
+// [1, 3, 5]
+println(negatives)
+// [-2, -4, -6]
+
+
+fun main() {
+    val actions = listOf("title", "year", "author")
+    val prefix = "https://example.com/book-info"
+    val id = 5
+    val urls = actions.map{ action -> "$prefix/$id/$action"}
+    println(urls)
+}
+
+
+
+fun repeatN(n: Int, action: () -> Unit) {
+    for ( i in 1..5){
+        action()
+    }
+}
+
+fun main() {
+    repeatN(5){
+        println("Hello")
+    }
+}
+
+
+
+// Extention function
+
+
+fun Int.isPositive(): Boolean{
+    if ( this > 0) return true
+    else return false
+}
+
+fun main() {
+    println(1.isPositive())
+    // true
+}
+
+
+fun String.toLowercaseString(): String{
+    return this.lowercase()
+}
+
+fun main() {
+    println("Hello World!".toLowercaseString())
+    // hello world!
+}
+
+
+
+/* 
+In Kotlin, to declare a class as inheritable, you must mark it with the open keyword. 
+By default, all classes in Kotlin are final, which means they cannot be inherited unless explicitly specified as open.
+*/
+
+// Override
+open class Parent {
+    open val info: String = "I am a parent"
+}
+
+class Child : Parent() {
+    override val info: String = "I am a child"
+}
+
+fun main() {
+    val child = Child()
+    println(child.info)  // Output: I am a child
 }
