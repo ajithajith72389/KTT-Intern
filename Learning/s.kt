@@ -613,3 +613,45 @@ fun main() {
     val child = Child()
     println(child.info)  // Output: I am a child
 }
+
+
+// open and final
+open class Bird {
+    open fun fly() { println("Bird flies") }
+    final fun sing() { println("Bird sings") }
+}
+
+class Sparrow : Bird() {
+    override fun fly() { println("Sparrow flies swiftly") }
+    // Cannot override sing() because it is final
+}
+
+/*
+To access overridden methods or properties, you simply use super followed by the method or property name. 
+*/
+
+open class Animal {
+    open fun makeSound() {
+        println("Animal sound")
+    }
+
+    fun move() {
+        println("Animal moves")
+    }
+}
+
+class Dog : Animal() {
+    override fun makeSound() {
+        println("Bark")
+    }
+
+    fun showAnimalSound() {
+        super.makeSound() // Calls Animal's makeSound
+        // makeSound() // Calls Dog's makeSound
+    }
+}
+
+fun main(){
+    var c = Dog()
+    c.showAnimalSound()
+}
