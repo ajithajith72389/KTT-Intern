@@ -1,5 +1,3 @@
-https://drive.google.com/viewerng/viewer?embedded=true&url=https://app.ktt.io/api/upload/file/9ac5a6d86e8924182271bd820acbce0e/Documents/101844_30_20250819_171433_front
-
 fun main(){
     println("hello Aj")
     print("Good")
